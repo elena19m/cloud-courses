@@ -15,3 +15,11 @@ You will learn how to:
   * monitor your network activity;
   * automize your node and service configuration;
   * load balance your servers;
+
+## Part I
+
+Follow the steps from [Working with OpenStack](../basic/working_with_openstack.md).
+
+## Part II
+
+Follow the steps from [Working with certificates](../basic/certificates.md).
