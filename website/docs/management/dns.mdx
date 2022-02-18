@@ -1,0 +1,51 @@
+---
+sidebar_position: 2
+---
+
+# Name services
+
+## Setup
+
+import Setup from '../common/dns/_setup.md';
+
+<Setup/>
+
+## DNS Resolvers
+
+import Resolvers from '../common/dns/_dns_resolvers.md';
+
+<Resolvers/>
+
+## DNS Servers
+
+import Servers from '../common/dns/_dns_server.md';
+
+<Servers/>
+
+## DNS Fine Tuning
+
+import Tuning from '../common/dns/_dns_fine_tuning.md';
+
+<Tuning/>
+
+## DNS Zone Transfer
+
+import Transfer from '../common/dns/_dns_zone_transfer.md';
+
+<Transfer/>
+
+## Paired DNS zone transfer
+Pair up with one of your peers.
+Each student will make the necessary changes in order for his master DNS server
+to be delegated the DNS zone of his colleague's master DNS server.
+You should be able to answer for queries about each others DNS domains.
+
+## DNSSEC
+
+DNS is vulnerable to MITM attacks.
+An attacker can pretend to be a DNS server and supply an unsuspecting victim with
+the wrong IP address for a URL. In order to combat this, DNSSEC can be used and
+configured to validate the identity of the DNS server.
+
+Using the instructions from [here](https://www.digitalocean.com/community/tutorials/how-to-setup-dnssec-on-an-authoritative-bind-dns-server--2),
+setup DNSSEC between the master and slave VM.
