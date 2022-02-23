@@ -187,8 +187,11 @@ student@scgc-lab00:~$
 
 Notice that the first time you want to connect to a new virtual machine, the SSH Agent will ask you to confirm the connection.
 
+
+### Possible issues
+
 <details>
-<summary>Possible issues</summary>
+<summary><b>Click to expand</b></summary>
 
 When connecting through SSH, the following issues may appear:
   *  the virtual machine has started, but the SSH daemon has not started yet. In this case, you may see a connenction refused message. In this case, if the service should start at boot time, wait until the virtual machine finishes the booting process.
