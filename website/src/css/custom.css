@@ -47,3 +47,25 @@ html[data-theme='dark'] img[src$='#light'] {
   display: block;
   margin: 0 auto;
 }
+
+.tabs__item {
+  border-right: 3px solid;
+  border-bottom: 3px solid;
+  border-bottom-left-radius: 0px;
+  border-top-left-radius: 0px;
+  margin: 2px;
+}
+
+.tabs__item--active {
+  border-bottom-right-radius: var(--ifm-global-radius);
+}
+
+.tabs__item:first-child {
+  border-left: 3px solid;
+}
+
+.tabs-container {
+  border-right: 1px groove;
+  border-bottom: 1px groove;
+  padding: 0.3rem;
+}
