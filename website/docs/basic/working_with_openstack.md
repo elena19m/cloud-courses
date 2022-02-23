@@ -168,7 +168,8 @@ The virtual machine will run on one of the servers in the cluster. If the server
 The picture bellow shows how you can connect to the virtual machine.
 Since the virtual machine runs in OpenStack (i.e. in the faculty's cluster) and the assigned IP address is a private address, you cannot directly connect to the virtual machine.
 
-![Connection flow](./assets/img/connection_flow_ssh.png)
+
+![Connect](./assets/img/connect_light.svg#light)![Connect](./assets/img/connect_dark.svg#dark)
 
 To connect to the virtual machine, you must first connect to fep, which is a front end computer that runs in the faculty's cluster (i.e. from here you can access the OpenStack network).
 Then, connect to the virtual machine.
