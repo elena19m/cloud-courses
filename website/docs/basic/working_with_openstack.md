@@ -37,7 +37,7 @@ ssh user.name@fep8.grid.pub.ro -X -o ServerAliveInterval=100
 ```
 The short format will likely be enough in most cases.
 
-:::important
+:::tip Important
 If you are using a Windows system, recommend creating a Linux virtual machine with a graphical interface, or a WSL Linux distribution. You could also use PuTTY as the SSH client.
 
 :::
@@ -86,7 +86,7 @@ New virtual machines can only be configured using pre-defined configurations, ca
 When creating a virtual machine, you have to setup the virtual machine’s configuration. After pressing `Launch instance`,
 a configuration window such as the one in the image below will be displayed on screen.
 
-:::important
+:::tip Important
 Menus where you can only choose one option will automatically use the option by default. However, if two or more options are available (e.g., two networks or two SSH keys), you must choose one when creating each virtual machine. Otherwise, none will be chosen, and you may not be able to connect to the virtual machine.
 
 :::
@@ -135,7 +135,7 @@ If the `vlan9` network is not present, you will not be able to connect to the vi
 
 In order to be able to connect to the virtual machine, you must provide a key pair.
 
-:::important
+:::tip Important
 The key must be provided in this step. It cannot be added later because the key is injected into the virtual machine at creation time.
 
 :::
@@ -158,7 +158,7 @@ In the previous image, you can see information about the newly created virtual m
   * **Key Pair**: `id_openstack` – the key pair used for connection
   * **Actions** – drop down button from where you can reset, rebuild or delete the current instance.
 
-:::note
+:::tip important
 The virtual machine will run on one of the servers in the cluster. If the server did not have the image before you tried creating the virtual machine, the image will have to be copied and converted on the server before being used. This means that sometimes the virtual machine will boot slower (up to 10 minutes of wait time). During this time, the ''Power State'' will be shown as ''Spawning''.
 
 :::
@@ -278,7 +278,7 @@ student@scgc-lab00:~$ xeyes
 student@scgc-lab00:~$ xclock
 ```
 
-:::note
+:::tip important
 To open the SSH connections, you can open multiple SSH connections to the virtual machine in Openstack,
 or use a terminal multiplexing application like `screen` or `tmux` (this is the recommended option, since it also allows you to not lose your session even when losing the internet connection).
 
@@ -291,8 +291,10 @@ Afterwards, you can navigate between the panes using `<C-b><arrow-key>` - e.g., 
 
 :::
 
+## Advanced Network Configuration
+
 <details>
-<summary>Advanced Network Configuration</summary>
+<summary>Click to expand</summary>
 
 If you cannot communicate with another virtual machine from OpenStack, it's because all traffic is Openstack is routed through a firewall.
 To view the allowed rules in the default security policy (the one your virtual machine uses unless you have created another policy
