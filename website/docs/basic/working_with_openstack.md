@@ -91,6 +91,8 @@ Menus where you can only choose one option will automatically use the option by 
 
 :::
 
+Make sure you go through each of the following tabs.
+
 <Tabs>
 <TabItem value="Details Menu" label="Details Menu" default>
 
