@@ -12,7 +12,7 @@ const config = {
   baseUrl: '/cloud-courses/',
   onBrokenLinks: 'throw',
   onBrokenMarkdownLinks: 'warn',
-  favicon: 'img/favicon.ico',
+  favicon: 'img/scgc_light.png',
   organizationName: 'SCGC Inc.', // Usually your GitHub org/user name.
   projectName: 'cloud-courses', // Usually your repo name.
 
@@ -39,7 +39,8 @@ const config = {
         title: 'SysDevOps Crash Courses',
         logo: {
           alt: 'Logo',
-          src: 'img/sigla_scgc.png',
+          src: 'img/scgc_light.png',
+          srcDark: 'img/scgc_dark.png',
         },
         items: [
           {
