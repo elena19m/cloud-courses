@@ -66,7 +66,7 @@ const config = {
             position: 'left'
           },
           {
-            href: 'https://github.com/scgc/cloud-courses',
+            href: 'https://gitlab.cs.pub.ro/SCGC/cloud-courses',
             label: 'Repository',
             position: 'right',
           },
