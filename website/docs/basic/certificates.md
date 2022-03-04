@@ -70,6 +70,10 @@ OK
 ```
 The certificate is expired, but has otherwise been verified.
 
+:::tip
+Use `man openssl-verify` to check other error codes.
+:::
+
 Check the information in certificate chain:
 ```bash
 $ cat terena-ca-chain.pem
