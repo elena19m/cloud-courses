@@ -33,7 +33,7 @@ We also recommend using `-o ServerAliveInterval=100` to instruct the SSH client 
 send beacons to the server every 100 seconds, so you do not get disconnected due to inactivity,
 and `-X` for X11 forwarding; the final command looks like:
 ```bash
-ssh user.name@fep8.grid.pub.ro -X -o ServerAliveInterval=100
+ssh user.name@fep.grid.pub.ro -X -o ServerAliveInterval=100
 ```
 The short format will likely be enough in most cases.
 
@@ -53,10 +53,10 @@ the commands below to create a 4096-bit RSA key and print the public part of it.
 The permissions on the `.ssh` directory must be `0700`, otherwise the ssh CLI tool will refuse to use the keys inside.
 
 ``` bash
-[user.name@fep7-1 ~]$ mkdir -p ~/.ssh
-[user.name@fep7-1 ~]$ chmod 0700 ~/.ssh
-[user.name@fep7-1 ~]$ ssh-keygen -t rsa -b 4096 -f ~/.ssh/id_openstack -C "openstack-ssh-key"
-[user.name@fep7-1 ~]$ cat ~/.ssh/id_openstack.pub
+[user.name@fep8 ~]$ mkdir -p ~/.ssh
+[user.name@fep8 ~]$ chmod 0700 ~/.ssh
+[user.name@fep8 ~]$ ssh-keygen -t rsa -b 4096 -f ~/.ssh/id_openstack -C "openstack-ssh-key"
+[user.name@fep8 ~]$ cat ~/.ssh/id_openstack.pub
 ```
 
 After having the public key, go to Horizon and access the `Project` &rarr; `Compute` &rarr; `Key Pairs` section.
@@ -179,7 +179,7 @@ Pay attention to the IP address that was assigned to your virtual machine and to
 Please note that the username you must use when logging in to the virtual machine may also differ. `SCGC Template` uses the username `student`.
 
 ```bash
-[user.name@fep7-1 ~]$ ssh -i ~/.ssh/id_openstack student@10.9.X.Y
+[user.name@fep8 ~]$ ssh -i ~/.ssh/id_openstack student@10.9.X.Y
 The authenticity of host '10.9.X.Y (10.9.X.Y)' can't be established.
 ...
 Are you sure you want to continue connecting (yes/no)? yes # you have to write yes and press Enter
@@ -198,12 +198,12 @@ Notice that the first time you want to connect to a new virtual machine, the SSH
 When connecting through SSH, the following issues may appear:
   *  the virtual machine has started, but the SSH daemon has not started yet. In this case, you may see a connenction refused message. In this case, if the service should start at boot time, wait until the virtual machine finishes the booting process.
 ```bash
-[user.name@fep7-1 ~]$ ssh -i ~/.ssh/id_openstack student@10.9.X.Y
+[user.name@fep8 ~]$ ssh -i ~/.ssh/id_openstack student@10.9.X.Y
 ssh: connect to host 10.9.X.Y port 22: Connection refused
 ```
   * you have connected to a virtual machine with the same IP address in the past (you have created another virtual machine, or rebuilt the current one), and SSH had saved its key fingerprint. Because the virtual machines are initialized through ''cloud-init'' the SSH host keys will differ between instances. If this is the case, you must remove the SSH key entry in ''~/.ssh/known_hosts'' before attempting to connect again.
 ``` bash
-[user.name@fep7-1 ~]$ ssh -i ~/.ssh/id_openstack student@10.9.X.Y
+[user.name@fep8 ~]$ ssh -i ~/.ssh/id_openstack student@10.9.X.Y
 @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 @    WARNING: REMOTE HOST IDENTIFICATION HAS CHANGED!     @
 @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
@@ -240,7 +240,7 @@ you must set this flag for each connection.
 ```bash
 user@workstation ~ $ ssh -X user.name@fep.grid.pub.ro
 ...
-[user.name@fep7-1 ~]$ ssh -X -i ~/.ssh/id_openstack student@10.9.X.Y
+[user.name@fep8 ~]$ ssh -X -i ~/.ssh/id_openstack student@10.9.X.Y
 ```
 
 Because X11 will forward the entire graphical interface, we recommend using it rarely,
