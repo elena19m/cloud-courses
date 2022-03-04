@@ -34,6 +34,7 @@ the certificate belonging to the server can be verified and, consequently, the i
 Begin by inspecting the certificate found in the `houdini.cs.pub.ro.crt-roedunet` file.
 
 ```bash
+$ cd 1
 $ openssl x509 -in houdini.cs.pub.ro.crt-roedunet -noout -text
 ```
 
@@ -235,7 +236,12 @@ The steps required when generating a certificate are as follows:
   - generate a certificate signing request (CSR) with the key and identification data
   - send the CSR to a CA in order to have it signed
 
-We will generate a CSR for `server.scgc`.
+We will generate a CSR for `server.scgc`. Use the `3` directory.
+
+```bash
+$ cd 3
+```
+
 First, generate a private key:
 
 ```bash
