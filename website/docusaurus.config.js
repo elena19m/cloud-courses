@@ -57,13 +57,13 @@ const config = {
           },
           {
             to: '/docs/management/',
-            label: 'SPD (Cluster & Grid Management)',
+            label: 'SPD',
             position: 'left',
             activeBaseRegex: `/docs/management/`,
           },
           {
             to: '/docs/security',
-            label: 'SCGC (Cluster & Grid Security)',
+            label: 'SCGC',
             position: 'left'
           },
           {
