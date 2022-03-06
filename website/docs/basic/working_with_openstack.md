@@ -422,7 +422,7 @@ Regardless of your choice, we will assume that the key is also named
 In order to use fep as the proxy host, add the `-J fep.grid.pub.ro` parameter,
 and then use the other parameters as if you could connect to the VM directly:
 ```bash
-ssh -J fep.grid.pub.ro -i ~/.ssh/id_openstack student@10.9.X.Y
+ssh -J fep.grid.pub.ro -i ~/.ssh/id_openstack -X student@10.9.X.Y
 ```
 
 :::tip Proxy host SSH parameters
@@ -438,6 +438,7 @@ Host openstack-vm
     Hostname 10.9.X.Y
     User student
     IdentityFile ~/.ssh/id_openstack
+    ForwardX11 yes
     ProxyJump fep.grid.pub.ro
 ```
 
@@ -451,6 +452,7 @@ achieve this, add the following to your SSH config file
 Host openstack-*
     User student
     IdentityFile ~/.ssh/id_openstack
+    ForwardX11 yes
     ProxyCommand ssh fep.grid.pub.ro -W $(echo "%h" | cut -d- -f2):%p
 ```
 
