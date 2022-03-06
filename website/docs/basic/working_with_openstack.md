@@ -324,6 +324,144 @@ thus all security measures will have to be implemented on the virtual machine it
 </details>
 
 
+## Connecting to VMs from your system
+Instead of manually connecting to fep every time you want to access the virtual
+machine, and from there connecting to the virtual machine, you can use fep
+as a jump host. Follow the steps below to make connecting easier.
+
+:::danger Storing SSH keys
+Both SSH keys and certificates are cryptographic material that **must** be
+kept private. Only keep your keys on your personal computer or trusted devices,
+and **NEVER** copy them on shared or untrusted devices. Leaked SSH keys can
+be used to impersonate you.
+
+For improved security, always encrypt your SSH keys and keep them only on
+encrypted devices (even if they are individually encrypted).
+:::
+
+### Connecting to fep using SSH keys
+Connecting to SSH hosts using a password is strongly discouraged. Modern
+security directives advise using SSH keys or certificates when connecting to
+remote SSH hosts.
+
+First, you will need to have a local SSH key to connect to fep. You can repeat
+the steps in the [SSH key pair generation](#ssh-key-pair-generation) section
+on your local system. For the purposes of this tutorial, we will consider that
+you have created a key named `id_fep`, with its public counterpart named
+`id_fep.pub`.
+
+After the key is created, you can then copy the public key to the
+`~/.ssh/authorized_keys` file on the fep server. You can do this by displaying
+the contents of the public key by running `cat ~/.ssh/id_fep.pub` on your
+local system, and then appending the line to the `~/.ssh/authorized_keys` file
+on fep.
+
+After the public key has been copied to the server, you will be able to connect
+to the server using the command below:
+```bash
+ssh user.name@fep.grid.pub.ro -X -o ServerAliveInterval=100 -i ~/.ssh/id_fep
+```
+
+### Permanent SSH configurations
+SSH parameters can be placed in a special file, called the SSH config. When
+starting an SSH-based connection (also applies to `scp` and `sftp`), the `ssh`
+command reads global and local configuration files, but parameters can also
+be overridden by the command line (you can read the `ssh_config` man page for
+more details).
+
+Append the following configurations to your `~/.ssh/config` file.
+```
+Host fep fep.grid.pub.ro
+    Hostname fep.grid.pub.ro
+    User user.name
+    ForwardX11 yes
+    ServerAliveInterval 100
+    IdentityFile ~/.ssh/id_fep
+```
+
+Afterwards, you can use either of the following commands, and connect to the
+server as if you had issued the command in the
+[previous sub-section](#connecting-to-fep-using-ssh-keys).
+```bash
+ssh fep # option 1
+ssh fep.grid.pub.ro # option 2
+```
+
+You can also change connection parameters by passing them in the command line.
+For example, if you want to connect using a different username, you could use:
+```bash
+ssh other.user@fep
+```
+
+Common parameters can be added using a general wildcard at **the end** of the
+configuration file. For example, if you want to keep all SSH connections alive,
+add the following to the end of the configuration file (note: the first
+encountered value for a parameter is used, regardless of the matched host rule;
+because of this, wildcards should be added to the end of the config):
+```
+Host *
+    ServerAliveInterval 100
+```
+
+### Connecting using an SSH jump host (proxy)
+If you want to connect to the OpenStack virtual machines from your system, you
+will have to use fep as your proxy jump host. The proxy jump option first
+connects to the jump host and then establishes a TCP connection from it to
+the host you wish to connect to.
+
+You will need to have an SSH key that is added to the virtual machine in order
+to connect. To do this, you have two options:
+- generate a new key locally (or reuse the `id_fep` key) and replace the SSH
+key that you previously used, both in the OpenStack configuration (delete the
+old key; will be injected only in **new** VMs) and on the target VMs;
+- copy the key that you had generated previously on fep to your local system.
+
+Regardless of your choice, we will assume that the key is also named
+`id_openstack` on your local system.
+
+In order to use fep as the proxy host, add the `-J fep.grid.pub.ro` parameter,
+and then use the other parameters as if you could connect to the VM directly:
+```bash
+ssh -J fep.grid.pub.ro -i ~/.ssh/id_openstack student@10.9.X.Y
+```
+
+:::tip Proxy host SSH parameters
+Most parameters that you provide on the command line will be used only for
+connecting to the VM, and not for the proxy host, so configurations for the
+proxy host must be added to the SSH config file.
+:::
+
+You can also configure the proxy jump in you SSH config, like in the following
+example:
+```
+Host openstack-vm
+    Hostname 10.9.X.Y
+    User student
+    IdentityFile ~/.ssh/id_openstack
+    ProxyJump fep.grid.pub.ro
+```
+
+<details>
+<summary>Generic proxy configuration</summary>
+
+You can create a sort of generic configuration for all VMs that run in
+OpenStack, to automatically use fep as the proxy host when connecting. To
+achieve this, add the following to your SSH config file
+```
+Host openstack-*
+    User student
+    IdentityFile ~/.ssh/id_openstack
+    ProxyCommand ssh fep.grid.pub.ro -W $(echo "%h" | cut -d- -f2):%p
+```
+
+Afterwards, you can connect using the following command, which will achieve
+a similar result to the SSH command above:
+```bash
+ssh openstack-10.9.X.Y
+```
+
+</details>
+
 ## Delete the virtual machine
 After each lab, and whenever you no longer need a virtual machine, please delete it.
 Go to the Horizon dashboard, go to `Project` &rarr; `Compute` &rarr; `Instances` and delete the virtual machine.
