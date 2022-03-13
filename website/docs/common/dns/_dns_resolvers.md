@@ -2,16 +2,16 @@ In this task we will examine how we ca use two DNS resolvers to query DNS server
 The two DNS resolvers we will use are **`host`** and **`dig`**.
 
 ```
-root@master:~# apt update
+root@dns:~# apt update
 [...]
-root@master:~# apt install host dnsutils
+root@dns:~# apt install host dnsutils
 [...]
 ```
 
 ### host
 Next, we find out the IP address of a website using **host**.
 ```
-root@master:~# host acs.pub.ro
+root@dns:~# host acs.pub.ro
 acs.pub.ro has address 141.85.227.151
 acs.pub.ro mail is handled by 10 mx.acs.pub.ro.
 ```
@@ -20,7 +20,7 @@ We can see from this output DNS records, such as NS(name server), MX(mail server
 
 For more information, we can use the `-v` parameter.
 ```
-root@master:~# host -v acs.pub.ro
+root@dns:~# host -v acs.pub.ro
 Trying "acs.pub.ro"
 ;; ->>HEADER<<- opcode: QUERY, status: NOERROR, id: 1805
 ;; flags: qr aa rd ra; QUERY: 1, ANSWER: 1, AUTHORITY: 3, ADDITIONAL: 3
@@ -79,19 +79,19 @@ Received 173 bytes from 141.85.241.15#53 in 2 ms
 
 In order to request a specific record we can use the `-t` parameter and the record we want.
 ```
-root@master:~# host -t ns acs.pub.ro
+root@dns:~# host -t ns acs.pub.ro
 acs.pub.ro name server ns2.cs.pub.ro.
 acs.pub.ro name server ns1.cs.pub.ro.
 acs.pub.ro name server ns1.grid.pub.ro.
-root@master:~# host -t mx acs.pub.ro
+root@dns:~# host -t mx acs.pub.ro
 acs.pub.ro mail is handled by 10 mx.acs.pub.ro.
-root@master:~# host -t soa acs.pub.ro
+root@dns:~# host -t soa acs.pub.ro
 acs.pub.ro has SOA record ns1.cs.pub.ro. admin.acs.pub.ro. 2017120701 28800 7200 604800 86400
 ```
 
 **host** will query the DNS servers from `/etc/resolv.conf`. If we want to query a specific DNS server, we can use host as such:
 ```
-root@master:~# host acs.pub.ro 8.8.8.8
+root@dns:~# host acs.pub.ro 8.8.8.8
 Using domain server:
 Name: 8.8.8.8
 Address: 8.8.8.8#53
@@ -111,13 +111,13 @@ DNS servers and they do not use the system's DNS resolver, which is usually a li
 We can see this from the following commands:
 
 ```
-root@master:~# strace -e openat host acs.pub.ro
+root@dns:~# strace -e openat host acs.pub.ro
 [...]
 openat(AT_FDCWD, "/etc/resolv.conf", O_RDONLY)      = 6
 acs.pub.ro has address 141.85.227.151
 acs.pub.ro mail is handled by 10 mx.acs.pub.ro.
 [...]
-root@master:~# strace -e openat ping -c 1 acs.pub.ro
+root@dns:~# strace -e openat ping -c 1 acs.pub.ro
 [...]
 openat(AT_FDCWD, "/etc/resolv.conf", O_RDONLY|O_CLOEXEC) = 4
 openat(AT_FDCWD, "/etc/resolv.conf", O_RDONLY|O_CLOEXEC) = 4
