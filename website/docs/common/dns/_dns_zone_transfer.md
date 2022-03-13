@@ -1,20 +1,20 @@
-We now want to configure the `lab1.scgc.ro` on the slave DNS server
+We now want to configure the `lab1.scgc.ro` on the helper server that will work as a slave DNS server
 (replace with your last name instead of scgc).
-This domain will be transfered from the master to the slave (DNS zone transfer).
+This domain will be transfered from the master (dns VM) to the slave (helper VM) (DNS zone transfer).
 In order to correctly configure a zone transfer, we must follow these steps:
   - We setup a new DNS domain on the master VM for `lab1.scgc.ro`.
-  - We install a DNS server on the slave VM.
-  - We transfer the `lab1.scgc.ro` domain from the master VM to the slave VM.
+  - We install a DNS server on the helper VM.
+  - We transfer the `lab1.scgc.ro` domain from the dns VM to the helper VM.
 
 ### Setup master DNS server
 
-Configure a new DNS zone on the master VM similarly to the previous one,
+Configure a new DNS zone on the dns VM similarly to the previous one,
 which will answer for queries about `lab1.scgc.ro`.
 Your DNS zone must have at least an A record and a NS record for this exercise.
 
 ### Zone transfer
 
-The slave VM has a Centos 7 operating system, which has some differences in the setup of the DNS server.
+The helper VM has a Centos 7 operating system, which has some differences in the setup of the DNS server.
 
 To install **BIND** use the following command:
 ```
@@ -26,17 +26,17 @@ On Red-Hat-based distributions bind will have the following characteristics:
   * Main configuration and zone names file: `/etc/named.conf`.
   * Default zone file location: `/var/named`.
 
-In order to transfer the zone from the master server, we need to make the following configurations:
-  * on the master VM add the following line in the `/etc/bind/named.conf.local` file for the zone created in the preceding subtask:
+In order to transfer the zone from the master DNS server, we need to make the following configurations:
+  * on the dns VM add the following line in the `/etc/bind/named.conf.local` file for the zone created in the preceding subtask:
 ```
-    allow-transfer { 10.9.107.152; }; // replace with the slave VM IP address
+    allow-transfer { 192.168.1.2; }; // replace with the slave VM IP address
 ```
-  * on the slave VM
+  * on the helper VM
 ```
 zone "lab1.scgc.ro." {
     type slave;
     file "/var/named/slaves/db.lab1.scgc.ro"; //the zone file
-    masters { 10.9.107.151; }; //replace with the master VM IP address
+    masters { 192.168.1.1; }; //replace with the master VM IP address
 };
 ```
 
@@ -54,9 +54,9 @@ systemctl restart named.service
 
 :::
 
-To check that everything went well you can check the status on the slave VM:
+To check that everything went well you can check the status on the helper VM:
 ```
-[root@slave ~]# systemctl status named.service
+[root@helper ~]# systemctl status named.service
 named.service - Berkeley Internet Name Domain (DNS)
    Loaded: loaded (/usr/lib/systemd/system/named.service; disabled)
    Active: active (running) since Ma 2018-02-27 14:20:06 UTC; 15min ago
@@ -74,15 +74,15 @@ feb 27 14:20:06 slave named[20552]: all zones loaded
 feb 27 14:20:06 slave named[20552]: running
 feb 27 14:20:06 slave systemd[1]: Started Berkeley Internet Name Domain (DNS).
 feb 27 14:20:06 slave named[20552]: zone lab1.scgc.ro/IN: Transfer started.
-feb 27 14:20:06 slave named[20552]: transfer of 'lab1.scgc.ro/IN' from 10.9.107.151#53: connected using 10.9.107.152#57942
+feb 27 14:20:06 slave named[20552]: transfer of 'lab1.scgc.ro/IN' from 192.168.1.1#53: connected using 192.168.1.2#57942
 feb 27 14:20:06 slave named[20552]: zone lab1.scgc.ro/IN: transferred serial 3
-feb 27 14:20:06 slave named[20552]: transfer of 'lab1.scgc.ro/IN' from 10.9.107.151#53: Transfer completed: 1 messages, 5 records, 156 bytes, 0.001 secs (156000 bytes/sec)
+feb 27 14:20:06 slave named[20552]: transfer of 'lab1.scgc.ro/IN' from 192.168.1.1#53: Transfer completed: 1 messages, 5 records, 156 bytes, 0.001 secs (156000 bytes/sec)
 feb 27 14:20:06 slave named[20552]: zone lab1.scgc.ro/IN: sending notifies (serial 3)
 ```
 
-To test that the zone has indeed been transferred you can now query the slave server for the zone which was transferred.
+To test that the zone has indeed been transferred you can now query the helper server for the zone which was transferred.
 ```
-[root@slave ~]# host -v lab1.scgc.ro localhost
+[root@helper ~]# host -v lab1.scgc.ro localhost
 Trying "lab1.scgc.ro"
 Using domain server:
 Name: localhost
@@ -96,13 +96,13 @@ Aliases:
 ;lab1.scgc.ro.			IN	A
 
 ;; ANSWER SECTION:
-lab1.scgc.ro.		604800	IN	A	10.9.107.151
+lab1.scgc.ro.		604800	IN	A	192.168.1.1
 
 ;; AUTHORITY SECTION:
 lab1.scgc.ro.		604800	IN	NS	ns.lab1.scgc.ro.
 
 ;; ADDITIONAL SECTION:
-ns.lab1.scgc.ro.	604800	IN	A	10.9.107.151
+ns.lab1.scgc.ro.	604800	IN	A	192.168.1.1
 
 Received 79 bytes from ::1#53 in 1 ms
 Trying "lab1.scgc.ro"
@@ -129,5 +129,5 @@ lab1.scgc.ro.		604800	IN	SOA	lab1.scgc.ro. root.scgc.ro. 3 604800 86400 2419200 
 Received 71 bytes from ::1#53 in 0 ms
 ```
 
-The command has to produce similar output when run on the master VM.
+The command has to produce similar output when run on the dns VM.
 
