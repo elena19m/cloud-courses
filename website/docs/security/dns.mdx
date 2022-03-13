@@ -1,0 +1,76 @@
+---
+sidebar_position: 2
+---
+
+# Name services (DNS)
+
+## Setup
+
+We will be using a virtual machine in the [faculty's cloud](http://cloud.grid.pub.ro/).
+
+When creating a virtual machine in the Launch Instance window:
+  * Select **Boot from image** in **Instance Boot Source** section
+  * Select **SCGC Template 2021** in **Image Name** section
+  * Select the **m1.large** flavor.
+
+In the base virtual machine:
+  * Download the laboratory archive from **TODO URL** in the `work` directory.
+  * Extract the archive. You will see multiple `.qcow2` files and two scripts: `lab-dns-start.sh` and `lab-dns-stop.sh`.
+The `.qcow2` files will be used to start virtual machines using the `lab-dns-start.sh` script. To stop the virtual machine,
+you can use `lab-dns-stop.sh`.
+  * Start the helper virtual machines using `./lab-dns-start.sh`.
+  * The username for connecting to the nested VMs is `student` and the password is `student`.
+  * For ease of use we recommend adding entries in the `/etc/hosts` file corresponding to the two VMs:
+    * `192.168.1.1 dns`
+    * `192.168.1.2 helper`
+    * These two lines will allow using `dns` instead of the IP address of the DNS VM for clarity. Likewise, we can use `helper` instead of the IP address of the helper VM.
+
+## DNS Resolvers
+
+import Resolvers from '../common/dns/_dns_resolvers.md';
+
+<Resolvers/>
+
+## DNS Servers
+
+import Servers from '../common/dns/_dns_server.md';
+
+<Servers/>
+
+## DNS Fine Tuning
+
+import Tuning from '../common/dns/_dns_fine_tuning.md';
+
+<Tuning/>
+
+## Security of DNS Servers
+DNS is a critical infrastructure and it is one of the most desired hosts to be compromised.
+Some common attacks on the DNS servers are:
+ * DNS Spoofing: A MITM (Man-in-the-Middle) attack where a malicious host acts like a
+legitimate DNS server and serves another IP for the desired domain.
+ * DoS Attacks: by flooding the DNS servers with random domains (when recursive queries
+are allowed) or random subdomains, the DNS server will not respond to legitimate queries.
+ * DNS Hijacking
+
+### DNS Reconnaissance
+import Recon from '../common/dns/_dns_reconnaissance.md';
+
+<Recon/>
+
+### NXDOMAIN Attack
+import NXDOMAIN from '../common/dns/_dns_nxdomain.md';
+
+<NXDOMAIN/>
+
+### DNS Spoofing
+TODO
+
+## DNSSEC
+
+DNS is vulnerable to MITM attacks.
+An attacker can pretend to be a DNS server and supply an unsuspecting victim with
+the wrong IP address for a URL. In order to combat this, DNSSEC can be used and
+configured to validate the identity of the DNS server.
+
+Using the instructions from [here](https://www.digitalocean.com/community/tutorials/how-to-setup-dnssec-on-an-authoritative-bind-dns-server--2),
+setup DNSSEC for your DNS server.
