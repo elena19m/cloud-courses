@@ -200,7 +200,7 @@ yum install bind-utils
 ### Additional records
 
 Add another NS record to the zone corresponding to antoher IP address and two MX records
-(one for the dns server with priority `10` and one for another server with priority `20`).
+(one for the dns server with priority `10` and one for the helper server with priority `20`).
 Restart your BIND server and test your configurations.
 
 
