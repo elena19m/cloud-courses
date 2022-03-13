@@ -1,7 +1,7 @@
 Now that we have seen how we can query DNS servers, let's configure our very own DNS server on the master VM using **bind**.
 
 ```
-root@master:~# apt install bind9 bind9utils
+root@dns:~# apt install bind9 bind9utils
 ```
 
 For Debian-based distributions, bind will have the following configuration files:
@@ -20,20 +20,20 @@ For this we have to add the following line to the `/etc/bind/named.conf.options`
 ```
 options {
 [...]
-        listen-on { 10.9.107.151; localhost; };
+        listen-on { 192.168.1.1; localhost; };
 [...]
 };
 ```
 
 :::note
-The IP address 10.9.107.151, used in the example will not be the IP address that you will use when configuring your server.
+The IP address 192.168.1.1, used in the example may not be the IP address that you will use when configuring your server.
 Replace it with your own IP address, which can be determined by using the //ip// command:
 ```
-root@master:~# ip a
+root@dns:~# ip a
 [...]
 2: eth0: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1450 qdisc pfifo_fast state UP group default qlen 1000
     link/ether fa:16:3e:00:7f:98 brd ff:ff:ff:ff:ff:ff
-    inet 10.9.107.151/16 brd 10.9.255.255 scope global eth0
+    inet 192.168.1.1/16 brd 10.9.255.255 scope global eth0
        valid_lft forever preferred_lft forever
     inet6 fe80::f816:3eff:fe00:7f98/64 scope link
        valid_lft forever preferred_lft forever
@@ -59,7 +59,7 @@ cp /etc/bind/db.local /etc/bind/db.scgc.ro
 Initially, it will look something like the following:
 
 ```
-root@master:~# cat /etc/bind/db.scgc.ro
+root@dns:~# cat /etc/bind/db.scgc.ro
 ;
 ; BIND data file for local loopback interface
 ;
@@ -102,8 +102,8 @@ Using our example names and private IP addresses, we will add `A` records for `n
 and a host corresponding to the `www.scgc.ro` (which will actually be our master DNS server), like so:
 ```
 ; name servers - A records
-ns1.scgc.ro.          IN      A      10.9.107.151
-www.scgc.ro.          IN      A      10.9.107.151
+ns1.scgc.ro.          IN      A      192.168.1.1
+www.scgc.ro.          IN      A      192.168.1.1
 ```
 
 Our final example forward zone file looks like the following:
@@ -120,8 +120,8 @@ $TTL	604800
     IN      NS      ns1.scgc.ro.
 
 ; name servers - A records
-ns1.scgc.ro.          IN      A      10.9.107.151
-www.scgc.ro.          IN      A      10.9.107.151
+ns1.scgc.ro.          IN      A      192.168.1.1
+www.scgc.ro.          IN      A      192.168.1.1
 ```
 
 ### Testing our configuration
@@ -129,7 +129,7 @@ www.scgc.ro.          IN      A      10.9.107.151
 Now that we have the a minimal configuration, let us check that it works.
 Run the following command to check the syntax of the `named.conf*` files:
 ```
-root@master:~# named-checkconf
+root@dns:~# named-checkconf
 ```
 
 If your named configuration files have no syntax errors, you will return to your shell prompt and see no error messages.
@@ -141,40 +141,40 @@ corresponding zone file, which are both defined in `named.conf.local`.
 
 For example, to check the `scgc.ro` zone configuration, run the following command (change the names to match your zone and file):
 ```
-root@master:~# named-checkzone scgc.ro /etc/bind/db.scgc.ro
+root@dns:~# named-checkzone scgc.ro /etc/bind/db.scgc.ro
 zone scgc.ro/IN: loaded serial 3
 OK
 ```
 
 When all of your configuration and zone files have no errors in them, you should be ready to restart the BIND service:
 ```
-root@master:~# service bind9 restart
+root@dns:~# service bind9 restart
 ```
 
 Now we should be able to test our DNS server.
 We will be using `host`, however feel free to use `dig` or any other command to test your server:
 ```
-root@master:~# host www.scgc.ro localhost
+root@dns:~# host www.scgc.ro localhost
 Using domain server:
-Name: 10.9.107.151
-Address: 10.9.107.151#53
+Name: 192.168.1.1
+Address: 192.168.1.1#53
 Aliases:
 
-www.scgc.ro has address 10.9.107.151
-root@master:~# host -t ns scgc.ro localhost
+www.scgc.ro has address 192.168.1.1
+root@dns:~# host -t ns scgc.ro localhost
 Using domain server:
-Name: 10.9.107.151
-Address: 10.9.107.151#53
+Name: 192.168.1.1
+Address: 192.168.1.1#53
 Aliases:
 
 scgc.ro name server ns1.scgc.ro.
-root@master:~# host ns1.scgc.ro localhost
+root@dns:~# host ns1.scgc.ro localhost
 Using domain server:
-Name: 10.9.107.151
-Address: 10.9.107.151#53
+Name: 192.168.1.1
+Address: 192.168.1.1#53
 Aliases:
 
-ns1.scgc.ro has address 10.9.107.151
+ns1.scgc.ro has address 192.168.1.1
 ```
 
 Now let's try to query from outside the server.
@@ -182,11 +182,11 @@ We will test that the `slave` VM will receive the same response(replace with the
 ```
 [root@slave ~]# host www.scgc.ro master
 Using domain server:
-Name: 10.9.107.151
-Address: 10.9.107.151#53
+Name: 192.168.1.1
+Address: 192.168.1.1#53
 Aliases:
 
-www.scgc.ro has address 10.9.107.151
+www.scgc.ro has address 192.168.1.1
 ```
 
 :::note
@@ -199,8 +199,8 @@ yum install bind-utils
 
 ### Additional records
 
-Add another NS record to the zone corresponding to the slave IP address and two MX records
-(one for the master with priority `10` and one for the slave with priority `20`).
+Add another NS record to the zone corresponding to antoher IP address and two MX records
+(one for the dns server with priority `10` and one for another server with priority `20`).
 Restart your BIND server and test your configurations.
 
 
