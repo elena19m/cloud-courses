@@ -12,7 +12,7 @@ Add the following zone to your DNS server:
 ; BIND data file for local loopback interface
 ;
 $TTL	604800
-@	IN	SOA	scgc.ro. admin.scgc.ro. (
+@	IN	SOA	demoscgc.ro. admin.demoscgc.ro. (
 			20220310	; Serial
 			  604800	; Refresh
 			   86400	; Retry
@@ -21,24 +21,24 @@ $TTL	604800
 ;
 
 ; NS records
-	IN	NS	ns1.scgc.ro.
-	IN	NS	ns2.scgc.ro.
+	IN	NS	ns1.demoscgc.ro.
+	IN	NS	ns2.demoscgc.ro.
 
 ; MX records
-	IN	MX	42	mail.scgc.ro.
-	IN	MX	60	mail2.scgc.ro.
+	IN	MX	42	mail.demoscgc.ro.
+	IN	MX	60	mail2.demoscgc.ro.
 
 ; A records
-ns1.scgc.ro.		IN	A	192.168.1.1
-ns2.scgc.ro.		IN	A	192.168.1.2
-www.scgc.ro.		IN	A	192.168.1.1
-mail.scgc.ro.		IN	A	192.168.1.3
-mail2.scgc.ro.		IN	A	192.168.1.4
-blog.scgc.ro.		IN	A	192.168.1.5
-internal.scgc.ro.	IN	A	192.168.1.6
-vmware.scgc.ro.		IN	A	192.168.1.7
-ftp.scgc.ro.		IN	A	192.168.1.8
-support.scgc.ro.	IN	A	192.168.1.9
+ns1.demoscgc.ro.		IN	A	192.168.1.1
+ns2.demoscgc.ro.		IN	A	192.168.1.2
+www.demoscgc.ro.		IN	A	192.168.1.1
+mail.demoscgc.ro.		IN	A	192.168.1.3
+mail2.demoscgc.ro.		IN	A	192.168.1.4
+blog.demoscgc.ro.		IN	A	192.168.1.5
+internal.demoscgc.ro.		IN	A	192.168.1.6
+vmware.demoscgc.ro.		IN	A	192.168.1.7
+ftp.demoscgc.ro.		IN	A	192.168.1.8
+support.demoscgc.ro.		IN	A	192.168.1.9
 
 
 transfer	IN	CNAME	ftp
@@ -53,11 +53,11 @@ $ sudo apt install dnsrecon
 
 Start a scan over your DNS Server:
 ```
-$ dnsrecon -d scgc.ro -n 192.168.1.1 -t std,brt
-[*] Performing General Enumeration of Domain:scgc.ro
-[-] DNSSEC is not configured for scgc.ro
+$ dnsrecon -d demoscgc.ro -n 192.168.1.1 -t std,brt
+[*] Performing General Enumeration of Domain:demoscgc.ro
+[-] DNSSEC is not configured for demoscgc.ro
 [-] Error while resolving SOA record.
-[*] 	 NS ns1.scgc.ro 192.168.1.1
+[*] 	 NS ns1.demoscgc.ro 192.168.1.1
 [-] 	 Recursion enabled on NS Server 192.168.1.1
 [*] 	 Bind Version for 192.168.1.1 b'9.16.22-Debian'
 ....
