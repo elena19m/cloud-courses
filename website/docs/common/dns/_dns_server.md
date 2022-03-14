@@ -20,6 +20,8 @@ For this we have to add the following line to the `/etc/bind/named.conf.options`
 ```
 options {
 [...]
+        dnssec-validation no;
+[...]
         listen-on { 192.168.100.11; localhost; };
 [...]
 };
