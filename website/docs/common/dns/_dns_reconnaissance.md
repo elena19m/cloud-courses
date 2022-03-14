@@ -1,6 +1,10 @@
 When inspecting the security of a network (pentesting), the first step is to conduct a reconnaissance attack.
 Usually, you start by inspecting all the hosts in the target network, their open ports and their services.
 
+:::warning
+For this task, you must allow recursive querries from your DNS server.
+:::
+
 You can do additional checking on the DNS server.
 You can discover new hosts, maybe ones not exposed to the Internet
 (i.e. with local network IP addresses) and you can get a better view of the target's network layout.
