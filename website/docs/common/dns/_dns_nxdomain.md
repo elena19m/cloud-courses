@@ -45,7 +45,7 @@ scgc.ro mail is handled by 60 mail2.scgc.ro.
 From the base VM, run `tcpdump`:
 
 ```bash
-$ sudo tcpdump -i br0 udp port 53 # we check only the DNS traffic
+$ sudo tcpdump -i virbr-labs udp port 53 # we check only the DNS traffic
 ```
 
 From the first terminal, start the attack:
