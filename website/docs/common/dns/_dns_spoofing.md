@@ -16,3 +16,10 @@ Thus, the attacker can steal the victim's credentials.
 A method of mitigating this kind of attack is to set up DNSSEC.
 DNSSEC signs the DNS responses, and the victim's local server will reject the
 attacker's mangled package.
+
+:::important
+Reproducing this attack is out of the scope of this laboratory. We'll not do that for the moment.
+However, if you want to see how this works, you can try and check replicating this attack with virtual machines.
+You need to set up a VM that acts as a DNS server and VMs for the victim, attacker, and webserver
+to redirect traffic. You can add DNSSEC to your DNS Server configuration and see if you can reproduce the attack.
+:::

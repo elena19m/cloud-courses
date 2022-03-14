@@ -1,4 +1,4 @@
-Now that we have seen how we can query DNS servers, let's configure our very own DNS server on the master VM using **bind**.
+Now that we have seen how we can query DNS servers, let's configure our very own DNS server on the dns VM using **bind**.
 
 ```
 root@dns:~# apt install bind9 bind9utils
@@ -9,7 +9,7 @@ For Debian-based distributions, bind will have the following configuration files
   * Zone names file: `/etc/bind/named.conf.local`.
   * Default zone file location: `/var/cache/bind/`.
 
-We will set up the master VM to respond to queries about our very own domain.
+We will set up the dns VM to respond to queries about our very own domain.
 Use `<your_last_name>.scgc.ro` as your very own domain name.
 In the following examples we will be using `scgc.ro` as our domain.
 
@@ -20,20 +20,20 @@ For this we have to add the following line to the `/etc/bind/named.conf.options`
 ```
 options {
 [...]
-        listen-on { 192.168.1.1; localhost; };
+        listen-on { 192.168.100.11; localhost; };
 [...]
 };
 ```
 
 :::note
-The IP address 192.168.1.1, used in the example may not be the IP address that you will use when configuring your server.
+The IP address 192.168.100.11, used in the example may not be the IP address that you will use when configuring your server.
 Replace it with your own IP address, which can be determined by using the //ip// command:
 ```
 root@dns:~# ip a
 [...]
 2: eth0: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1450 qdisc pfifo_fast state UP group default qlen 1000
     link/ether fa:16:3e:00:7f:98 brd ff:ff:ff:ff:ff:ff
-    inet 192.168.1.1/16 brd 10.9.255.255 scope global eth0
+    inet 192.168.100.11/16 brd 10.9.255.255 scope global eth0
        valid_lft forever preferred_lft forever
     inet6 fe80::f816:3eff:fe00:7f98/64 scope link
        valid_lft forever preferred_lft forever
@@ -99,11 +99,11 @@ Then add the A records for your hosts that belong in this zone.
 This includes any server whose name we want to end with `.scgc.ro`
 (substitute the names and IP addresses).
 Using our example names and private IP addresses, we will add `A` records for `ns1`,
-and a host corresponding to the `www.scgc.ro` (which will actually be our master DNS server), like so:
+and a host corresponding to the `www.scgc.ro`, like so:
 ```
 ; name servers - A records
-ns1.scgc.ro.          IN      A      192.168.1.1
-www.scgc.ro.          IN      A      192.168.1.1
+ns1.scgc.ro.          IN      A      192.168.100.11
+www.scgc.ro.          IN      A      192.168.100.11
 ```
 
 Our final example forward zone file looks like the following:
@@ -120,8 +120,8 @@ $TTL	604800
     IN      NS      ns1.scgc.ro.
 
 ; name servers - A records
-ns1.scgc.ro.          IN      A      192.168.1.1
-www.scgc.ro.          IN      A      192.168.1.1
+ns1.scgc.ro.          IN      A      192.168.100.11
+www.scgc.ro.          IN      A      192.168.100.11
 ```
 
 ### Testing our configuration
@@ -156,43 +156,43 @@ We will be using `host`, however feel free to use `dig` or any other command to 
 ```
 root@dns:~# host www.scgc.ro localhost
 Using domain server:
-Name: 192.168.1.1
-Address: 192.168.1.1#53
+Name: 192.168.100.11
+Address: 192.168.100.11#53
 Aliases:
 
-www.scgc.ro has address 192.168.1.1
+www.scgc.ro has address 192.168.100.11
 root@dns:~# host -t ns scgc.ro localhost
 Using domain server:
-Name: 192.168.1.1
-Address: 192.168.1.1#53
+Name: 192.168.100.11
+Address: 192.168.100.11#53
 Aliases:
 
 scgc.ro name server ns1.scgc.ro.
 root@dns:~# host ns1.scgc.ro localhost
 Using domain server:
-Name: 192.168.1.1
-Address: 192.168.1.1#53
+Name: 192.168.100.11
+Address: 192.168.100.11#53
 Aliases:
 
-ns1.scgc.ro has address 192.168.1.1
+ns1.scgc.ro has address 192.168.100.11
 ```
 
 Now let's try to query from outside the server.
-We will test that the `slave` VM will receive the same response(replace with the appropriate name and IP address):
+We will test that the `helper` VM will receive the same response(replace with the appropriate name and IP address):
 ```
-[root@slave ~]# host www.scgc.ro master
+[root@helper ~]# host www.scgc.ro dns
 Using domain server:
-Name: 192.168.1.1
-Address: 192.168.1.1#53
+Name: 192.168.100.11
+Address: 192.168.100.11#53
 Aliases:
 
-www.scgc.ro has address 192.168.1.1
+www.scgc.ro has address 192.168.100.11
 ```
 
 :::note
-To install host, dig, nslookup on Centos 7, run the following command:
+To install host, dig, nslookup on Centos 8, run the following command:
 ```bash
-yum install bind-utils
+sudo dnf install bind-utils
 ```
 
 :::

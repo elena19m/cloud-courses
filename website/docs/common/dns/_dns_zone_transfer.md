@@ -29,14 +29,14 @@ On Red-Hat-based distributions bind will have the following characteristics:
 In order to transfer the zone from the master DNS server, we need to make the following configurations:
   * on the dns VM add the following line in the `/etc/bind/named.conf.local` file for the zone created in the preceding subtask:
 ```
-    allow-transfer { 192.168.1.2; }; // replace with the slave VM IP address
+    allow-transfer { 192.168.100.12; }; // replace with the slave VM IP address
 ```
   * on the helper VM
 ```
 zone "lab1.scgc.ro." {
     type slave;
     file "/var/named/slaves/db.lab1.scgc.ro"; //the zone file
-    masters { 192.168.1.1; }; //replace with the master VM IP address
+    masters { 192.168.100.11; }; //replace with the master VM IP address
 };
 ```
 
@@ -74,9 +74,9 @@ feb 27 14:20:06 slave named[20552]: all zones loaded
 feb 27 14:20:06 slave named[20552]: running
 feb 27 14:20:06 slave systemd[1]: Started Berkeley Internet Name Domain (DNS).
 feb 27 14:20:06 slave named[20552]: zone lab1.scgc.ro/IN: Transfer started.
-feb 27 14:20:06 slave named[20552]: transfer of 'lab1.scgc.ro/IN' from 192.168.1.1#53: connected using 192.168.1.2#57942
+feb 27 14:20:06 slave named[20552]: transfer of 'lab1.scgc.ro/IN' from 192.168.100.11#53: connected using 192.168.100.12#57942
 feb 27 14:20:06 slave named[20552]: zone lab1.scgc.ro/IN: transferred serial 3
-feb 27 14:20:06 slave named[20552]: transfer of 'lab1.scgc.ro/IN' from 192.168.1.1#53: Transfer completed: 1 messages, 5 records, 156 bytes, 0.001 secs (156000 bytes/sec)
+feb 27 14:20:06 slave named[20552]: transfer of 'lab1.scgc.ro/IN' from 192.168.100.11#53: Transfer completed: 1 messages, 5 records, 156 bytes, 0.001 secs (156000 bytes/sec)
 feb 27 14:20:06 slave named[20552]: zone lab1.scgc.ro/IN: sending notifies (serial 3)
 ```
 
@@ -96,13 +96,13 @@ Aliases:
 ;lab1.scgc.ro.			IN	A
 
 ;; ANSWER SECTION:
-lab1.scgc.ro.		604800	IN	A	192.168.1.1
+lab1.scgc.ro.		604800	IN	A	192.168.100.11
 
 ;; AUTHORITY SECTION:
 lab1.scgc.ro.		604800	IN	NS	ns.lab1.scgc.ro.
 
 ;; ADDITIONAL SECTION:
-ns.lab1.scgc.ro.	604800	IN	A	192.168.1.1
+ns.lab1.scgc.ro.	604800	IN	A	192.168.100.11
 
 Received 79 bytes from ::1#53 in 1 ms
 Trying "lab1.scgc.ro"
