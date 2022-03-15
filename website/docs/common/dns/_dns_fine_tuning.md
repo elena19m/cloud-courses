@@ -7,8 +7,8 @@ We can check this by quering for `google.com` from the dns and helper VMs:
 ```
 root@dns:~# host google.com localhost
 Using domain server:
-Name: 192.168.100.11
-Address: 192.168.100.11#53
+Name: localhost
+Address: ::1#53
 Aliases:
 
 google.com has address 216.58.214.206
@@ -37,7 +37,7 @@ google.com mail is handled by 50 alt4.aspmx.l.google.com.
 In order to restrict who can make recursive queries, we have to edit the `/etc/bind/named.conf.options` file and add the following lines:
 
 ```
-acl goodguys { 192.168.100.11; 127.0.0.1; };
+acl goodguys { 192.168.100.11; 127.0.0.1; ::1; };
 
 options {
 [...]
