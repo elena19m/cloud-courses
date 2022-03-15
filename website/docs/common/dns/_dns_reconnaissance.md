@@ -2,7 +2,7 @@ When inspecting the security of a network (pentesting), the first step is to con
 Usually, you start by inspecting all the hosts in the target network, their open ports and their services.
 
 :::warning
-For this task, you must allow recursive queries for your DNS server. This should be already configured from the previous tasks, but double check to make sure.
+For this task, you must allow recursive queries for your DNS server.
 :::
 
 You can do additional checking on the DNS server.
