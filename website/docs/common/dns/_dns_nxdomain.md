@@ -29,7 +29,11 @@ $ grep dest_sock_addr.sin_addr.s_addr dos_attack.c
 $ gcc -o dos_attack dos_attack.c
 ```
 
-Interrogate your DNS server to check if everything works fine (both from the base VM and from the helper VM):
+Interrogate your DNS server to check if everything works fine (both from the base VM and from the helper VM).
+
+:::note
+Use <your_last_name>.scgc.ro (the domain you configured earlier) for testing. In the following examples we will be using scgc.ro as our domain.
+:::
 
 ```bash
 $ host scgc.ro dns
