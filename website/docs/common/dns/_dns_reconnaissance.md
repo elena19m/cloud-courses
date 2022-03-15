@@ -2,7 +2,7 @@ When inspecting the security of a network (pentesting), the first step is to con
 Usually, you start by inspecting all the hosts in the target network, their open ports and their services.
 
 :::warning
-For this task, you must allow recursive querries from your DNS server.
+For this task, you must allow recursive queries for your DNS server. This should be already configured from the previous tasks, but double check to make sure.
 :::
 
 You can do additional checking on the DNS server.
@@ -55,8 +55,9 @@ Don't forget to add another zone to the `/etc/bind/named.conf.local` file.
 
 Restart `bind`.
 
-Install `dnsrecon` on the base VM:
+Install `dnsrecon` on the **BASE VM**:
 ```
+$ sudo apt update
 $ sudo apt install dnsrecon
 ```
 
