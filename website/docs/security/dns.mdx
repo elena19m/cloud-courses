@@ -38,6 +38,14 @@ $ # check if the VMs booted
 $ virsh net-dhcp-leases labvms
 ```
 
+:::note caution
+Please note that the **dns** and **helper** names will be used interchangeably
+with their respective IP addresses throughout the lab. If you do not define the
+host-IP mappings in each VM, you may encounter errors if you attempt to use
+the name in commands (e.g., `host google.com dns`). In this case, you can use
+the IP address directly, without any issues (e.g., `host google.com 192.168.100.11`).
+:::
+
 
 ## DNS Resolvers
 
