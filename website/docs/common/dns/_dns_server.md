@@ -206,8 +206,13 @@ sudo dnf install bind-utils
 
 ### Additional records
 
-Add another NS record to the zone corresponding to antoher IP address and two MX records
+Add another NS record to the zone corresponding to another IP address and two MX records
 (one for the dns server with priority `10` and one for the helper server with priority `20`).
+
+:::note
+See [here](https://help.ubuntu.com/community/BIND9ServerHowto#Mail_Exchange_Records) how to configure MX records.
+:::
+
 Restart your BIND server and test your configurations.
 
 
