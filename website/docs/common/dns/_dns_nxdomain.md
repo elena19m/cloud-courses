@@ -10,23 +10,26 @@ may make the server unavailable for legitimate requests.
 
 We will see how to make a denial of service attack on a DNS server.
 You will need to open three terminals to the host (SCGC Template).
-For the sake of this task, enable recursion for the helper VM.
+
+:::warning
+For the sake of this task, enable recursion for the helper VM. This should be already configured from the previous task, but double check to make sure.
+:::
 
 Connect to the helper VM.
 Clone the following repository and change the working directory:
 
 ```bash
-$ git clone https://github.com/shiroe41/DNS-NXDOMAIN-FLood-Attack
-$ cd DNS-NXDOMAIN_FLood-Attack/src
+[student@helper ~]$ git clone https://github.com/shiroe41/DNS-NXDOMAIN-FLood-Attack
+[student@helper ~]$ cd DNS-NXDOMAIN_FLood-Attack/src
 ```
 
 Modify the source code to use your DNS server IP address and compile the code:
 
 ```bash
-$ grep dest_sock_addr.sin_addr.s_addr dos_attack.c
+[student@helper ~]$ grep dest_sock_addr.sin_addr.s_addr dos_attack.c
     dest_sock_addr.sin_addr.s_addr = inet_addr("192.168.100.11");  /* target DNS server ip address */
     ip_header->ip_dst.s_addr = dest_sock_addr.sin_addr.s_addr;
-$ gcc -o dos_attack dos_attack.c
+[student@helper ~]$ gcc -o dos_attack dos_attack.c
 ```
 
 Interrogate your DNS server to check if everything works fine (both from the base VM and from the helper VM).
@@ -55,7 +58,7 @@ $ sudo tcpdump -i virbr-labs udp port 53 # we check only the DNS traffic
 From the first terminal, start the attack:
 
 ```bash
-$ sudo ./dos_attack
+[student@helper ~]$ sudo ./dos_attack
 ```
 
 While the attack is running, from the base VM, test the DNS server:
