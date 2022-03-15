@@ -47,6 +47,8 @@ options {
 };
 ```
 
+Do not forget to restart the BIND service after changing the configuration.
+
 Now, if we query again for `google.com`, from the dns VM the query should suceed and from the helper VM it should now fail.
 
 ```

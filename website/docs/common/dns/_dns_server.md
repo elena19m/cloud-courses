@@ -27,9 +27,14 @@ options {
 };
 ```
 
+:::caution
+Most services do not have automatic configuration reloads. Make sure to restart
+the DNS service whenever you make a change in the configuration files.
+:::
+
 :::note
 The IP address 192.168.100.11, used in the example may not be the IP address that you will use when configuring your server.
-Replace it with your own IP address, which can be determined by using the //ip// command:
+Replace it with your own IP address, which can be determined by using the `ip` command:
 ```
 root@dns:~# ip a
 [...]
