@@ -26,6 +26,19 @@ The `.qcow2` files will be used to start virtual machines using the `runvm.sh` s
     * `192.168.100.12 helper`
     * These two lines will allow using `dns` instead of the IP address of the DNS VM for clarity. Likewise, we can use `helper` instead of the IP address of the helper VM.
 
+```bash
+$ # change the working dir
+$ cd ~/work
+$ # download the archive; replace user-curs with your LDAP username
+$ wget --user=user-curs --ask-password http://repository.grid.pub.ro/cs/scgc/laboratoare/lab-dns.zip
+$ unzip lab-dns.zip
+$ # start VMs; it may take a while
+$ bash runvm.sh
+$ # check if the VMs booted
+$ virsh net-dhcp-leases labvms
+```
+
+
 ## DNS Resolvers
 
 import Resolvers from '../common/dns/_dns_resolvers.md';
