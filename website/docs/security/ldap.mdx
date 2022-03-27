@@ -4,14 +4,16 @@ sidebar_position: 3
 
 # Directory services (LDAP)
 
-import LDAPbasic from '../common/ldap/_ldap_basic.md';
+import LDAPbasic, {toc as LDAPbasicTOC} from '../common/ldap/_ldap_basic.md';
 
 <LDAPbasic/>
 
-import LDAPcockpit from '../common/ldap/_ldap_cockpit.md';
+import LDAPcockpit, {toc as LDAPcockpitTOC} from '../common/ldap/_ldap_cockpit.md';
 
 <LDAPcockpit/>
 
-import LDAPunix from '../common/ldap/_ldap_unix.md';
+import LDAPunix, {toc as LDAPunixTOC} from '../common/ldap/_ldap_unix.md';
 
 <LDAPunix/>
+
+export const toc = [...LDAPbasicTOC, ...LDAPcockpitTOC, ...LDAPunixTOC]
