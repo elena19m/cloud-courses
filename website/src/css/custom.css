@@ -19,6 +19,7 @@
   --ifm-color-info-contrast-background: #cef2ff;
   --ifm-color-warning-contrast-background: #fbe6b0;
   --ifm-color-danger-contrast-background: #ffc4c7;
+  --ifm-color-toc-active-background: #cef2f0c0;
 }
 
 html[data-theme='light'] pre code {
@@ -34,6 +35,7 @@ html[data-theme='dark'] {
   --ifm-color-primary-light: #29d5b0;
   --ifm-color-primary-lighter: #32d8b4;
   --ifm-color-primary-lightest: #4fddbf;
+  --ifm-color-toc-active-background: #193c4780;
 }
 
 .docusaurus-highlight-code-line {
@@ -92,4 +94,30 @@ html[data-theme='dark'] img[src$='#light'] {
   border-right: 1px groove;
   border-bottom: 1px groove;
   padding: 0.3rem;
+}
+
+.table-of-contents__link {
+  position: relative;
+  box-sizing: border-box;
+  padding-left: 1rem;
+  display: block;
+  border-left: 3px solid var(--ifm-color-primary);
+}
+
+.table-of-contents__link--active {
+  font-weight: 700;
+  animation: select-toc 0.8s;
+  animation-fill-mode: forwards;
+}
+
+@keyframes select-toc {
+  from {
+    border-radius: 0px;
+    background: transparent;
+  }
+
+  to {
+    border-radius: 8px;
+    background: var(--ifm-color-toc-active-background);
+  }
 }
