@@ -15,10 +15,10 @@
   --ifm-color-primary-lightest: #3cad6e;
   --ifm-code-font-size: 95%;
   --ifm-color-secondary-contrast-background: #eff2f2;
-  --ifm-color-success-contrast-background: rgb(214, 255, 214);
-  --ifm-color-info-contrast-background: rgb(206, 242, 255);
-  --ifm-color-warning-contrast-background: rgb(251, 230, 176);
-  --ifm-color-danger-contrast-background: rgb(255, 196, 199);
+  --ifm-color-success-contrast-background: #d6ffd6;
+  --ifm-color-info-contrast-background: #cef2ff;
+  --ifm-color-warning-contrast-background: #fbe6b0;
+  --ifm-color-danger-contrast-background: #ffc4c7;
 }
 
 html[data-theme='light'] pre code {
