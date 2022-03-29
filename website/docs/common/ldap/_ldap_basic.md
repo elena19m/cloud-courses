@@ -9,7 +9,7 @@ When creating a virtual machine in the Launch Instance window:
 
 In the base virtual machine:
   * Download the laboratory archive from [here](https://repository.grid.pub.ro/cs/scgc/laboratoare/lab-ldap.zip) in the `work` directory.
-Use: `wget --user=user-curs --ask-password http://repository.grid.pub.ro/cs/scgc/laboratoare/lab-ldap.zip` to download the archive.
+Use: `wget --user=user-curs --ask-password https://repository.grid.pub.ro/cs/scgc/laboratoare/lab-ldap.zip` to download the archive.
 Replace `user-curs` with your LDAP username. The password is your LDAP password.
   * Extract the archive.
 The `.qcow2` files will be used to start virtual machines using the `runvm.sh` script.
@@ -20,7 +20,7 @@ The `.qcow2` files will be used to start virtual machines using the `runvm.sh` s
 $ # change the working dir
 $ cd ~/work
 $ # download the archive; replace user-curs with your LDAP username
-$ wget --user=user-curs --ask-password http://repository.grid.pub.ro/cs/scgc/laboratoare/lab-ldap.zip
+$ wget --user=user-curs --ask-password https://repository.grid.pub.ro/cs/scgc/laboratoare/lab-ldap.zip
 $ unzip lab-ldap.zip
 $ # start VMs; it may take a while
 $ bash runvm.sh
