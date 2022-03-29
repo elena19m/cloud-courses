@@ -108,6 +108,7 @@ html[data-theme='dark'] img[src$='#light'] {
   font-weight: 700;
   animation: select-toc 0.8s;
   animation-fill-mode: forwards;
+  border-right: 3px solid var(--ifm-color-primary);
 }
 
 @keyframes select-toc {
