@@ -19,7 +19,8 @@
   --ifm-color-info-contrast-background: #cef2ff;
   --ifm-color-warning-contrast-background: #fbe6b0;
   --ifm-color-danger-contrast-background: #ffc4c7;
-  --ifm-color-toc-active-background: #cef2f0c0;
+  --ifm-color-toc-active-background-flash: #cef2f0;
+  --ifm-color-toc-active-background: #cef2f080;
 }
 
 html[data-theme='light'] pre code {
@@ -35,6 +36,7 @@ html[data-theme='dark'] {
   --ifm-color-primary-light: #29d5b0;
   --ifm-color-primary-lighter: #32d8b4;
   --ifm-color-primary-lightest: #4fddbf;
+  --ifm-color-toc-active-background-flash: #193c47;
   --ifm-color-toc-active-background: #193c4780;
 }
 
@@ -100,24 +102,29 @@ html[data-theme='dark'] img[src$='#light'] {
   position: relative;
   box-sizing: border-box;
   padding-left: 1rem;
+  padding-right: 0.5rem;
   display: block;
   border-left: 3px solid var(--ifm-color-primary);
 }
 
 .table-of-contents__link--active {
   font-weight: 700;
-  animation: select-toc 0.8s;
+  animation: select-toc 0.8s cubic-bezier(.68, -.55, .27, 1.55);
   animation-fill-mode: forwards;
   border-right: 3px solid var(--ifm-color-primary);
 }
 
 @keyframes select-toc {
-  from {
+  0% {
     border-radius: 0px;
     background: transparent;
   }
 
-  to {
+  50% {
+    background: var(--ifm-color-toc-active-background-flash);
+  }
+
+  100% {
     border-radius: 8px;
     background: var(--ifm-color-toc-active-background);
   }
