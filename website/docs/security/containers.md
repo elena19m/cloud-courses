@@ -496,23 +496,3 @@ From this we can limit the running of applications in the container. We can do t
 However, a disadvantage that containers have over virtual machines comes from the fact that a container runs on the same system as the host system and when it makes system calls it runs code from within the host kernel.
 If a vulnerability is discovered that allows an application to exit the container, it can affect the entire system, especially if it is a vulnerability at the kernel level.
 But in the case of a viral machine, a machine runs in an environment completely isolated from the physical system, so it has no way to receive additional access to system resources.
-
-To limit the number of cores used by the container we will use the `--cpus` option as follows:
-```
-student@lab-docker:~$ sudo docker run --cpus 0.5 -it centos:7 /bin/bash
-[root@d48d00c2c572 /]# :(){ :|:& };:
-[1] 16
-```
-
-We can also specify values that are not integers.
-We tested the option using the command `:(){ :|:& };:`, this is a fork bomb, ie an application that generates child processes exponentially to infinity.
-
-In another terminal we can run the `uptime` command in order to see the total CPU usage:
-```
-student@test-vm:~$ uptime
- 04:12:23 up 59 min,  2 users,  load average: 0.92, 0.50, 0.24
-```
-
-This is the load average for a machine with two CPUs. This means that the container, which spawns a
-large number of compute intensive processes is well container thanks to the `--cpus` command.
-
