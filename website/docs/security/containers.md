@@ -70,9 +70,9 @@ container without conflict between them.
 
 Both containers and virtual machines allow us to run applications in an isolated environment.
 However, there are fundamental differences between the two mechanisms.
-A container runs directly on top of the operating system
+A container runs directly on top of the operating system.
 Meanwhile, a virtual machine runs its own kernel and then runs the applications on top of that.
-This added abstraction lare adds overhead to running the desired applications, and the overhead slows down  the applications.
+This added abstraction layer adds overhead to running the desired applications, and the overhead slows down  the applications.
 
 Another plus for running containers is the ability to build and pack them iteratively.
 We can easily download a container from a public repository, modify it, and
@@ -81,8 +81,8 @@ changes to a container are made iteratively, saving the differences between the 
 original and modified version.
 
 There are also cases where we want to run applications inside a virtual machine. E.g,
-if we want to run a compiled application for an operating system other than Linux, we won't
-could do this because containers can run applications that are compiled for the system
+if we want to run a compiled application for an operating system other than Linux, we
+could not do this because containers can run applications that are compiled for the system
 host operation. Virtual machines can also run operating systems other than the operating system
 host.
 
@@ -108,7 +108,7 @@ root@3ec334aece37:/#
 The `docker` command was run using the following parameters:
 * `run`, start a container;
 * `-i`, starts an" interactive "container, which accepts keyboard input;
-* `-t`, associates a virtual end to the run command;
+* `-t`, associates a terminal to the run command;
 * `ubuntu: 18.04` is the name of the image we want to use.
   [Dockerhub] (https://hub.docker.com/) is a public image repository from which we can download
   already built images;
@@ -122,7 +122,7 @@ UID          PID    PPID  C STIME TTY          TIME CMD
 root           1       0  0 12:01 ?        00:00:00 ps -ef
 ```
 
-:::warning
+:::note
 The `ps -ef` command would show all active processes in the system. We notice that only one command appears in the output above, because we are running in an isolated environment. We will return to this in the TODO subsection
 :::
 
@@ -149,7 +149,7 @@ Relevant columnts
 * `CONTAINER ID`
 * `NAMES`
 
-To connect to a container running in the backgrous, use the `docker exec` command along with the container ID or name selected using the `docker ps` command:
+To connect to a container running in the background, use the `docker exec` command along with the container ID or name selected using the `docker ps` command:
 
 ```
 student@lab-docker:~$ sudo docker exec -it a63ee06826a3 /bin/bash
@@ -174,7 +174,7 @@ student@lab-docker:~$
 ## Exercise: Starting a container
 
 * Start a container in the background based on the `centos: 7` image.
-* Connect to the container just turned on and run the `yum install bind-tools` command.
+* Connect to the container just turned on and run the `yum install bind-utils` command.
 * Disconnect from container.
 
 ## Context: Container separation
@@ -192,7 +192,13 @@ This architecture allows us to change a container, such as changing the type of 
 
 ## Building a container
 
-To build the container we will use the example used in the Operating Systems Usage book. This file is called the `Dockerfile`:
+Most times just running a container interractively and connectig to it when the need arrises is not enough.
+We want a way to automatically build and distribute single-use containers.
+For example, we want to use purpose build containers when running a CI/CD system that build a website and publishes it to the web.
+Each website has its own setup requirements, and we'd like to automate this.
+We could add automation by running a script, but in this case we'd lose one of the psotives of running containers, the iterrative nature of images, because the docker images would be monilithic.
+
+In order to create a container we need to define a `Dockerfile` file as follows:
 
 ```
 FROM ubuntu:18.04
@@ -220,7 +226,7 @@ To build the container we will use the following command:
 student@lab-docker:~$ docker build -t firefox-container  .
 ```
 
-When we run the command we base that the `Dockerfile` file is in the current directory (` ~ `). The `-t` option will generate a container image named` book-latex-container`.
+When we run the command we base that the `Dockerfile` file is in the current directory (`~`). The `-t` option will generate a container image named `firefox-container`.
 
 To list container images on the machine use the following command:
 ```
@@ -233,7 +239,7 @@ This list contains both internally downloaded and locally built containers.
 
 * Write a `Dockerfile.centos` file containing a recipe for generating a container image based on the` centos:7` container in which to install the `bind-utils` tool.
 
-:::warning
+:::note
 To generate a container using a file other than the default `Dockerfile` we use the` -f` option.
 :::
 
@@ -414,7 +420,7 @@ root@ad1b42b46654:/# cat /var/lib/mysql/test-file
 Hello
 ```
 
-:::warning
+:::note
 While `docker stop` stops the container from running, the container's data is pruned after running the `docker rm` command.
 :::
 
@@ -472,7 +478,7 @@ networks:
 
 ```
 
-:::warning
+:::note
 Note that when we run the `docker-compose down` command, the volume defined in` docker-compose.yaml` is deleted.
 In order not to delete the volumes from the recipe, we need to run the `docker-compose stop` command to stop the containers defined in the YAML file.
 :::
