@@ -86,6 +86,10 @@ could not do this because containers can run applications that are compiled for 
 host operation. Virtual machines can also run operating systems other than the operating system
 host.
 
+## LXC / LXD
+
+**TODO** (see old [labs](https://ocw.cs.pub.ro/courses/scgc/laboratoare/04))
+
 ## Starting a container
 
 To start an application inside a Docker container use the following command:
