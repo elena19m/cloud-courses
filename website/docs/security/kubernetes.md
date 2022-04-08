@@ -109,7 +109,7 @@ kind-control-plane   Ready    control-plane,master   19h   v1.23.4
 
 ## Pods
 
-The basic resource in Kubernetes is the **pod** which typically encapsulated a container with the resources it needs (e.g. config file, volumes etc.).
+The basic resource in Kubernetes is the **pod** which typically encapsulates a container with the resources it needs (e.g. config files, volumes etc.).
 
 In some usecases, a pod can contain multiple containers (also called sidecar containers). We won't be addressing this in the lab.
 
@@ -134,7 +134,7 @@ NAME                         READY   STATUS    RESTARTS   AGE
 hello-app                    1/1     Running   0          12s
 ```
 
-For details information, we can use `kubectl describe`:
+For detailed information, we can use `kubectl describe`:
 
 ```bash
 student@lab-kubernetes:~$ kubectl describe pods hello-app
@@ -187,7 +187,7 @@ pod "hello-app" deleted
 
 ## Deployments
 
-In many usecases, we want do describe the state of an application declaratively, so managing individual pods is not very convenient. Also, if an individual pod crashes or is deleted, it will not be respawned by default.
+In many usecases, we want to describe the state of an application declaratively, so managing individual pods is not very convenient. Also, if an individual pod crashes or is deleted, it will not be respawned by default.
 
 For this, we will use a **deployment** resource, which is an abstration that encapsulates one or more pods.
 
@@ -231,7 +231,7 @@ RollingUpdateStrategy:  25% max unavailable, 25% max surge
 [...]
 ```
 
-### Remove a deployment
+### Removing a deployment
 
 A deployment is removed with the `kubectl delete` command:
 
@@ -243,7 +243,7 @@ deployment.apps "hello-app" deleted
 ### Kubernetes manifests
 
 Rather than using `kubectl create` commands, it is more convenient to use Kubernetes **manifests**.
-There are `.yaml` files that describe the resources we want to create. We can then create the resources with `kubectl apply`.
+These are `.yaml` files that describe the resources we want to create. We can then create the resources with `kubectl apply`.
 
 For example, let's define a manifest for creating the `hello-app` deployment:
 
@@ -354,7 +354,7 @@ Hostname: hello-app-599bb4bf7f-l45k4
 
 If the traffic to our app increases, we may need to scale the app (create mode pods, identical to the ones that already exist).
 
-For example, let's scale `hello-app` to 10 pods. For this change the values for `replicas` in `hello-app-deployment.yaml` to `10`, and reapply the manifest:
+For example, let's scale `hello-app` to 10 pods. For this, change the value for `replicas` in `hello-app-deployment.yaml` to `10`, and reapply the manifest:
 
 ```bash
 student@lab-kubernetes:~$ kubectl apply -f hello-app-deployment.yaml 
@@ -485,9 +485,9 @@ In the following steps, we will deploy an **nginx** application that will serve 
 
 ### Defining a ConfigMap
 
-Kubernetes **ConfigMaps** are objects that can store arbitrary string, including files.
+Kubernetes **ConfigMaps** are objects that can store arbitrary strings, including files.
 
-Let's create a manifests that defines a ConfigMap that stores a custom `index.html` file. Note that the file content is defined inline:
+Let's create a manifest that defines a ConfigMap that stores a custom `index.html` file. Note that the file content is defined inline:
 
 ```bash
 student@lab-kubernetes:~$ cat nginx-html.yaml 
@@ -626,7 +626,7 @@ student@lab-kubernetes:~$ kubectl apply -f nginx-config.yaml
 configmap/nginx-conf created
 ```
 
-### Mount the config file
+### Mounting the config file
 
 Modify the nginx deployment so that the config file is mounted in `/etc/nginx/conf.d/default.conf`:
 
@@ -651,7 +651,7 @@ student@lab-kubernetes:~$ kubectl apply -f nginx-deployment.yaml
 deployment.apps/nginx configured
 ```
 
-### Test the app
+### Testing the app
 
 Test that requests on `/` work as before, but requests on `/hello` are proxied:
 
@@ -669,7 +669,7 @@ Hostname: hello-app-599bb4bf7f-dxqxs
 
 Even if containers represent isolated environments, we may need a broader isolation, for security purposes.
 
-For examples, we may want to separate the applications of different customers, or development and production environment.
+For examples, we may want to separate the applications of different customers, or development and production environments.
 
 In Kubernetes, this is achieved using **namespaces**.
 
