@@ -17,8 +17,6 @@ In the base virtual machine:
 Use: `wget --user=user-curs --ask-password https://repository.grid.pub.ro/cs/scgc/laboratoare/lab-kubernetes.zip` to download the archive.
 Replace `user-curs` with your LDAP username. The password is your LDAP password.
   * Extract the archive.
-  * Download the `runvm.sh` script.
-The `.qcow2` files will be used to start virtual machines using the `runvm.sh` script.
   * Start the virtual machines using `bash runvm.sh`.
   * The username for connecting to the nested VMs is `student` and the password is `student`.
 
