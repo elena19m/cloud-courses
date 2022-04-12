@@ -115,7 +115,7 @@ In some usecases, a pod can contain multiple containers (also called sidecar con
 
 Launching a pod is very similar to launching a Docker container. We will use the `kubectl run` command to do that.
 
-We will use the `gcr.io/google-samples/hello-app:1.0` image, with is a simple HTTP server that echoes a message when receiving a request.
+We will use the `gcr.io/google-samples/hello-app:1.0` image, which is a simple HTTP server that echoes a message when receiving a request.
 
 ```bash
 student@lab-kubernetes:~$ kubectl run hello-app --image=gcr.io/google-samples/hello-app:1.0
@@ -663,6 +663,12 @@ Version: 1.0.0
 Hostname: hello-app-599bb4bf7f-dxqxs
 ```
 
+:::note
+This example was only a didactical one, for showing how a config file can be mounted into a pod.
+For request routing, Kubernetes has a native mechanism, called [Ingress](https://kubernetes.io/docs/concepts/services-networking/ingress/)
+:::
+
+
 ## Namespaces
 
 Even if containers represent isolated environments, we may need a broader isolation, for security purposes.
@@ -722,7 +728,7 @@ NAME    READY   STATUS    RESTARTS   AGE
 nginx   1/1     Running   0          7s
 ```
 
-Connect to the pod and verify if the `hello-app` service from the `default` namespace can be reached:
+Connect to the pod and verify if the name of the `hello-app` service from the `default` namespace can be resolved:
 
 ```bash
 student@lab-kubernetes:~$ kubectl exec -it nginx -n test /bin/bash
@@ -730,3 +736,8 @@ kubectl exec [POD] [COMMAND] is DEPRECATED and will be removed in a future versi
 root@nginx:/# curl http://hello-app:8080
 curl: (6) Could not resolve host: hello-app
 ```
+
+:::note
+The default namespace isolation is not very strong, because resources can still be accessed by FQDN or by IP address.
+But additional security can be implemented, such as denying all network traffic between namespaces.
+:::
