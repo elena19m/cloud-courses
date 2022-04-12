@@ -10,6 +10,9 @@ services:
       - docusaurus:/app/website/.docusaurus:rw
       - build:/app/website/build:rw
       - modules:/app/website/node_modules:rw
+    environment:
+      URL: http://localhost
+      BASE_URL: /cloud-courses/
     working_dir: /app/website
 
 volumes:
