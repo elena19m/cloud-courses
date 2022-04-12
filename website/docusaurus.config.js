@@ -22,7 +22,7 @@ const config = {
       /** @type {import('@docusaurus/preset-classic').Options} */
       ({
         docs: {
-          editUrl: 'https://gitlab.cs.pub.ro/scgc/courses/website/docs',
+          editUrl: 'https://gitlab.cs.pub.ro/scgc/cloud-courses/-/blob/main/website',
         },
         blog: false,
         theme: {
