@@ -13,7 +13,7 @@ const config = {
   onBrokenLinks: 'throw',
   onBrokenMarkdownLinks: 'warn',
   favicon: 'img/scgc_light.png',
-  organizationName: 'SCGC Inc.', // Usually your GitHub org/user name.
+  organizationName: 'SCGC Team', // Usually your GitHub org/user name.
   projectName: 'cloud-courses', // Usually your repo name.
 
   presets: [
