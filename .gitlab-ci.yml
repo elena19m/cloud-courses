@@ -9,6 +9,10 @@ cache:
   paths:
     - website/node_modules/
 
+variables:
+  URL: 'https://scgc.pages.upb.ro'
+  BASE_URL: '/cloud-courses/'
+
 test:
   stage: test
   cache:

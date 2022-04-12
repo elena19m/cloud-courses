@@ -8,8 +8,8 @@ const darkCodeTheme = require('prism-react-renderer/themes/dracula');
 const config = {
   title: 'Cluster, Grid and Cloud Courses (SysDevOps Crunch)',
   tagline: 'Be your own SysAdmin!',
-  url: 'https://scgc.pages.upb.ro',
-  baseUrl: '/cloud-courses/',
+  url: process.env.URL,
+  baseUrl: process.env.BASE_URL,
   onBrokenLinks: 'throw',
   onBrokenMarkdownLinks: 'warn',
   favicon: 'img/scgc_light.png',
