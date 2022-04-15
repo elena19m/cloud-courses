@@ -22,7 +22,7 @@ Activating compression for the video stream can improve performance.
 You can use compression by also appending the `-C` parameter to the SSH command.
 You can get more details in the [Working with OpenStack][] lab.
 :::
-[Working with OpenStack]: ../../basic/working_with_OpenStack.md
+[Working with OpenStack]: ../../basic/working_with_openstack.md
 
 If you intend to use the `root` account to run the commands in this lab, you
 must fetch the `xauth` token created for the `student` user.
