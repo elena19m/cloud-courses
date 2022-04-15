@@ -1,0 +1,15 @@
+---
+sidebar_position: 6
+---
+
+# Native virtualization
+
+import NVkvm, {toc as NVkvmTOC} from '../common/native_virt/_native_virt_kvm.md';
+
+<NVkvm/>
+
+import NVlibvirt, {toc as NVlibvirtTOC} from '../common/native_virt/_native_virt_libvirt.md';
+
+<NVlibvirt/>
+
+export const toc = [...NVkvmTOC, ...NVlibvirtTOC]
