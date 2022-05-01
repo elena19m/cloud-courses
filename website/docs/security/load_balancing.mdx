@@ -1,0 +1,19 @@
+---
+sidebar_position: 7
+---
+
+# Load balancing
+
+import LBsetup, {toc as LBsetupTOC} from '../common/load_balancing/_setup.md';
+
+<LBsetup/>
+
+import LBipvs, {toc as LBipvsTOC} from '../common/load_balancing/_ipvs.md';
+
+<LBipvs/>
+
+import LBhaproxy, {toc as LBhaproxyTOC} from '../common/load_balancing/_haproxy.md';
+
+<LBhaproxy/>
+
+export const toc = [...LBsetupTOC, ...LBipvsTOC, ...LBhaproxyTOC]
