@@ -114,7 +114,7 @@ bodies.
 
 
 ```bash
-student@dm-load-balancing:~/work$ sudo tcpdump -i virbr-labs -e
+student@lab-lb-host:~/work$ sudo tcpdump -i virbr-labs -e
 ```
 
 :::note Note IP and MAC addresses
