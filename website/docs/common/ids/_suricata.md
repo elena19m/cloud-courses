@@ -10,12 +10,12 @@ As presented in the scheme above, our architecture is the following:
   OpenStack network (which is the External Network), while `virbr-labs` is the
   bridge that connects the virtual machines (which is our Internal Network);
   * three virtual machines that are connected to the `virbr-labs` bridge
-  interface: VM1 is an Debian webserver, VM2 and VM3 are CentOS systems;
+  interface: VM1 is a Debian webserver, VM2 and VM3 are CentOS systems;
 
 Using virtual machines, the topology presented above simulates a small network.
 The traffic we want to monitor is the one that flows through the `virbr-labs`
 network adapter. Thus, we will install Suricata in the base virtual machine
-and will configure it to inspect the traffic that flow through `virtbr-labs`.
+and will configure it to inspect the traffic that flows through `virbr-labs`.
 We will consider our internal network `192.168.100.0/24`.
 
 ### Install Suricata
@@ -36,10 +36,11 @@ student@base-lab-ids:~$ sudo apt install suricata
 ```
 
 Edit `/etc/suricata/suricata.yaml` and set up `HOME_NET` and `EXTERNAL_NET`
-variables. Usually, your `HOME_NET` contains the IP addresses that you
+variables. Usually, `HOME_NET` contains the IP addresses that you
 consider to be your internal network. If you want to add multiple IP addresses
 or networks, you can use the list format. In contrast, `EXTERNAL_NET` is,
-usually, everything that your homework is not (hence the `!` (not) marker).
+usually, everything that your internal network is not (hence the `!` (not)
+marker).
 
 ```
 [...]
@@ -87,7 +88,7 @@ A Suricata rule has three components:
     - **pass** - the packet that matches this rule will not be further inspected
       and is allowed in the network;
     - **drop** - the traffic that matches this rule will be dropped. In this
-      case, neither the source, not the destination are not notified that the
+      case, neither the source, not the destination are notified that the
       packet was dropped;
     - **reject** - same as **drop** with the difference that both source and
       destination will receive a notification that says that the packet is
