@@ -600,9 +600,9 @@ Add custom rules that generates an alert and drops the packets if the user tries
 to access a cryptomining site (you can choose any cryptomining site).
 
 :::tip
-You do not have to write your own rules if you do not want you. There are
+You do not have to write your own rules if you do not want to. There are
 multiple rules you can find online (i.e. on GitHub, like
-[this one](https://gist.github.com/GelosSnake/e116ebf3b7fa0579965e25fa4d758d41).
+[this one](https://gist.github.com/GelosSnake/e116ebf3b7fa0579965e25fa4d758d41)).
 :::
 
 

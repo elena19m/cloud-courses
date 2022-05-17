@@ -21,7 +21,7 @@ $ # change the working dir
 $ cd ~/work
 $ # download the archive; replace user-curs with your LDAP username
 $ wget --user=user-curs --ask-password https://repository.grid.pub.ro/cs/scgc/laboratoare/lab-ids.zip
-$ unzip lab-idp.zip
+$ unzip lab-ids.zip
 $ # start VMs; it may take a while
 $ bash runvm.sh
 $ # check if the VMs booted
