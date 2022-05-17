@@ -48,6 +48,12 @@ EXTERNAL_NET: "!$HOME_NET"
 [...]
 ```
 
+:::warning
+For some of the attacks later in the lab we will use an IP in the `10.9.0.0/16`
+network as the source IP. For the detection to work properly, make sure that
+only the `192.168.100.0/24` is part of the `HOME_NET`.
+:::
+
 We need to specify the interface we want Suricata to monitor. Edit the
 `/etc/suricata/suricata.yaml` file and setup `af-packet` -> `interface` and
 `pcap` -> `interface` to `virbr-labs` and restart Suricata.
@@ -167,7 +173,11 @@ If you do not see any traffic in the `fast.log` file, check that the
 `virbr-labs` interface is properly set for both `af-packet` and `pcap` sections
 and restart Suricata. Wait a couple of minutes after restarting Suricata before
 reattempting the test.
+
+You can check whether Suricata has finished loading the rules by inspecting the
+`/var/log/suricata/suricata.log` file.
 :::
+
 
 ### Download third-party rulesets
 
