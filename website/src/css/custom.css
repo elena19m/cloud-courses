@@ -21,6 +21,7 @@
   --ifm-color-danger-contrast-background: #ffc4c7;
   --ifm-color-toc-active-background-flash: #cef2f0;
   --ifm-color-toc-active-background: #cef2f080;
+  --docusaurus-highlighted-code-line-bg: #4060a030;
 }
 
 html[data-theme='light'] pre code {
@@ -38,17 +39,7 @@ html[data-theme='dark'] {
   --ifm-color-primary-lightest: #4fddbf;
   --ifm-color-toc-active-background-flash: #193c47;
   --ifm-color-toc-active-background: #193c4780;
-}
-
-.docusaurus-highlight-code-line {
-  background-color: rgba(0, 0, 0, 0.1);
-  display: block;
-  margin: 0 calc(-1 * var(--ifm-pre-padding));
-  padding: 0 var(--ifm-pre-padding);
-}
-
-html[data-theme='dark'] .docusaurus-highlight-code-line {
-  background-color: rgba(0, 0, 0, 0.3);
+  --docusaurus-highlighted-code-line-bg: #8080c030;
 }
 
 html[data-theme='light'] img[src$='#dark'],
