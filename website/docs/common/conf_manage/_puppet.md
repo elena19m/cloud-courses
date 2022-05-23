@@ -4,6 +4,15 @@ Puppet is a configuration management tool. In order to describe the required
 configurations, Puppet uses its own declarative language. Puppet can manage both
 Linux and Windows systems.
 
+All Puppet tasks will be done inside the virtual machine that the `runvm.sh`
+scripts starts.
+
+To use Puppet you must first install the `puppet` package on your system.
+
+```bash
+[student@lab-conf-manage ~]$ sudo dnf install puppet
+```
+
 A `resource` is an abstraction for most entities and operations that can be
 performed on a system. As an example, the state of a service (running / stopped)
 is defined in Puppet as a resource.
@@ -275,6 +284,11 @@ in which they are applied is not strictly enforced.
 There are some situations when we have to make sure that a resource is applied
 before another (e.g. a package is installed before starting a service). In such
 cases, we must define resource dependencies.
+
+The [Puppet relationships docs][] provide a more detailed overview of how
+resource relationships work. We will provide some examples in the following
+sections.
+[Puppet relationships docs]: https://puppet.com/docs/puppet/6/lang_relationships.html
 
 #### Before / require
 
