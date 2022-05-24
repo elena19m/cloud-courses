@@ -5,7 +5,7 @@ We will be using a virtual machine in the [faculty's cloud](http://cloud.grid.pu
 When creating a virtual machine in the Launch Instance window:
   * Select **Boot from image** in **Instance Boot Source** section
   * Select **SCGC Template 2021** in **Image Name** section
-  * Select the **m1.medium** flavor.
+  * Select the **m1.large** flavor.
 
 In the base virtual machine:
   * Download the laboratory archive from [here](https://repository.grid.pub.ro/cs/scgc/laboratoare/lab-conf-manage.zip) in the `work` directory.
