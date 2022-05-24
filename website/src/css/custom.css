@@ -67,6 +67,10 @@ html[data-theme='dark'] img[src$='#light'] {
   background: var(--ifm-background-surface-color);
 }
 
+.alert a {
+  text-decoration-color: var(--ifm-link-color);
+}
+
 .tabs__item {
   border-right: 3px solid;
   border-bottom: 3px solid;
