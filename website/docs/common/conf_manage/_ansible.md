@@ -283,6 +283,11 @@ Confirm New Vault password:
 After running the command, an editor process will open. Enter the configuration
 parameters and then close the editor:
 
+:::warning Authenticator file variable
+Set the `authenticator_file` variable to the output of the `base64` command
+above. Do not use the `base64_encoded_google_...` string.
+:::
+
 ```yaml
 ansible_become_password: student
 authenticator_file: base64_encoded_google_authenticator_configuration_file
