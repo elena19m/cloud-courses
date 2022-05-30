@@ -691,6 +691,12 @@ resources:
       - network: vlan9
 ```
 
+:::tip Stack password
+You do not need to enter your LDAP account's password in the field with the
+label `Password for user "user.name"`. The meaning of the stack parameters is
+presented in the [Launch and manage stacks][] page.
+[Launch and manage stacks]: https://docs.openstack.org/mitaka/user-guide/dashboard_stacks.html
+:::
 
 :::note Inspect the stack
 After the stack is created:
