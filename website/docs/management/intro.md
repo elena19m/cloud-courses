@@ -21,4 +21,4 @@ Follow the steps from [Working with OpenStack](../basic/working_with_openstack.m
 
 ## Part II
 
-Follow the steps from [Working with certificates](../basic/certificates.md).
+Follow the steps from [Shell basics](../basic/shell_basics.md).
