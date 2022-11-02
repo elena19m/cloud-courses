@@ -1,0 +1,27 @@
+---
+sidebar_position: 4
+---
+
+# TLS security and load balancing
+
+import CertLBSetup, {toc as CertLBSetupTOC} from './_cert_load_balance_setup.md';
+
+<CertLBSetup/>
+
+import CertBasics, {toc as CertBasicsTOC} from '../common/certificates/_basics.md';
+
+<CertBasics/>
+
+import CertComm, {toc as CertCommTOC} from '../common/certificates/_communication.md';
+
+<CertComm/>
+
+import LBtopology, {toc as LBtopologyTOC} from '../common/load_balancing/_topology.md';
+
+<LBtopology/>
+
+import LBhaproxy, {toc as LBhaproxyTOC} from '../common/load_balancing/_haproxy.md';
+
+<LBhaproxy/>
+
+export const toc = [...CertLBSetupTOC, ...CertBasicsTOC, ...CertCommTOC, ...LBtopologyTOC, ...LBhaproxyTOC]
