@@ -8,6 +8,10 @@ import LBsetup, {toc as LBsetupTOC} from '../common/load_balancing/_setup.md';
 
 <LBsetup/>
 
+import LBtopology, {toc as LBtopologyTOC} from '../common/load_balancing/_topology.md';
+
+<LBtopology/>
+
 import LBipvs, {toc as LBipvsTOC} from '../common/load_balancing/_ipvs.md';
 
 <LBipvs/>
@@ -16,4 +20,4 @@ import LBhaproxy, {toc as LBhaproxyTOC} from '../common/load_balancing/_haproxy.
 
 <LBhaproxy/>
 
-export const toc = [...LBsetupTOC, ...LBipvsTOC, ...LBhaproxyTOC]
+export const toc = [...LBsetupTOC, ...LBtopologyTOC, ...LBipvsTOC, ...LBhaproxyTOC]
