@@ -6,7 +6,7 @@
 Begin by inspecting the certificate found in the `houdini.cs.pub.ro.crt-roedunet` file.
 
 ```bash
-$ cd 1
+$ cd cert-inspect
 $ openssl x509 -in houdini.cs.pub.ro.crt-roedunet -noout -text
 ```
 
@@ -126,8 +126,8 @@ Certificate:
         Signature Algorithm: sha384WithRSAEncryption
         Issuer: C = NL, O = GEANT Vereniging, CN = GEANT OV RSA CA 4
         Validity
-            Not Before: Jul  8 00:00:00 2020 GMT
-            Not After : Jul  8 23:59:59 2021 GMT
+            Not Before: Feb  30 00:00:00 20XX GMT
+            Not After : Feb  30 23:59:59 20XY GMT
         Subject: C = RO, postalCode = 060042, L = Bucure\C8\99ti, street = Sectorul 6, street = "Independentei Street, No.313", O = Universitatea Politehnica din Bucure\C8\99ti, OU = NCIT Cluster, CN = *.curs.pub.ro
         Subject Public Key Info:
             Public Key Algorithm: rsaEncryption
@@ -216,16 +216,16 @@ The steps required when generating a certificate are as follows:
   - generate a certificate signing request (CSR) with the key and identification data
   - send the CSR to a CA in order to have it signed
 
-We will generate a CSR for `server.scgc`. Use the `3` directory.
+We will generate a CSR for `server.tld`. Use the `cert-gen` directory.
 
 ```bash
-$ cd 3
+$ cd cert-gen
 ```
 
 First, generate a private key:
 
 ```bash
-$ openssl genrsa -out server.scgc.key 2048
+$ openssl genrsa -out server.key 2048
 Generating RSA private key, 2048 bit long modulus
 ...............................................+++
 .....................................................................................+++
@@ -235,24 +235,25 @@ e is 65537 (0x10001)
 Then, generate the signing request:
 
 ```bash
-$ openssl req -new -key server.scgc.key -out server.scgc.csr
+$ openssl req -new -key server.key -out server.csr
 ...
 ```
 
 :::tip
 Supply the following information in the request:
-  * `Organization Name`: `SCGC`.
+  * `Organization Name`: `Cloud courses`.
   * `Organizational Unit`: `Development`.
-  * `Common Name`: `server.scgc`.
+  * `Common Name`: `server.tld`.
+
 The other fields can be completed as desired.
 :::
 
 Usually, at this point, the request would be sent to a trusted CA in order to be signed.
-Instead, we will sign the certificate using the `scgc-ca.crt` certificate from the resource archive.
+Instead, we will sign the certificate using the `ca.crt` certificate from the resource archive.
 
 ```bash
-$ openssl ca -config scgc-ca.cnf -policy signing_policy -extensions signing_req -in server.scgc.csr -out server.scgc.crt
-Using configuration from scgc-ca.cnf
+$ openssl ca -config ca.cnf -policy signing_policy -extensions signing_req -in server.csr -out server.crt
+Using configuration from ca.cnf
 Check that the request matches the signature
 Signature ok
 ...
@@ -265,31 +266,22 @@ Data Base Updated
 ```
 
 :::tip
-Inspect the `scgc-ca.cnf` file, in particular the `signing_policy` section.
+Inspect the `ca.cnf` file, in particular the `signing_policy` section.
 
-A more complex openssl configuration file can be found at `/etc/ssl/openssl.cnf`.
+A more complex OpenSSL configuration file can be found at `/etc/ssl/openssl.cnf`.
 :::
 
 Verify that the signed certificate matches the generated key.
 
 ```bash
-$ openssl x509 -in server.scgc.crt -noout -modulus | md5sum
+$ openssl x509 -in server.crt -noout -modulus | md5sum
 d80db122c02c6ef6eabb3b4cbd8b8f40  -
-$ openssl rsa -in server.scgc.key -noout -modulus | md5sum
+$ openssl rsa -in server.key -noout -modulus | md5sum
 d80db122c02c6ef6eabb3b4cbd8b8f40  -
 ```
 
-Furthermore, verify the certificate using the `scgc-ca.crt` certificate.
+Furthermore, verify the certificate using the `ca.crt` certificate.
 ```bash
-$ openssl verify -CAfile scgc-ca/scgc-ca.crt server.scgc.crt
-server.scgc.crt: OK
+$ openssl verify -CAfile ca/ca.crt server.crt
+server.crt: OK
 ```
-
-:::warning
-Currently, the `scgc-ca.crt` certificate is expired, so the last command will fail.
-If you want to solve this issue, you can regenerate the CA certificate by running the following commands (and resign the newly created CSR):
-```bash
-$ openssl req -new -key scgc-ca/scgc-ca.key -out scgc-ca/scgc-ca.csr
-$ openssl x509 -req -in scgc-ca/scgc-ca.csr -signkey scgc-ca/scgc-ca.key -out scgc-ca/scgc-ca.crt
-```
-:::

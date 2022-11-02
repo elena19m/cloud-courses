@@ -9,7 +9,7 @@
   * For the following exercises, the resources can be found in the laboratory archive:
 
 ```bash
-$ cd
-$ wget --user=<username> --ask-password https://repository.grid.pub.ro/cs/scgc/laboratoare/lab-08.zip
-$ unzip lab-08.zip
+$ cd work/
+$ wget --user=<username> --ask-password https://repository.grid.pub.ro/cs/scgc/laboratoare/lab-cert.zip
+$ unzip lab-cert.zip
 ```
