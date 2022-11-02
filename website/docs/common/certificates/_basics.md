@@ -1,6 +1,16 @@
 ## Creating and inspecting certificates
 
 
+TLS (Transport Layer Security) is a cryptographic protocol that provides communication security between a client and a server.
+Usually, the identity of the server is verified through a certificate.
+This certificate contains a public key, the identity of the server and a signature which verifies that the key belongs to the entity in the certificate.
+
+A certificate is valid if it is signed by a Certificate Authority (CA).
+The CA is considered trustworthy by the communication client.
+The client has access to the certificate of the CA, with which the signature in
+the certificate belonging to the server can be verified and, consequently, the identity of the server can be verified.
+
+
 ### Inspecting local certificate files
 
 Begin by inspecting the certificate found in the `houdini.cs.pub.ro.crt-roedunet` file.
