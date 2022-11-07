@@ -71,6 +71,10 @@ html[data-theme='dark'] img[src$='#light'] {
   text-decoration-color: var(--ifm-link-color);
 }
 
+.markdown a {
+  font-weight: 600;
+}
+
 .tabs__item {
   border-right: 3px solid;
   border-bottom: 3px solid;
