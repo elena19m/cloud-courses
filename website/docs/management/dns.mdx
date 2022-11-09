@@ -14,17 +14,17 @@ When creating a virtual machine in the Launch Instance window:
   * Select the **m1.large** flavor.
 
 In the base virtual machine:
-  * Download the laboratory archive from **TODO URL** in the `work` directory.
-  * Extract the archive. You will see multiple `.qcow2` files and two scripts: `lab-dns-start.sh` and `lab-dns-stop.sh`.
-The `.qcow2` files will be used to start virtual machines using the `lab-dns-start.sh` script. To stop the virtual machine,
-you can use `lab-dns-stop.sh`.
-  * Start the helper virtual machines using `./lab-dns-start.sh`.
+  * Download the laboratory archive from [here](https://repository.grid.pub.ro/cs/scgc/laboratoare/lab-dns.zip) in the `work` directory.
+Use: `wget --user=user-curs --ask-password https://repository.grid.pub.ro/cs/scgc/laboratoare/lab-dns.zip` to download the archive.
+Replace `user-curs` with your LDAP username. The password is your LDAP password.
+  * Extract the archive.
+The `.qcow2` files will be used to start virtual machines using the `runvm.sh` script.
+  * Start the virtual machines using `bash runvm.sh`.
   * The username for connecting to the nested VMs is `student` and the password is `student`.
   * For ease of use we recommend adding entries in the `/etc/hosts` file corresponding to the two VMs:
-    * `192.168.1.1 dns`
-    * `192.168.1.2 helper`
+    * `192.168.100.11 dns`
+    * `192.168.100.12 helper`
     * These two lines will allow using `dns` instead of the IP address of the DNS VM for clarity. Likewise, we can use `helper` instead of the IP address of the helper VM.
-  * For accessing the two VMs, connect to them using SSH from the base machine (username is **student**).
 
 ## DNS Resolvers
 

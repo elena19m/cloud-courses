@@ -1,15 +1,15 @@
-We now want to configure the `lab1.scgc.ro` on the helper server that will work as a slave DNS server
+We now want to configure the `lab.scgc.ro` on the helper server that will work as a slave DNS server
 (replace with your last name instead of scgc).
 This domain will be transfered from the master (dns VM) to the slave (helper VM) (DNS zone transfer).
 In order to correctly configure a zone transfer, we must follow these steps:
-  - We setup a new DNS domain on the master VM for `lab1.scgc.ro`.
+  - We setup a new DNS domain on the master VM for `lab.scgc.ro`.
   - We install a DNS server on the helper VM.
-  - We transfer the `lab1.scgc.ro` domain from the dns VM to the helper VM.
+  - We transfer the `lab.scgc.ro` domain from the dns VM to the helper VM.
 
 ### Setup master DNS server
 
 Configure a new DNS zone on the dns VM similarly to the previous one,
-which will answer for queries about `lab1.scgc.ro`.
+which will answer for queries about `lab.scgc.ro`.
 Your DNS zone must have at least an A record and a NS record for this exercise.
 
 ### Zone transfer
@@ -18,7 +18,7 @@ The helper VM has a Centos 7 operating system, which has some differences in the
 
 To install **BIND** use the following command:
 ```
-yum install bind
+[student@helper ~]$ sudo dnf install bind
 ```
 
 On Red-Hat-based distributions bind will have the following characteristics:
@@ -33,9 +33,9 @@ In order to transfer the zone from the master DNS server, we need to make the fo
 ```
   * on the helper VM
 ```
-zone "lab1.scgc.ro." {
+zone "lab.scgc.ro." {
     type slave;
-    file "/var/named/slaves/db.lab1.scgc.ro"; //the zone file
+    file "/var/named/slaves/db.lab.scgc.ro"; //the zone file
     masters { 192.168.100.11; }; //replace with the master VM IP address
 };
 ```
@@ -49,7 +49,7 @@ After making these configurations restart both servers.
 :::note
 To restart the **named** service on Centos, use the following command:
 ```
-systemctl restart named.service
+[root@helper ~]# systemctl restart named.service
 ```
 
 :::
@@ -73,17 +73,17 @@ feb 27 14:20:06 slave named[20552]: zone 1.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0
 feb 27 14:20:06 slave named[20552]: all zones loaded
 feb 27 14:20:06 slave named[20552]: running
 feb 27 14:20:06 slave systemd[1]: Started Berkeley Internet Name Domain (DNS).
-feb 27 14:20:06 slave named[20552]: zone lab1.scgc.ro/IN: Transfer started.
-feb 27 14:20:06 slave named[20552]: transfer of 'lab1.scgc.ro/IN' from 192.168.100.11#53: connected using 192.168.100.12#57942
-feb 27 14:20:06 slave named[20552]: zone lab1.scgc.ro/IN: transferred serial 3
-feb 27 14:20:06 slave named[20552]: transfer of 'lab1.scgc.ro/IN' from 192.168.100.11#53: Transfer completed: 1 messages, 5 records, 156 bytes, 0.001 secs (156000 bytes/sec)
-feb 27 14:20:06 slave named[20552]: zone lab1.scgc.ro/IN: sending notifies (serial 3)
+feb 27 14:20:06 slave named[20552]: zone lab.scgc.ro/IN: Transfer started.
+feb 27 14:20:06 slave named[20552]: transfer of 'lab.scgc.ro/IN' from 192.168.100.11#53: connected using 192.168.100.12#57942
+feb 27 14:20:06 slave named[20552]: zone lab.scgc.ro/IN: transferred serial 3
+feb 27 14:20:06 slave named[20552]: transfer of 'lab.scgc.ro/IN' from 192.168.100.11#53: Transfer completed: 1 messages, 5 records, 156 bytes, 0.001 secs (156000 bytes/sec)
+feb 27 14:20:06 slave named[20552]: zone lab.scgc.ro/IN: sending notifies (serial 3)
 ```
 
 To test that the zone has indeed been transferred you can now query the helper server for the zone which was transferred.
 ```
-[root@helper ~]# host -v lab1.scgc.ro localhost
-Trying "lab1.scgc.ro"
+[root@helper ~]# host -v lab.scgc.ro localhost
+Trying "lab.scgc.ro"
 Using domain server:
 Name: localhost
 Address: ::1#53
@@ -93,38 +93,38 @@ Aliases:
 ;; flags: qr aa rd ra; QUERY: 1, ANSWER: 1, AUTHORITY: 1, ADDITIONAL: 1
 
 ;; QUESTION SECTION:
-;lab1.scgc.ro.			IN	A
+;lab.scgc.ro.			IN	A
 
 ;; ANSWER SECTION:
-lab1.scgc.ro.		604800	IN	A	192.168.100.11
+lab.scgc.ro.		604800	IN	A	192.168.100.11
 
 ;; AUTHORITY SECTION:
-lab1.scgc.ro.		604800	IN	NS	ns.lab1.scgc.ro.
+lab.scgc.ro.		604800	IN	NS	ns.lab.scgc.ro.
 
 ;; ADDITIONAL SECTION:
-ns.lab1.scgc.ro.	604800	IN	A	192.168.100.11
+ns.lab.scgc.ro.	604800	IN	A	192.168.100.11
 
 Received 79 bytes from ::1#53 in 1 ms
-Trying "lab1.scgc.ro"
+Trying "lab.scgc.ro"
 ;; ->>HEADER<<- opcode: QUERY, status: NOERROR, id: 5264
 ;; flags: qr aa rd ra; QUERY: 1, ANSWER: 0, AUTHORITY: 1, ADDITIONAL: 0
 
 ;; QUESTION SECTION:
-;lab1.scgc.ro.			IN	AAAA
+;lab.scgc.ro.			IN	AAAA
 
 ;; AUTHORITY SECTION:
-lab1.scgc.ro.		604800	IN	SOA	lab1.scgc.ro. root.scgc.ro. 3 604800 86400 2419200 604800
+lab.scgc.ro.		604800	IN	SOA	lab.scgc.ro. root.scgc.ro. 3 604800 86400 2419200 604800
 
 Received 71 bytes from ::1#53 in 0 ms
-Trying "lab1.scgc.ro"
+Trying "lab.scgc.ro"
 ;; ->>HEADER<<- opcode: QUERY, status: NOERROR, id: 24490
 ;; flags: qr aa rd ra; QUERY: 1, ANSWER: 0, AUTHORITY: 1, ADDITIONAL: 0
 
 ;; QUESTION SECTION:
-;lab1.scgc.ro.			IN	MX
+;lab.scgc.ro.			IN	MX
 
 ;; AUTHORITY SECTION:
-lab1.scgc.ro.		604800	IN	SOA	lab1.scgc.ro. root.scgc.ro. 3 604800 86400 2419200 604800
+lab.scgc.ro.		604800	IN	SOA	lab.scgc.ro. root.scgc.ro. 3 604800 86400 2419200 604800
 
 Received 71 bytes from ::1#53 in 0 ms
 ```
