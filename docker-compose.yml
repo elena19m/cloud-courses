@@ -3,6 +3,7 @@ version: "3"
 services:
   docusaurus:
     build: .
+    user: "node"
     ports:
       - 127.0.0.1:3000:3000
     volumes:
