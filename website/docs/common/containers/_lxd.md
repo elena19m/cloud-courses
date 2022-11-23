@@ -21,21 +21,21 @@ You will be prompted to specify details about the storage backend for the LXD co
 
 ```
 root@lab-docker:~# lxd init
-Do you want to configure the LXD bridge (yes/no) [default=yes]? # press Enter
-What should the new bridge be called [default=lxdbr0]? # press Enter
-What IPv4 address should be used (CIDR subnet notation, “auto” or “none”) [default=auto]? 12.0.0.1/24
-Would you like LXD to NAT IPv4 traffic on your bridge? [default=yes]? # press Enter
-What IPv6 address should be used (CIDR subnet notation, “auto” or “none”) [default=auto]? # press Enter
-Do you want to configure a new storage pool (yes/no) [default=yes]? # press Enter
-Name of the storage backend to use (dir or zfs) [default=dir]: # press Enter
-Would you like LXD to be available over the network (yes/no) [default=no]? yes
-Address to bind LXD to (not including port) [default=all]: 10.0.0.1
-Port to bind LXD to [default=8443]: # press Enter
-Trust password for new clients: # enter a password and press Enter
-Again: # re-enter the same password and press enter
-LXD has been successfully configured.
+Would you like to use LXD clustering? (yes/no) [default=no]: # press Enter
+Do you want to configure a new storage pool? (yes/no) [default=yes]: # press Enter
+Name of the new storage pool [default=default]: # press Enter
+Name of the storage backend to use (dir, lvm, zfs, ceph, btrfs) [default=zfs]: # press Enter
+Create a new ZFS pool? (yes/no) [default=yes]: # press Enter
+Would you like to use an existing empty block device (e.g. a disk or partition)? (yes/no) [default=no]: # press Enter
+Size in GB of the new loop device (1GB minimum) [default=5GB]: # press Enter
+Would you like to connect to a MAAS server? (yes/no) [default=no]: # press Enter
+Would you like to create a new local network bridge? (yes/no) [default=yes]: # press Enter
+What should the new bridge be called? [default=lxdbr0]: # press Enter
+What IPv4 address should be used? (CIDR subnet notation, “auto” or “none”) [default=auto]: # press Enter
+Would you like the LXD server to be available over the network? (yes/no) [default=no]: # press Enter
+Would you like stale cached images to be updated automatically? (yes/no) [default=yes]: # press Enter
+Would you like a YAML "lxd init" preseed to be printed? (yes/no) [default=no]: # press Enter
 ```
-
 
 We have now successfully configured LXD storage backend and also networking. We can verify that `lxdbr0` was properly configured with the given subnet:
 ```
