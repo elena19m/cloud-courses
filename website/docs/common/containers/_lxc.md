@@ -166,6 +166,7 @@ As shown above, the init process of `ct1` is a child process of `lxc-start`.
 
 Now, print the container processes from within `ct1`:
 ```
+root@lab-docker:~# lxc-attach -n ct1
 ~ # ps -ef
 PID   USER     COMMAND
     1 root     init
@@ -176,6 +177,11 @@ PID   USER     COMMAND
    19 root     -sh
    21 root     {ps} -sh
 ```
+
+:::note
+Because we don't know the password for the root user for busybox, we used the
+`lxc-attach` command to connect to it.
+:::
 
 Even though the same processes can be observed from within or outside of the container, the process PIDs are different. This is because the operating system translates the process space for each container.
 
