@@ -1,96 +1,6 @@
----
-sidebar_position: 5
----
+## Docker
 
-# Container-based virtualization
-
-## Setup
-
-We will be using a virtual machine in the [faculty's cloud](http://cloud.grid.pub.ro/).
-
-When creating a virtual machine in the Launch Instance window:
-  * Select **Boot from image** in **Instance Boot Source** section
-  * Select **SCGC Template 2021** in **Image Name** section
-  * Select the **m1.large** flavor.
-
-In the base virtual machine:
-  * Download the laboratory archive from [here](https://repository.grid.pub.ro/cs/scgc/laboratoare/lab-docker.zip) in the `work` directory.
-Use: `wget --user=user-curs --ask-password https://repository.grid.pub.ro/cs/scgc/laboratoare/lab-docker.zip` to download the archive.
-Replace `user-curs` with your LDAP username. The password is your LDAP password.
-  * Extract the archive.
-  * Download the `runvm.sh` script.
-The `.qcow2` files will be used to start virtual machines using the `runvm.sh` script.
-  * Start the virtual machines using `bash runvm.sh`.
-  * The username for connecting to the nested VMs is `student` and the password is `student`.
-
-```bash
-$ # change the working dir
-$ cd ~/work
-$ # download the archive; replace user-curs with your LDAP username
-$ wget --user=user-curs --ask-password https://repository.grid.pub.ro/cs/scgc/laboratoare/lab-docker.zip
-$ unzip lab-docker.zip
-$ wget swarm.cs.pub.ro/~sweisz/runvm.sh
-$ # start VMs; it may take a while
-$ bash runvm.sh
-$ # check if the VMs booted
-$ virsh net-dhcp-leases labvms
-```
-
-## Needs / use-cases
-
-* easy service install
-* isolated test environments
-* local replicas of production environments
-
-## Objectives
-
-* container management (start, stop, build)
-* service management
-* container configuration and generation
-
-## What are containers?
-
-Containers are an environment in which we can run applications isolated from the host system.
-
-In Linux-based operating systems, containers are run like an application
-which has access to the resources of the host station, but which may interact with processes from
-outside the isolated environment.
-
-The advantage of using a container for running applications is that it can be easily turned on and off
-and modified. Thus, we can install applications in a container, configure them
-and run them without affecting the other system components
-
-A real usecase where we run containers is when we want to set up a server that depends on
-fixed, old versions of certain libraries. We don't want to run that server on our system
-physically, as conflicts with other applications may occur. Containerizing the server, we can have a
-version of the library installed on the physical machine and another version installed on the
-container without conflict between them.
-
-## Containers versus virtual machines?
-
-Both containers and virtual machines allow us to run applications in an isolated environment.
-However, there are fundamental differences between the two mechanisms.
-A container runs directly on top of the operating system.
-Meanwhile, a virtual machine runs its own kernel and then runs the applications on top of that.
-This added abstraction layer adds overhead to running the desired applications, and the overhead slows down  the applications.
-
-Another plus for running containers is the ability to build and pack them iteratively.
-We can easily download a container from a public repository, modify it, and
-upload it to a public repository without uploading the entire image. We can do that because
-changes to a container are made iteratively, saving the differences between the image
-original and modified version.
-
-There are also cases where we want to run applications inside a virtual machine. E.g,
-if we want to run a compiled application for an operating system other than Linux, we
-could not do this because containers can run applications that are compiled for the system
-host operation. Virtual machines can also run operating systems other than the operating system
-host.
-
-## LXC / LXD
-
-**TODO** (see old [labs](https://ocw.cs.pub.ro/courses/scgc/laboratoare/04))
-
-## Starting a container
+### Starting a container
 
 To start an application inside a Docker container use the following command:
 
@@ -127,7 +37,7 @@ root           1       0  0 12:01 ?        00:00:00 ps -ef
 ```
 
 :::note
-The `ps -ef` command would show all active processes in the system. We notice that only one command appears in the output above, because we are running in an isolated environment. We will return to this in the TODO subsection
+The `ps -ef` command would show all active processes in the system. We notice that only one command appears in the output above, because we are running in an isolated environment. We will return to this in the "Container Security" section.
 :::
 
 However, we do not want to always run containers in the foreground. If we want to run a script that cannot be run in the host environment, and this script will run for a long time, we prefer to run the command in the background.
@@ -175,13 +85,13 @@ student@lab-docker:~$
 ```
 
 
-## Exercise: Starting a container
+### Exercise: Starting a container
 
 * Start a container in the background based on the `centos: 7` image.
 * Connect to the container just turned on and run the `yum install bind-utils` command.
 * Disconnect from container.
 
-## Context: Container separation
+### Context: Container separation
 
 Most of the time when we use containers we do not use them interractively. They have a well-defined purpose, to run a service, an application, or to do a set of fixed operations.
 
@@ -194,7 +104,7 @@ For example, for a web application we might have the following approach:
 
 This architecture allows us to change a container, such as changing the type of database used without changing the entire container.
 
-## Building a container
+### Building a container
 
 Most times just running a container interractively and connectig to it when the need arrises is not enough.
 We want a way to automatically build and distribute single-use containers.
@@ -239,7 +149,7 @@ student@lab-docker:~$ docker image list
 
 This list contains both internally downloaded and locally built containers.
 
-## Exercise: Generate a container image
+### Exercise: Generate a container image
 
 * Write a `Dockerfile.centos` file containing a recipe for generating a container image based on the` centos:7` container in which to install the `bind-utils` tool.
 
@@ -249,13 +159,13 @@ To generate a container using a file other than the default `Dockerfile` we use 
 
 * Start the container generated in the previous exercise and run the command `nslookup hub.docker.com` to verify the installation of the package.
 
-## Downloading containers
+### Downloading containers
 
 Another important principle, both in the use of containers and in programming in general, is reusability. Instead of developing a new solution for every problem we encounter, we can use a solution that has already been implemented and submitted to a public repository.
 
 For example, if we want to use a MySQL database to store information, instead of using a basic Ubuntu container and installing and configuring the server ourselves, we can download a container that already has the package installed.
 
-## Running orders in an unloaded container
+## Running commands in an unloaded container
 
 We will use as an example, a set of containers consisting of a MySQL database and a WordPress service.
 
@@ -308,13 +218,13 @@ We noticed in the output that we created the `test-net` network. We did this bec
 
 We can connect using the Firefox browser to the virtual machine on port `8000` to configure the WordPress server.
 
-### Exercise: Running orders in the container
+#### Exercise: Running commands in the container
 
 Start a container that hosts the Nextcloud file sharing service. To connect to the nextcloud service, you need to expose the HTTP server running in the virtual machine. To do this, follow the example above. The container image name is `nextcloud`.
 
-## Automate container startup using Docker Compose
+### Automate container startup using Docker Compose
 
-As we can see from the TODO example, we can start containers using the `docker run` command, but that means running a command for each container.
+As we can see from the above example, we can start containers using the `docker run` command, but that means running a command for each container.
 This is simple when we only need to start two containers, but if we want to start more than two containers, or if we want to offer users a "one click" solution and we have a suite of containers needed for our solution, running in an ordered fasion for each container does not scale.
 
 The solution to this issue is the Docker Compose mechanism.
@@ -396,11 +306,11 @@ Removing student_db_1        ... done
 Removing network student_default
 ```
 
-### Exercise: Automation using Docker Compose
+#### Exercise: Automation using Docker Compose
 
 Write a `docker-compose.yaml` file that will automatically start the `nextcloud` container when running the `docker-compose up` command.
 
-## Using persistent storage in containers
+### Using persistent storage in containers
 
 When we work with applications that we install on a cluster, they store data ephemerally. Thus, when deleting the container, all the information in the container is deleted.
 We don't want this to happen in the example of a database, where we rely on information being stored for a long time.
@@ -487,15 +397,15 @@ Note that when we run the `docker-compose down` command, the volume defined in` 
 In order not to delete the volumes from the recipe, we need to run the `docker-compose stop` command to stop the containers defined in the YAML file.
 :::
 
-### Exercise: Mount a persistent volume in the container
+#### Exercise: Mount a persistent volume in the container
 
 Start a container from the `nextcloud` image to which you attach a volume called` nextcloud-vol` to `/var/www/html`.
 Restart the container and check that the configurations made when starting the container have been saved.
 
-## Container security
+### Container security
 
 An advantage of using containers, in addition to the ease of building and starting containers, comes from the fact that a container runs in an isolated environment from the rest of the system.
-From this we can limit the running of applications in the container. We can do this by limiting process access to other processes in the system, as we saw in the TODO example, or we can do this by limiting the number of cyclesCPUs that can be accessed by the container, or by limiting the ram memory that can be allocated by applications in the container.
+From this we can limit the running of applications in the container. We can do this by limiting process access to other processes in the system, as we saw in the example bellow, or we can do this by limiting the number of cyclesCPUs that can be accessed by the container, or by limiting the ram memory that can be allocated by applications in the container.
 
 However, a disadvantage that containers have over virtual machines comes from the fact that a container runs on the same system as the host system and when it makes system calls it runs code from within the host kernel.
 If a vulnerability is discovered that allows an application to exit the container, it can affect the entire system, especially if it is a vulnerability at the kernel level.
