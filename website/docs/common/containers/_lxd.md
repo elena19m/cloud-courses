@@ -8,7 +8,6 @@ LXD has it's image based on pre-made images available for a wide number of Linux
 Let's start by installing LXD on `lab-docker` using snap and setup the `PATH` variable so we can use it easily:
 ```
 root@lab-docker:~# apt install snapd
-root@lab-docker:~# snap install --channel=2.0/stable lxd
 root@lab-docker:~# export PATH="$PATH:/snap/bin"
 ```
 
@@ -31,7 +30,8 @@ Size in GB of the new loop device (1GB minimum) [default=5GB]: # press Enter
 Would you like to connect to a MAAS server? (yes/no) [default=no]: # press Enter
 Would you like to create a new local network bridge? (yes/no) [default=yes]: # press Enter
 What should the new bridge be called? [default=lxdbr0]: # press Enter
-What IPv4 address should be used? (CIDR subnet notation, “auto” or “none”) [default=auto]: # press Enter
+What IPv4 address should be used? (CIDR subnet notation, “auto” or “none”) [default=auto]: 12.0.0.0/24
+What IPv6 address should be used? (CIDR subnet notation, “auto” or “none”) [default=auto]: # press Enter
 Would you like the LXD server to be available over the network? (yes/no) [default=no]: # press Enter
 Would you like stale cached images to be updated automatically? (yes/no) [default=yes]: # press Enter
 Would you like a YAML "lxd init" preseed to be printed? (yes/no) [default=no]: # press Enter
