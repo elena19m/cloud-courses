@@ -40,6 +40,10 @@ lxc-create -n NAME -t TEMPLATE
 
 Some of the values for `TEMPLATE` are: `alpine`, `ubuntu`, `busybox`, `sshd`, `debian`, or `fedora` and specifies the template script that will be employed when creating the `rootfs`. All the available template scripts are available in the following location: `/usr/share/lxc/templates/`.
 
+:::note
+If you system doesn't have the templates mentioned above, you can install them using the command `apt install lxc-templates`
+:::
+
 We can also use special parameters for running a specific template. For example,
 in order to create a container using the following commands:
 
