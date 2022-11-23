@@ -35,18 +35,18 @@ $ virsh net-dhcp-leases labvms
 
 import ContainerBasics, {toc as ContainerBasicsTOC} from '../common/containers/_basics.md';
 
-<CertBasics/>
+<ContainerBasics/>
 
 import ContainerDocker, {toc as ContainerDockerTOC} from '../common/containers/_docker.md';
 
-<CertDocker/>
+<ContainerDocker/>
 
 import ContainerLXC, {toc as ContainerLXCTOC} from '../common/containers/_lxc.md';
 
-<CertLXC/>
+<ContainerLXC/>
 
 import ContainerLXD, {toc as ContainerLXDTOC} from '../common/containers/_lxd.md';
 
-<CertLXD/>
+<ContainerLXD/>
 
-export const toc = [...CertBasicsTOC, ...CertDockerTOC, ...ContainerLXCTOC, ...ContainerLXDTOC]
+export const toc = [...ContainerBasicsTOC, ...ContainerDockerTOC, ...ContainerLXCTOC, ...ContainerLXDTOC]
