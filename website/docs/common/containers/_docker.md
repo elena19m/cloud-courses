@@ -8,15 +8,15 @@ To start an application inside a Docker container use the following command:
 student@lab-docker:~$ sudo docker run -it ubuntu:18.04 bash
 Unable to find image 'ubuntu:18.04' locally
 18.04: Pulling from library/ubuntu
-11323ed2c653: Already exists 
+11323ed2c653: Already exists
 Digest: sha256:d8ac28b7bec51664c6b71a9dd1d8f788127ff310b8af30820560973bcfc605a0
 Status: Downloaded newer image for ubuntu:18.04
-root@3ec334aece37:/# cat /etc/lsb-release 
+root@3ec334aece37:/# cat /etc/lsb-release
 DISTRIB_ID=Ubuntu
 DISTRIB_RELEASE=18.04
 DISTRIB_CODENAME=bionic
 DISTRIB_DESCRIPTION="Ubuntu 18.04.6 LTS"
-root@3ec334aece37:/# 
+root@3ec334aece37:/#
 ```
 
 The `docker` command was run using the following parameters:
@@ -81,7 +81,7 @@ student@lab-docker:~$ sudo docker stop a63ee06826a3
 a63ee06826a3
 student@lab-docker:~$ sudo docker ps
 CONTAINER ID   IMAGE     COMMAND   CREATED   STATUS    PORTS     NAMES
-student@lab-docker:~$ 
+student@lab-docker:~$
 ```
 
 
@@ -181,27 +181,27 @@ student@lab-docker:~$ sudo docker run -d --hostname db --network test-net -e "MY
 student@lab-docker:~$ sudo docker run -d --hostname wordpress --network test-net -p "8000:80" -e "WORDPRESS_DB_HOST=db" -e "WORDPRESS_DB_USER=wordpress" -e "WORDPRESS_DB_PASSWORD=wordpress" wordpress:latest
 Unable to find image 'wordpress:latest' locally
 latest: Pulling from library/wordpress
-c229119241af: Pull complete 
-47e86af584f1: Pull complete 
-e1bd55b3ae5f: Pull complete 
-1f3a70af964a: Pull complete 
-0f5086159710: Pull complete 
-7d9c764dc190: Pull complete 
-ec2bb7a6eead: Pull complete 
-9d9132470f34: Pull complete 
-fb23ab197126: Pull complete 
-cbdd566be443: Pull complete 
-be224cc1ae0f: Pull complete 
-629912c3cae4: Pull complete 
-f1bae9b2bf5b: Pull complete 
-19542807523e: Pull complete 
-59191c568fb8: Pull complete 
-30be9b012597: Pull complete 
-bb41528d36dd: Pull complete 
-bfd3efbb7409: Pull complete 
-7f19a53dfc12: Pull complete 
-23dc552fade0: Pull complete 
-5133d8c158a7: Pull complete 
+c229119241af: Pull complete
+47e86af584f1: Pull complete
+e1bd55b3ae5f: Pull complete
+1f3a70af964a: Pull complete
+0f5086159710: Pull complete
+7d9c764dc190: Pull complete
+ec2bb7a6eead: Pull complete
+9d9132470f34: Pull complete
+fb23ab197126: Pull complete
+cbdd566be443: Pull complete
+be224cc1ae0f: Pull complete
+629912c3cae4: Pull complete
+f1bae9b2bf5b: Pull complete
+19542807523e: Pull complete
+59191c568fb8: Pull complete
+30be9b012597: Pull complete
+bb41528d36dd: Pull complete
+bfd3efbb7409: Pull complete
+7f19a53dfc12: Pull complete
+23dc552fade0: Pull complete
+5133d8c158a7: Pull complete
 Digest: sha256:df2edd42c943f0925d4634718d1ed1171ea63e043a39201c0b6cbff9d470d571
 Status: Downloaded newer image for wordpress:latest
 b019fd009ad4bf69a9bb9db3964a4d446e9681b64729ffb850af3421c1df070c
@@ -330,7 +330,7 @@ student@lab-docker:~$ sudo docker rm 07ae337cead33307e6146f4e7142345e59d59dd2933
 student@lab-docker:~$ sudo docker run -d -v mysql-volume:/var/lib/mysql -e "MYSQL_ROOT_PASSWORD=somewordpress" -e "MYSQL_DATABASE=wordpress" -e "MYSQL_USER=wordpress" -e "MYSQL_PASSWORD=wordpress" mysql:5.7
 ad1b42b46654a8d4c721e69e824aa7ee18f1e39a85e0b27f1ac966c355a2786a
 student@lab-docker:~$ sudo docker exec -it ad1b42b46654a8d4c721e69e824aa7ee18f1e39a85e0b27f1ac966c355a2786a /bin/bash
-root@ad1b42b46654:/# cat /var/lib/mysql/test-file 
+root@ad1b42b46654:/# cat /var/lib/mysql/test-file
 Hello
 ```
 

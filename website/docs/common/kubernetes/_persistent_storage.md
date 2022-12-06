@@ -11,7 +11,7 @@ Kubernetes **ConfigMaps** are objects that can store arbitrary strings, includin
 Let's create a manifest that defines a ConfigMap that stores a custom `index.html` file. Note that the file content is defined inline:
 
 ```bash
-student@lab-kubernetes:~$ cat nginx-html.yaml 
+student@lab-kubernetes:~$ cat nginx-html.yaml
 apiVersion: v1
 kind: ConfigMap
 metadata:
@@ -24,7 +24,7 @@ data:
 Apply the manifest:
 
 ```bash
-student@lab-kubernetes:~$ kubectl apply -f nginx-html.yaml 
+student@lab-kubernetes:~$ kubectl apply -f nginx-html.yaml
 configmap/nginx-html created
 ```
 
@@ -33,7 +33,7 @@ configmap/nginx-html created
 Next, we will define an nginx **deployment** that mounts the ConfigMap by using a Volume.
 
 ```bash
-student@lab-kubernetes:~$ cat nginx-deployment.yaml 
+student@lab-kubernetes:~$ cat nginx-deployment.yaml
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -77,20 +77,20 @@ Observe the following:
 Apply the manifest:
 
 ```bash
-student@lab-kubernetes:~$ kubectl apply -f nginx-deployment.yaml 
+student@lab-kubernetes:~$ kubectl apply -f nginx-deployment.yaml
 deployment.apps/nginx created
 ```
 
 Also, expose the app via a service:
 
 ```bash
-student@lab-kubernetes:~$ cat nginx-service.yaml 
+student@lab-kubernetes:~$ cat nginx-service.yaml
 apiVersion: v1
 kind: Service
 metadata:
   name: nginx
 spec:
-  type: NodePort      
+  type: NodePort
   selector:
     app: nginx
   ports:
@@ -99,7 +99,7 @@ spec:
       targetPort: 80
       nodePort: 30888
 
-student@lab-kubernetes:~$ kubectl apply -f nginx-service.yaml 
+student@lab-kubernetes:~$ kubectl apply -f nginx-service.yaml
 service/nginx created
 ```
 

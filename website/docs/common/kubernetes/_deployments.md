@@ -61,7 +61,7 @@ These are `.yaml` files that describe the resources we want to create. We can th
 For example, let's define a manifest for creating the `hello-app` deployment:
 
 ```bash
-student@lab-kubernetes:~$ cat hello-app-deployment.yaml 
+student@lab-kubernetes:~$ cat hello-app-deployment.yaml
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -88,7 +88,7 @@ spec:
 Apply the manifest and check that the deployment and the pod was created:
 
 ```bash
-student@lab-kubernetes:~$ kubectl apply -f hello-app-deployment.yaml 
+student@lab-kubernetes:~$ kubectl apply -f hello-app-deployment.yaml
 deployment.apps/hello-app created
 
 student@lab-kubernetes:~$ kubectl get deployments

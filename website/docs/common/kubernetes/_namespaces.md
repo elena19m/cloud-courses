@@ -9,7 +9,7 @@ For showing this, we will configure the nginx app, so that for requests on `/hel
 We will need to create a ConfigMap for the custom nginx config file:
 
 ```bash
-student@lab-kubernetes:~$ cat nginx-config.yaml 
+student@lab-kubernetes:~$ cat nginx-config.yaml
 apiVersion: v1
 kind: ConfigMap
 metadata:
@@ -31,7 +31,7 @@ data:
       }
     }
 
-student@lab-kubernetes:~$ kubectl apply -f nginx-config.yaml 
+student@lab-kubernetes:~$ kubectl apply -f nginx-config.yaml
 configmap/nginx-conf created
 ```
 
@@ -40,7 +40,7 @@ configmap/nginx-conf created
 Modify the nginx deployment so that the config file is mounted in `/etc/nginx/conf.d/default.conf`:
 
 ```bash
-student@lab-kubernetes:~$ cat nginx-deployment.yaml 
+student@lab-kubernetes:~$ cat nginx-deployment.yaml
 [...]
         volumeMounts:
 [...]
@@ -56,7 +56,7 @@ student@lab-kubernetes:~$ cat nginx-deployment.yaml
           - key: "default.conf"
             path: "default.conf"
 
-student@lab-kubernetes:~$ kubectl apply -f nginx-deployment.yaml 
+student@lab-kubernetes:~$ kubectl apply -f nginx-deployment.yaml
 deployment.apps/nginx configured
 ```
 

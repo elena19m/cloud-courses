@@ -12,13 +12,13 @@ We can create a service using `kubectl expose` or using a manifest. We will choo
 Let's define a service manifest and apply it:
 
 ```bash
-student@lab-kubernetes:~$ cat hello-app-service.yaml 
+student@lab-kubernetes:~$ cat hello-app-service.yaml
 apiVersion: v1
 kind: Service
 metadata:
   name: hello-app
 spec:
-  type: NodePort      
+  type: NodePort
   selector:
     app: hello
   ports:
@@ -27,7 +27,7 @@ spec:
       targetPort: 8080
       nodePort: 30080
 
-student@lab-kubernetes:~$ kubectl apply -f hello-app-service.yaml 
+student@lab-kubernetes:~$ kubectl apply -f hello-app-service.yaml
 service/hello-app created
 
 student@lab-kubernetes:~$ kubectl get services
@@ -42,7 +42,7 @@ There are multiple attributes that describe ports:
   * `port` is the port that other pods from **within** the cluster can connect to the service
   * `nodePort` is the port that we can connect to from **outside** the cluster (must be between 30000-32767)
 :::
-  
+
 ### Connecting to a service
 
 Before connecting to the service, we must determine the node's IP address:
@@ -68,7 +68,7 @@ If the traffic to our app increases, we may need to scale the app (create mode p
 For example, let's scale `hello-app` to 10 pods. For this, change the value for `replicas` in `hello-app-deployment.yaml` to `10`, and reapply the manifest:
 
 ```bash
-student@lab-kubernetes:~$ kubectl apply -f hello-app-deployment.yaml 
+student@lab-kubernetes:~$ kubectl apply -f hello-app-deployment.yaml
 deployment.apps/hello-app configured
 
 student@lab-kubernetes:~$ kubectl get pods
@@ -139,7 +139,7 @@ Deploying a different image version is done via editing the manifest and modifyi
 Update `hello-app-deployment.yaml` and change the image tag to `2.0`. Then, redeploy the manifest:
 
 ```bash
-student@lab-kubernetes:~$ kubectl apply -f hello-app-deployment.yaml 
+student@lab-kubernetes:~$ kubectl apply -f hello-app-deployment.yaml
 deployment.apps/hello-app configured
 ```
 

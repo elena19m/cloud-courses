@@ -31,12 +31,12 @@ For creating a cluster on the lab machine, use the `kind create cluster` command
 ```bash
 student@lab-kubernetes:~$ kind create cluster
 Creating cluster "kind" ...
- ✓ Ensuring node image (kindest/node:v1.23.4) 🖼 
- ✓ Preparing nodes 📦  
- ✓ Writing configuration 📜 
- ✓ Starting control-plane 🕹️ 
- ✓ Installing CNI 🔌 
- ✓ Installing StorageClass 💾 
+ ✓ Ensuring node image (kindest/node:v1.23.4) 🖼
+ ✓ Preparing nodes 📦
+ ✓ Writing configuration 📜
+ ✓ Starting control-plane 🕹️
+ ✓ Installing CNI 🔌
+ ✓ Installing StorageClass 💾
 Set kubectl context to "kind-kind"
 You can now use your cluster with:
 
