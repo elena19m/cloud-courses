@@ -1,0 +1,35 @@
+---
+sidebar_position: 5
+---
+
+# Container orchestration with Kubernetes
+
+import K8sSetup, {toc as K8sSetupTOC} from '../common/kubernetes/_setup.md';
+
+<K8sSetup/>
+
+import K8sInstall, {toc as K8sInstallTOC} from '../common/kubernetes/_install.md';
+
+<K8sInstall/>
+
+import K8sPods, {toc as K8sPodsTOC} from '../common/kubernetes/_pods.md';
+
+<K8sPods/>
+
+import K8sDeployments, {toc as K8sDeploymentsTOC} from '../common/kubernetes/_deployments.md';
+
+<K8sDeployements/>
+
+import K8sAppsServices, {toc as K8sAppsServicesTOC} from '../common/kubernetes/_apps_services.md';
+
+<K8sAppsServices/>
+
+import K8sStorage, {toc as K8sStorageTOC} from '../common/kubernetes/_persistent_storage.md';
+
+<K8sStorage/>
+
+import K8sNamespaces, {toc as K8sNamespacesTOC} from '../common/kubernetes/_namespaces.md';
+
+<K8sNamespaces/>
+
+export const toc = [...K8sSetupTOC, ...K8sInstallTOC, ...K8sPodsTOC, ...K8sDeploymentsTOC, ...K8sAppsServicesTOC, ...K8sStorageTOC, ...K8sNamespacesTOC]
