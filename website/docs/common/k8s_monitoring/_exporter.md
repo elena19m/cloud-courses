@@ -6,13 +6,13 @@ For nginx, a popular prometheus exporter is **nginx-prometheus-exporter**: https
 
 Deploy nginx-prometheus-exporter in the Kubernetes cluster, using a Kubernetes deployment. Take a look at the `docker run` command from the [`README.md`](https://github.com/nginxinc/nginx-prometheus-exporter/blob/main/README.md) file to figure out how you should configure your deployment.
 
-:::hint
+:::tip
 You should add the `-nginx.scrape-uri` command-line argument to the container.
 
 Use [`args`](https://kubernetes.io/docs/tasks/inject-data-application/define-command-argument-container/) for configuring command-line arguments.
 :::
 
-:::hint
+:::tip
 The URL that will be monitored should be `http://nginx:8080/metrics`
 :::
 

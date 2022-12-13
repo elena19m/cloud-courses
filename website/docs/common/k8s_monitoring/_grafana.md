@@ -12,7 +12,7 @@ After the helm chart is deployed, use [`kubectl port-forward`](https://kubernete
 
 Connect to the Grafana UI using a browser. 
 
-:::hint
+:::tip
 See https://scgc.pages.upb.ro/cloud-courses/docs/basic/working_with_openstack#connecting-using-an-ssh-jump-host-proxy and use `-D 12345` instead of `-X` for starting a Socks proxy towards your VM. Then, configure a local browser to use `localhost:12345` as a Socks Proxy.
 :::
 
@@ -20,7 +20,7 @@ See https://scgc.pages.upb.ro/cloud-courses/docs/basic/working_with_openstack#co
 
 In the Grafana UI, configure a Prometheus data source, specifying the URL of the Prometheus server deployed in the same namespace.
 
-:::hint
+:::tip
 The URL should be `http://prometheus-server`.
 :::
 
