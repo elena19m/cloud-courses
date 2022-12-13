@@ -1,0 +1,35 @@
+---
+sidebar_position: 8
+---
+
+# Monitoring applications in Kubernetes
+
+import K8sMonSetup, {toc as K8sMonSetupTOC} from '../common/k8s_monitoring/_setup.md';
+
+<K8sMonSetup/>
+
+import K8sMonInstall, {toc as K8sMonInstallTOC} from '../common/k8s_monitoring/_install.md';
+
+<K8sMonInstall/>
+
+import K8sMonService, {toc as K8sMonServiceTOC} from '../common/k8s_monitoring/_service.md';
+
+<K8sMonService/>
+
+import K8sMonExporter, {toc as K8sMonExporterTOC} from '../common/k8s_monitoring/_exporter.md';
+
+<K8sMonExporter/>
+
+import K8sMonHelm, {toc as K8sMonHelmTOC} from '../common/k8s_monitoring/_helm.md';
+
+<K8sMonHelm/>
+
+import K8sMonPrometheus, {toc as K8sMonPrometheusTOC} from '../common/k8s_monitoring/_prometheus.md';
+
+<K8sMonPrometheus/>
+
+import K8sMonGrafana, {toc as K8sMonGrafanaTOC} from '../common/k8s_monitoring/_grafana.md';
+
+<K8sMonGrafana/>
+
+export const toc = [...K8sMonSetupTOC, ...K8sMonInstallTOC, ...K8sMonServiceTOC, ...K8sMonExporterTOC, ...K8sMonHelmTOC, ...K8sMonPrometheusTOC, ...K8sMonGrafanaTOC]
