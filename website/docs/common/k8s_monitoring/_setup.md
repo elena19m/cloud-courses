@@ -11,8 +11,8 @@ We will be using the same resources as in the Kubernetes lab, as this lab is bas
 
 In the base virtual machine:
   * Download the laboratory archive from [here](https://repository.grid.pub.ro/cs/scgc/laboratoare/lab-kubernetes.zip) in the `work` directory.
-Use: `wget --user=user-curs --ask-password https://repository.grid.pub.ro/cs/scgc/laboratoare/lab-kubernetes.zip` to download the archive.
-Replace `user-curs` with your LDAP username. The password is your LDAP password.
+Use: `wget https://repository.grid.pub.ro/cs/scgc/laboratoare/lab-kubernetes.zip` to download the archive.
+
   * Extract the archive.
   * Start the virtual machines using `bash runvm.sh`.
   * The username for connecting to the nested VMs is `student` and the password is `student`.
@@ -20,8 +20,8 @@ Replace `user-curs` with your LDAP username. The password is your LDAP password.
 ```bash
 $ # change the working dir
 $ cd ~/work
-$ # download the archive; replace user-curs with your LDAP username
-$ wget --user=user-curs --ask-password https://repository.grid.pub.ro/cs/scgc/laboratoare/lab-kubernetes.zip
+$ # download the archive
+$ wget https://repository.grid.pub.ro/cs/scgc/laboratoare/lab-kubernetes.zip
 $ unzip lab-kubernetes.zip
 $ # start VMs; it may take a while
 $ bash runvm.sh

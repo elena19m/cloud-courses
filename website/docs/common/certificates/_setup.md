@@ -10,6 +10,6 @@
 
 ```bash
 $ cd work/
-$ wget --user=<username> --ask-password https://repository.grid.pub.ro/cs/scgc/laboratoare/lab-cert.zip
+$ wget https://repository.grid.pub.ro/cs/scgc/laboratoare/lab-cert.zip
 $ unzip lab-cert.zip
 ```
