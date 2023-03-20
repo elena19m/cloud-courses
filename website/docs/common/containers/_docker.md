@@ -59,7 +59,7 @@ root@a63ee06826a3:/# exit
 ```
 
 We can see that the container started by us is still running by running the `docker ps` command.
-Relevant columnts
+Relevant columns
 * `CONTAINER ID`
 * `NAMES`
 
@@ -93,7 +93,7 @@ student@lab-docker:~$
 
 ### Context: Container separation
 
-Most of the time when we use containers we do not use them interractively. They have a well-defined purpose, to run a service, an application, or to do a set of fixed operations.
+Most of the time when we use containers we do not use them interactively. They have a well-defined purpose, to run a service, an application, or to do a set of fixed operations.
 
 A constructive approach to using containers is `do one thing and do it well`. For this reason, we recommend that each container be built with a single purpose in mind.
 
@@ -106,11 +106,11 @@ This architecture allows us to change a container, such as changing the type of 
 
 ### Building a container
 
-Most times just running a container interractively and connectig to it when the need arrises is not enough.
+Most times just running a container interactively and connecting to it when the need arises is not enough.
 We want a way to automatically build and distribute single-use containers.
 For example, we want to use purpose build containers when running a CI/CD system that build a website and publishes it to the web.
 Each website has its own setup requirements, and we'd like to automate this.
-We could add automation by running a script, but in this case we'd lose one of the psotives of running containers, the iterrative nature of images, because the docker images would be monilithic.
+We could add automation by running a script, but in this case we'd lose one of the positives of running containers, the iterative nature of images, because the docker images would be monolithic.
 
 In order to create a container we need to define a `Dockerfile` file as follows:
 
@@ -131,7 +131,7 @@ Each line contains commands that will be interpreted by Docker when building the
 * `FROM`, specifies the base container image
 * `RUN`, runs in container
 
-This container will then be used to compile a container which can run firefox.
+This container will then be used to compile a container which can run Firefox.
 
 It should be noted that in the process of building containers we have to use non-interactive commands, because we do not have access to the terminal where the terminal is built, so we can not write the keyboard options.
 
@@ -220,12 +220,12 @@ We can connect using the Firefox browser to the virtual machine on port `8000` t
 
 #### Exercise: Running commands in the container
 
-Start a container that hosts the Nextcloud file sharing service. To connect to the nextcloud service, you need to expose the HTTP server running in the virtual machine. To do this, follow the example above. The container image name is `nextcloud`.
+Start a container that hosts the NextCloud file sharing service. To connect to the NextCloud service, you need to expose the HTTP server running in the virtual machine. To do this, follow the example above. The container image name is `nextcloud`.
 
 ### Automate container startup using Docker Compose
 
 As we can see from the above example, we can start containers using the `docker run` command, but that means running a command for each container.
-This is simple when we only need to start two containers, but if we want to start more than two containers, or if we want to offer users a "one click" solution and we have a suite of containers needed for our solution, running in an ordered fasion for each container does not scale.
+This is simple when we only need to start two containers, but if we want to start more than two containers, or if we want to offer users a "one click" solution and we have a suite of containers needed for our solution, running in an ordered manner for each container does not scale.
 
 The solution to this issue is the Docker Compose mechanism.
 It allows an administrator to write a specification for a work environment, including options for running containers, volumes running containers, and networks where containers will communicate.
@@ -294,7 +294,7 @@ db_1         | 2022-04-05T03:48:44.339950Z 0 [Warning] CA certificate ca.pem is 
 db_1         | 2022-04-05T03:48:44.547479Z 1 [Warning] root@localhost is created with an empty password ! Please consider switching off the --initialize-insecure option.
 ```
 
-Notice that both containers run in the foreground. In order to start the containers in the backgroud, we have to user the `-d` option.
+Notice that both containers run in the foreground. In order to start the containers in the background, we have to user the `-d` option.
 
 To stop the containers specified in the `docker-compose.yaml` file we use the` docker-compose down` command as follows:
 
