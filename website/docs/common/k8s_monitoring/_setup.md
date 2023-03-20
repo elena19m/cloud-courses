@@ -4,7 +4,7 @@ We will be using a virtual machine in the [faculty's cloud](http://cloud.grid.pu
 
 When creating a virtual machine in the Launch Instance window:
   * Select **Boot from image** in **Instance Boot Source** section
-  * Select **SCGC Template 2021** in **Image Name** section
+  * Select **SCGC Template** in **Image Name** section
   * Select the **m1.large** flavor.
 
 We will be using the same resources as in the Kubernetes lab, as this lab is based upon it.

@@ -41,7 +41,7 @@ command:
 | ID                                   | Name                                     | Status |
 +--------------------------------------+------------------------------------------+--------+
 [...]
-| xxxxxxxx-yyyy-zzzz-tttt-xxxxxxxxxx11 | SCGC Template 2021                       | active |
+| xxxxxxxx-yyyy-zzzz-tttt-xxxxxxxxxx11 | SCGC Template                            | active |
 [...]
 | xxxxxxxx-yyyy-zzzz-tttt-xxxxxxxxxx12 | Ubuntu 16.04 Xenial                      | active |
 [...]
