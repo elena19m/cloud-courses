@@ -145,6 +145,6 @@ and their configuration XML files are removed.
 
 ### Using libvirt as an unprivileged user
 
-Create a new user called `vmanager` and copy the `centos-8.qcow2` disk image to
+Create a new user called `vmanager` and copy the `almalinux-8.qcow2` disk image to
 their home directory. Make the required changes so you can run virtual machines
 as that user (the user cannot use `sudo` to run libvirt commands).

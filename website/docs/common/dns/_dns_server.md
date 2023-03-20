@@ -197,7 +197,7 @@ www.scgc.ro has address 192.168.100.11
 ```
 
 :::note
-To install host, dig, nslookup on Centos 8, run the following command:
+To install host, dig, nslookup on Alma Linux 8, run the following command:
 ```bash
 sudo dnf install bind-utils
 ```

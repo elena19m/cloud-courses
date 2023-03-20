@@ -10,7 +10,7 @@ As presented in the scheme above, our architecture is the following:
   OpenStack network (which is the External Network), while `virbr-labs` is the
   bridge that connects the virtual machines (which is our Internal Network);
   * three virtual machines that are connected to the `virbr-labs` bridge
-  interface: VM1 is a Debian webserver, VM2 and VM3 are CentOS systems;
+  interface: VM1 is a Debian webserver, VM2 and VM3 are Alma Linux systems;
 
 Using virtual machines, the topology presented above simulates a small network.
 The traffic we want to monitor is the one that flows through the `virbr-labs`

@@ -14,7 +14,7 @@ Your DNS zone must have at least an A record and a NS record for this exercise.
 
 ### Zone transfer
 
-The helper VM has a Centos 7 operating system, which has some differences in the setup of the DNS server.
+The helper VM has a Alma Linux 8 operating system, which has some differences in the setup of the DNS server.
 
 To install **BIND** use the following command:
 ```
@@ -47,7 +47,7 @@ Do **not** create the zone file. This file will be created by bind when the zone
 
 After making these configurations restart both servers.
 :::note
-To restart the **named** service on Centos, use the following command:
+To restart the **named** service on Alma Linux, use the following command:
 ```
 [root@helper ~]# systemctl restart named.service
 ```

@@ -432,7 +432,7 @@ student@lab-conf-manage-host:~$ ssh 192.168.100.91 -o PreferredAuthentications=k
 
 :::note Unable to login
 You may notice that you are **not** able to login on the remote system if it is
-running a RedHat operating system (e.g., Centos). Inspect the journal logs on
+running a RedHat operating system (e.g., Alma Linux). Inspect the journal logs on
 the system to identify the problem:
 
 ```bash

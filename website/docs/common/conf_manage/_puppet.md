@@ -435,7 +435,7 @@ the manifest. For example:
 Create a `package` / `file` / `service` manifest for the nginx service. You can
 use the example configuration file from `/home/student/config-samples`.
 
-On Centos, the package is called `nginx` and the configuration file must is
+On Alma Linux, the package is called `nginx` and the configuration file must is
 placed in `/etc/nginx/nginx.conf`.
 
 Also, add a custom index page that you place under

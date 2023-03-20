@@ -32,7 +32,7 @@ $ virsh net-dhcp-leases labvms
 ## Installing 389-ds
 
 The most commonly used Lightweight Directory Access Protocol service (LDAP) on
-Centos is [389-ds][]. It is the upstream project / free alternative to
+Alma Linux is [389-ds][]. It is the upstream project / free alternative to
 the RedHat Directory Server project. In order to set it up, we will need to
 install it and all of its dependencies.
 
