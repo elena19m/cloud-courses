@@ -36,25 +36,17 @@ Centos is [389-ds][]. It is the upstream project / free alternative to
 the RedHat Directory Server project. In order to set it up, we will need to
 install it and all of its dependencies.
 
-The required packages are not distributed in the default Centos repositories,
-so we will need to add the Extra Packages for Enterprise Linux (EPEL)
-repository. You can install it using the command below:
-
-```bash
-[student@lab-ldap ~]$ sudo dnf install epel-release
-```
-
 The configuration of the directory service will be handled using a `cockpit`
 plugin which will need to be installed alongside the other directory server
 packages. Cockpit is a web interface that allows you to configure the system
 and even run commands on a RedHat-based operating system.
 
-For this lab you will need to install the `389-directory-service` module,
-`cockpit` and some additional packages. You can use the commands below to
-install them:
+For this lab you will need to install the `389-directory-service` module from
+the `@389` group, `cockpit` and some additional packages. You can use the
+commands below to install them:
 
 ```bash
-[student@lab-ldap ~]$ sudo dnf module install 389-directory-server:stable/default
+[student@lab-ldap ~]$ sudo dnf copr enable -y @389ds/389-directory-server
 [student@lab-ldap ~]$ sudo dnf install 389-ds-base cockpit cockpit-389-ds
 ```
 

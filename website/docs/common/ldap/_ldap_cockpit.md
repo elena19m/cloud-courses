@@ -136,7 +136,7 @@ users and groups, we will focus on how this information can be managed.
 
 ### Adding users to LDAP
 
-We will begin by adding users to LDAP. First, navigate to the `Users & Groups`
+We will begin by adding users to LDAP. First, navigate to the `LDAP Browser`
 tab and then click on the `dc=lab-ldap,dc=scgc,dc=ro` entry in the `Suffix
 Tree`. A new view that contains the entry details will appear, with some
 information on the database.
