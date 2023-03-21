@@ -39,6 +39,11 @@ user@local:~$ ssh -fN -D 8220 openstack-10.9.X.Y
 user@local:~$ ssh -i ~/.ssh/id_openstack -J user.name@fep.grid.pub.ro -fN -D 8220 student@10.9.X.Y
 ```
 
+:::note
+The SSH process that handles the SOCKS proxy runs in the background, and
+the port will be kept occupied while the process is running.
+:::
+
 The commands above create a dynamic port forward and open the `8220` on your
 system for dynamic port forwarding (a SOCKS proxy is created).
 
@@ -168,14 +173,16 @@ in the new hierarchy. In order to create a new user, we will go the the
 ![389 directory server OU entry menu](./assets/cockpit-389-ds-ou-menu.jpg)
 
 From the configuration window, select the following options:
- 1. Select `Create a new User`;
- 2. Select the `cn`, `sn`, `uid` and `userPassword` parameters. The `uid`
-and `userPassword` will be required later to authenticate as the user in the
-virtual machine;
- 3. Set values for the parameters. For this user we will set the following
+ 1. Select `Create a new custom Entry`;
+ 1. In the `Select ObjectClasses` section search for `person`, and select
+ `inetorgperson` and `person`;
+ 1. In the `Select Attributes` secion select the `cn`, `sn`, `uid` and
+ `userPassword` attributes. The `uid` and `userPassword` attributes will be
+ required later to authenticate as the user in a Linux virtual machine;
+ 1. Set values for the parameters. For this user we will set the following
 parameters: `cn` = `Luke`, `sn` = `Skywalker`, `uid` = `luke`, and whatever
-password you prefer.
- 4. Confirm the creation by clicking on `Create`.
+password you prefer;
+ 1. Confirm the creation by clicking on `Create`.
 
 At this point we can confirm that the new user is present under the `People`
 organizational unit in the tree view. We can also check that the user

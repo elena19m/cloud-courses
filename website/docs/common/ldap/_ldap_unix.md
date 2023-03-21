@@ -44,7 +44,7 @@ ldap_uri = ldap://192.168.100.21
 ldap_search_base = dc=lab-ldap,dc=scgc,dc=ro
 ldap_default_bind_dn = cn=Directory Manager
 ldap_default_authtok_type = password
-ldap_default_authtok = CHANGEME
+ldap_default_authtok = <Directory Manager's password>
 ldap_user_auth_type = userPassword
 ldap_tls_reqcert = allow
 
