@@ -1,0 +1,30 @@
+---
+sidebar_position: 4
+---
+
+# Virtualization in cloud
+
+:::note
+This lab has two sections - one for native virtualization, and one for cloud virtualization
+in OpenStack. For the second section you will create the virtual machines from
+the command line, and not the web interface.
+:::
+
+# Native virtualization
+
+import NVkvm, {toc as NVkvmTOC} from '../common/native_virt/_native_virt_kvm.md';
+
+<NVkvm/>
+
+
+# OpenStack
+
+import OSsetup, {toc as OSsetupTOC} from '../common/openstack/_setup.md';
+
+<OSsetup/>
+
+import OSmanage, {toc as OSmanageTOC} from '../common/openstack/_management.md';
+
+<OSmanage/>
+
+export const toc = [...NVkvmTOC, ...OSsetupTOC, ...OSmanageTOC]
