@@ -131,7 +131,7 @@ namespace/test created
 Create a simple `nginx` pod in the `test` namespace. Notice the `-n test` parameter.
 
 ```bash
-student@lab-kubernetes:~$ kubectl run nginx --image=nginx:latest -n test
+student@lab-kubernetes:~$ kubectl run nginx --image=gitlab.cs.pub.ro:5050/scgc/cloud-courses/nginx:latest -n test
 pod/nginx created
 
 student@lab-kubernetes:~$ kubectl get pods -n test

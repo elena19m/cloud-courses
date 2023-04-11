@@ -80,7 +80,7 @@ spec:
     spec:
       containers:
       - name: hello-app
-        image: gcr.io/google-samples/hello-app:1.0
+        image: gitlab.cs.pub.ro:5050/scgc/cloud-courses/hello-app:1.0
         ports:
         - containerPort: 8080
 ```

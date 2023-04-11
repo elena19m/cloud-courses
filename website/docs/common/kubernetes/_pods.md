@@ -8,10 +8,10 @@ In some usecases, a pod can contain multiple containers (also called sidecar con
 
 Launching a pod is very similar to launching a Docker container. We will use the `kubectl run` command to do that.
 
-We will use the `gcr.io/google-samples/hello-app:1.0` image, which is a simple HTTP server that echoes a message when receiving a request.
+We will use the `gitlab.cs.pub.ro:5050/scgc/cloud-courses/hello-app:1.0` image, which is a simple HTTP server that echoes a message when receiving a request.
 
 ```bash
-student@lab-kubernetes:~$ kubectl run hello-app --image=gcr.io/google-samples/hello-app:1.0
+student@lab-kubernetes:~$ kubectl run hello-app --image=gitlab.cs.pub.ro:5050/scgc/cloud-courses/hello-app:1.0
 pod/hello-app created
 ```
 

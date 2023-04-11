@@ -52,7 +52,7 @@ spec:
     spec:
       containers:
       - name: nginx
-        image: nginx:latest
+        image: gitlab.cs.pub.ro:5050/scgc/cloud-courses/nginx:latest
         ports:
         - containerPort: 80
         volumeMounts:
