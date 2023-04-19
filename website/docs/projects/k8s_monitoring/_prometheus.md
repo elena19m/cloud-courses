@@ -1,6 +1,6 @@
-## Prometheus
+### Prometheus
 
-### Monitoring namespace
+#### Monitoring namespace
 
 Prometheus must be deployed in a separate Kubernetes namespace, called **monitoring**. This namespace does not exist, so you must create it.
 
@@ -8,7 +8,7 @@ Prometheus must be deployed in a separate Kubernetes namespace, called **monitor
 Review the steps for creating a new namespace in the Kubernetes lab [here](https://scgc.pages.upb.ro/cloud-courses/docs/management/kubernetes#creating-a-new-namespace).
 :::
 
-### Deploying Prometheus
+#### Deploying Prometheus
 
 Deploy Prometheus using Helm, following the instructions from here: https://github.com/prometheus-community/helm-charts/tree/main/charts/prometheus
 

@@ -1,6 +1,6 @@
-## Grafana
+### Grafana
 
-### Deploying Grafana
+#### Deploying Grafana
 
 Deploy Grafana using Helm, following the instructions from here: https://docs.bitnami.com/kubernetes/infrastructure/grafana/get-started/install/
 
@@ -16,7 +16,7 @@ Connect to the Grafana UI using a browser.
 See https://scgc.pages.upb.ro/cloud-courses/docs/basic/working_with_openstack#connecting-using-an-ssh-jump-host-proxy and use `-D 12345` instead of `-X` for starting a Socks proxy towards your VM. Then, configure a local browser to use `localhost:12345` as a Socks Proxy.
 :::
 
-### Configuring Grafana
+#### Configuring Grafana
 
 In the Grafana UI, configure a Prometheus data source, specifying the URL of the Prometheus server deployed in the same namespace.
 
@@ -26,6 +26,6 @@ The URL should be `http://prometheus-server`.
 
 Import the Grafana dashboard provided by nginx-prometheus-exporter, by following the instructions from here: https://github.com/nginxinc/nginx-prometheus-exporter/tree/main/grafana
 
-### Using Grafana
+#### Using Grafana
 
 Perform requests on the nginx server and verify that the dashboard is updating.

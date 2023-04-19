@@ -1,0 +1,87 @@
+---
+sidebar_position: 99
+---
+
+# Homework Project - Monitoring applications in Kubernetes
+
+## Task 0 - 5p
+
+import K8sMonSetup, {toc as K8sMonSetupTOC} from '../projects/k8s_monitoring/_setup.md';
+
+<K8sMonSetup/>
+
+## Task 1 - 20p
+
+import K8sMonInstall, {toc as K8sMonInstallTOC} from '../projects/k8s_monitoring/_install.md';
+
+<K8sMonInstall/>
+
+import K8sMonService, {toc as K8sMonServiceTOC} from '../projects/k8s_monitoring/_service.md';
+
+<K8sMonService/>
+
+## Task 2 - 20p
+
+import K8sMonExporter, {toc as K8sMonExporterTOC} from '../projects/k8s_monitoring/_exporter.md';
+
+<K8sMonExporter/>
+
+## Task 3 - 20p
+
+import K8sMonHelm, {toc as K8sMonHelmTOC} from '../projects/k8s_monitoring/_helm.md';
+
+<K8sMonHelm/>
+
+import K8sMonPrometheus, {toc as K8sMonPrometheusTOC} from '../projects/k8s_monitoring/_prometheus.md';
+
+<K8sMonPrometheus/>
+
+## Task 4 - 20p
+import K8sMonGrafana, {toc as K8sMonGrafanaTOC} from '../projects/k8s_monitoring/_grafana.md';
+
+<K8sMonGrafana/>
+
+## Task 5 - 15p
+
+When you have your nginx + Prometheus + Grafana setup up and running, check how
+the graphs change when you have a high load on your web server compared to when
+there is a light load.
+
+To do this, run some Denial-of-Service (DoS) attacks against the nginx web server
+using a tool such as [slowhttptest](https://github.com/shekyan/slowhttptest) or any
+other tool you find suitable.
+
+If you are using `slowhttptest`, you can find a tutorial on how it can be used
+[here](https://github.com/shekyan/slowhttptest/wiki/InstallationAndUsage#usage).
+
+See how things change in the Grafana Dashboard. Take a few screen captures (before, during
+and after the attack), add them to a document and briefly present some conclusions you can
+reach by observing the Grafana Dashboard (max half page).
+
+
+## Task 6 (Bonus) - up to 20p
+
+For the `nginx-Prometheus-Grafana` setup you have implemented, propose what
+security-related actions should be added to secure your web server and your
+infrastructure.
+
+## Homework submission
+
+To submit your homework, you have to upload on Moodle a zip archive named `SCGC - <Your LDAP username here>.zip` (e.g. `SCGC - ana.popescu3342.zip` that contains the following
+files:
+  - The Manifests you used to deploy your Kubernetes containers.
+  - A screenshot with each solved task.
+  - A write-up on how your infrastructure should be reproduced (any ramp-up scripts work as well) and tested.
+  - A pdf file containing a write-up, screenshots for all solved tasks and the written text for tasks 5 and 6. This pdf file must be named `Proposed Solution - <Your LDAP
+username here>.pdf` (e.g., `Proposed Solution - ana.popescu3342.pdf`).
+  - A README file.
+
+The deadline for submitting your zip archive is the 21st of May 2023, 23:55.
+
+## Homework presentation
+
+The homework must be presented during the last laboratory (30th of May 2023). You will have to briefly present what and how you have set up for your infrastructure and demonstrate that it
+works. The homework presentation is mandatory. You will not receive a grade on your homework if you do not present it.
+
+
+export const toc = [...K8sMonSetupTOC, ...K8sMonInstallTOC, ...K8sMonServiceTOC, ...K8sMonExporterTOC, ...K8sMonHelmTOC, ...K8sMonPrometheusTOC, ...K8sMonGrafanaTOC]

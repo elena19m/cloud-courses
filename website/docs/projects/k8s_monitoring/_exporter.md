@@ -1,4 +1,4 @@
-## Deploying the Prometheus exporter
+### Deploying the Prometheus exporter
 
 The metrics exposed by nginx via the **stub_status** module are not compatible with Prometheus. To be able to use Prometheus for monitoring, we must use a prometheus exporter, which is a simple application that reads metrics and translates them to the prometheus format.
 

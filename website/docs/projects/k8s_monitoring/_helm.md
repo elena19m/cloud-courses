@@ -1,4 +1,4 @@
-## The Helm package manager
+### The Helm package manager
 
 Before deploying the Prometheus and Grafana monitoring tools in Kubernetes, we will have to install [Helm](https://helm.sh/), which is a package manager for Kubernetes.
 
