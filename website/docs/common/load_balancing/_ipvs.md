@@ -102,7 +102,7 @@ bodies.
 
 
 ```bash
-student@lab-lb-host:~/work$ sudo tcpdump -i virbr-labs -e
+student@lab-lb-host:~/work$ sudo tcpdump -i virbr-labs -e src port 80 or dst port 80
 ```
 
 :::note Note IP and MAC addresses
