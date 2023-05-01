@@ -1,0 +1,31 @@
+---
+sidebar_position: 10
+---
+
+# Elastic Stack
+
+import ELKintro, {toc as ELKintroTOC} from '../common/elastic_stack/_elastic_stack_intro.md';
+
+<ELKintro/>
+
+import ELKsetup, {toc as ELKsetupTOC} from '../common/elastic_stack/_elastic_stack_installation.md';
+
+<ELKsetup/>
+
+import ELKfilebeat, {toc as ELKfilebeatTOC} from '../common/elastic_stack/_elastic_stack_filebeat.md';
+
+<ELKfilebeat/>
+
+import ELKpacketbeat, {toc as ELKpacketbeatTOC} from '../common/elastic_stack/_elastic_stack_packetbeat.md';
+
+<ELKpacketbeat/>
+
+import ELKauditbeat, {toc as ELKauditbeatTOC} from '../common/elastic_stack/_elastic_stack_auditbeat.md';
+
+<ELKauditbeat/>
+
+import ELKlogstash, {toc as ELKlogstashTOC} from '../common/elastic_stack/_elastic_stack_logstash.md';
+
+<ELKlogstash/>
+
+export const toc = [...ELKintroTOC, ...ELKsetupTOC, ...ELKfilebeatTOC, ...ELKpacketbeatTOC, ...ELKauditbeatTOC, ...ELKlogstashTOC]
