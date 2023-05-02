@@ -58,37 +58,37 @@ Use a similar configuration to the one below:
 auditbeat.modules:
 
 - module: system
-	datasets:
-		- package
+    datasets:
+        - package
 
-	period: 15m
-	state.period: 12h
-
-- module: system
-	datasets:
-		- host
-		- user
-	
-	period: 12h
-	state.period: 24h
+    period: 15m
+    state.period: 12h
 
 - module: system
-	datasets:
-		- login
+    datasets:
+        - host
+        - user
+    
+    period: 12h
+    state.period: 24h
 
-	user.detect_password_changes: true
+- module: system
+    datasets:
+        - login
+
+    user.detect_password_changes: true
 
   login.wtmp_file_pattern: /var/log/wtmp*
   login.btmp_file_pattern: /var/log/btmp*
-	
-	period: 5m
-	
+    
+    period: 5m
+    
 - module: system
-	datasets:
-		- process
-		#- socket
+    datasets:
+        - process
+        #- socket
 
-	period: 1s
+    period: 1s
 
 ```
 
