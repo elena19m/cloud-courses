@@ -36,7 +36,7 @@ the two real servers.
 To manage the IP virtual server, you must first install the `ipvsadm` package on
 the director system.
 
-```bash
+```shell-session
 student@load-balancer:~$ sudo apt update
 student@load-balancer:~$ sudo apt install ipvsadm
 ```
@@ -45,7 +45,7 @@ We will first configure a virtual address on the director machine. We will add
 the `192.168.100.251/24` address on the `eth0:1` sub-interface on the
 `load-balancer` machine.
 
-```bash
+```shell-session
 student@load-balancer:~$ sudo ip addr add dev eth0 192.168.100.251/24 label eth0:1
 ```
 
@@ -57,13 +57,13 @@ specify the virtual address, port and transport protocol used (TCP, in our
 case). The following command creates a service (the `-A` parameter) that
 handles requests coming to the `192.168.100.251` IP address on TCP port 80:
 
-```bash
+```shell-session
 student@load-balancer:~$ sudo ipvsadm -A -t 192.168.100.251:80
 ```
 
 Once the virtual service has been configured, we can also add the real servers:
 
-```bash
+```shell-session
 student@load-balancer:~$ sudo ipvsadm -a -t 192.168.100.251:80 -r 192.168.100.72:80 -g
 student@load-balancer:~$ sudo ipvsadm -a -t 192.168.100.251:80 -r 192.168.100.73:80 -g
 ```
@@ -83,7 +83,7 @@ messages that are actually meant for the director. This issue is known as the
 even though the virtual address is not configured on any interface. We will use
 this approach.
 
-```bash
+```shell-session
 student@real-server-1:~$ sudo iptables -t nat -A PREROUTING -d 192.168.100.251 -j REDIRECT
 student@real-server-2:~$ sudo iptables -t nat -A PREROUTING -d 192.168.100.251 -j REDIRECT
 ```
@@ -101,7 +101,7 @@ parameter). You could optionally add the `-A` parameter to also print the packet
 bodies.
 
 
-```bash
+```shell-session
 student@lab-lb-host:~/work$ sudo tcpdump -i virbr-labs -e src port 80 or dst port 80
 ```
 
@@ -115,7 +115,7 @@ Check the IP and MAC addresses of the packets:
 The configuration of the virtual server can be inspected using the `-l`
 parameter:
 
-```bash
+```shell-session
 student@load-balancer:~$ sudo ipvsadm -l
 IP Virtual Server version 1.2.1 (size=4096)
 Prot LocalAddress:Port Scheduler Flags
@@ -128,7 +128,7 @@ TCP  192.168.100.251:http wlc
 A list of connections that are managed by the virtual server can be obtained
 using the `-c` parameter:
 
-```bash
+```shell-session
 student@load-balancer:~$ sudo ipvsadm -l -c
 ```
 
@@ -161,13 +161,13 @@ server).
 
 To delete the service, use the `-D` parameter:
 
-```bash
+```shell-session
 student@load-balancer:~$ sudo ipvsadm -D -t 192.168.100.251:80
 ```
 
 You must also delete the iptables rules on the real servers:
 
-```bash
+```shell-session
 student@real-server-1:~$ sudo iptables -t nat -F
 student@real-server-2:~$ sudo iptables -t nat -F
 ```
@@ -193,7 +193,7 @@ same as the IP address of the director.
 To create an IP-IP tunnel interface on the first real server you can use the
 following command:
 
-```bash
+```shell-session
 student@real-server-1:~$ sudo ip tunnel add tun0 mode ipip local 192.168.100.72
 ```
 
@@ -224,7 +224,7 @@ handling to how connections were handled in direct routing mode.
 Remove the service on the director and the tunnel interfaces on the real
 servers.
 
-```bash
+```shell-session
 student@real-server-1:~$ sudo ip tunnel del tun0
 student@real-server-2:~$ sudo ip tunnel del tun0
 ```

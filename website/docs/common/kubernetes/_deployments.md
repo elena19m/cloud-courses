@@ -8,14 +8,14 @@ For this, we will use a **deployment** resource, which is an abstration that enc
 
 Let's create a deployment for `hello-app` using the `kubectl create` command:
 
-```bash
+```shell-session
 student@lab-kubernetes:~$ kubectl create deployment hello-app --image=gcr.io/google-samples/hello-app:1.0
 deployment.apps/hello-app created
 ```
 
 We can see that the deployment is created, along with a pod:
 
-```bash
+```shell-session
 student@lab-kubernetes:~$ kubectl get deployments
 NAME        READY   UP-TO-DATE   AVAILABLE   AGE
 hello-app   1/1     1            1           35s
@@ -29,7 +29,7 @@ hello-app-79df7f8b96-mn6wj   1/1     Running   0          39s
 
 We can use `kubectl describe` to get details about a deployment:
 
-```bash
+```shell-session
 student@lab-kubernetes:~$ kubectl describe deployments hello-app
 Name:                   hello-app
 Namespace:              default
@@ -48,7 +48,7 @@ RollingUpdateStrategy:  25% max unavailable, 25% max surge
 
 A deployment is removed with the `kubectl delete` command:
 
-```bash
+```shell-session
 student@lab-kubernetes:~$ kubectl delete deployments hello-app
 deployment.apps "hello-app" deleted
 ```
@@ -60,7 +60,7 @@ These are `.yaml` files that describe the resources we want to create. We can th
 
 For example, let's define a manifest for creating the `hello-app` deployment:
 
-```bash
+```shell-session
 student@lab-kubernetes:~$ cat hello-app-deployment.yaml
 apiVersion: apps/v1
 kind: Deployment
@@ -87,7 +87,7 @@ spec:
 
 Apply the manifest and check that the deployment and the pod was created:
 
-```bash
+```shell-session
 student@lab-kubernetes:~$ kubectl apply -f hello-app-deployment.yaml
 deployment.apps/hello-app created
 

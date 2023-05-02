@@ -8,7 +8,7 @@ For showing this, we will configure the nginx app, so that for requests on `/hel
 
 We will need to create a ConfigMap for the custom nginx config file:
 
-```bash
+```shell-session
 student@lab-kubernetes:~$ cat nginx-config.yaml
 apiVersion: v1
 kind: ConfigMap
@@ -39,7 +39,7 @@ configmap/nginx-conf created
 
 Modify the nginx deployment so that the config file is mounted in `/etc/nginx/conf.d/default.conf`:
 
-```bash
+```shell-session
 student@lab-kubernetes:~$ cat nginx-deployment.yaml
 [...]
         volumeMounts:
@@ -64,7 +64,7 @@ deployment.apps/nginx configured
 
 Test that requests on `/` work as before, but requests on `/hello` are proxied:
 
-```bash
+```shell-session
 student@lab-kubernetes:~$ curl http://172.18.0.2:30888
 <html><body>Hello from SCGC Lab!</body></html>
 
@@ -92,7 +92,7 @@ In Kubernetes, this is achieved using **namespaces**.
 
 All the exercises until now were performed in the **default** namespace. But Kubernetes has several namespaces out of the box:
 
-```bash
+```shell-session
 student@lab-kubernetes:~$ kubectl get namespaces
 NAME                 STATUS   AGE
 default              Active   25h
@@ -104,7 +104,7 @@ local-path-storage   Active   25h
 
 For example, the `kube-system` namespace is used for Kubernetes internal resources, that should not be modified by the user:
 
-```bash
+```shell-session
 student@lab-kubernetes:~$ kubectl get pods -n kube-system
 NAME                                         READY   STATUS    RESTARTS   AGE
 coredns-64897985d-6qnmw                      1/1     Running   0          25h
@@ -121,7 +121,7 @@ kube-scheduler-kind-control-plane            1/1     Running   0          25h
 
 We can create a new namespace using `kubectl create`:
 
-```bash
+```shell-session
 student@lab-kubernetes:~$ kubectl create namespace test
 namespace/test created
 ```
@@ -130,7 +130,7 @@ namespace/test created
 
 Create a simple `nginx` pod in the `test` namespace. Notice the `-n test` parameter.
 
-```bash
+```shell-session
 student@lab-kubernetes:~$ kubectl run nginx --image=gitlab.cs.pub.ro:5050/scgc/cloud-courses/nginx:latest -n test
 pod/nginx created
 
@@ -141,7 +141,7 @@ nginx   1/1     Running   0          7s
 
 Connect to the pod and verify if the name of the `hello-app` service from the `default` namespace can be resolved:
 
-```bash
+```shell-session
 student@lab-kubernetes:~$ kubectl exec -it nginx -n test /bin/bash
 kubectl exec [POD] [COMMAND] is DEPRECATED and will be removed in a future version. Use kubectl exec [POD] -- [COMMAND] instead.
 root@nginx:/# curl http://hello-app:8080

@@ -10,7 +10,7 @@ Kubernetes **ConfigMaps** are objects that can store arbitrary strings, includin
 
 Let's create a manifest that defines a ConfigMap that stores a custom `index.html` file. Note that the file content is defined inline:
 
-```bash
+```shell-session
 student@lab-kubernetes:~$ cat nginx-html.yaml
 apiVersion: v1
 kind: ConfigMap
@@ -23,7 +23,7 @@ data:
 
 Apply the manifest:
 
-```bash
+```shell-session
 student@lab-kubernetes:~$ kubectl apply -f nginx-html.yaml
 configmap/nginx-html created
 ```
@@ -32,7 +32,7 @@ configmap/nginx-html created
 
 Next, we will define an nginx **deployment** that mounts the ConfigMap by using a Volume.
 
-```bash
+```shell-session
 student@lab-kubernetes:~$ cat nginx-deployment.yaml
 apiVersion: apps/v1
 kind: Deployment
@@ -76,14 +76,14 @@ Observe the following:
 
 Apply the manifest:
 
-```bash
+```shell-session
 student@lab-kubernetes:~$ kubectl apply -f nginx-deployment.yaml
 deployment.apps/nginx created
 ```
 
 Also, expose the app via a service:
 
-```bash
+```shell-session
 student@lab-kubernetes:~$ cat nginx-service.yaml
 apiVersion: v1
 kind: Service
@@ -105,7 +105,7 @@ service/nginx created
 
 Test that the app was correctly configured:
 
-```bash
+```shell-session
 student@lab-kubernetes:~$ curl http://172.18.0.2:30888
 <html><body>Hello from SCGC Lab!</body></html>
 ```

@@ -16,7 +16,7 @@ The `.qcow2` files will be used to start virtual machines using the `runvm.sh` s
   * Start the virtual machines using `bash runvm.sh`.
   * The username for connecting to the nested VMs is `student` and the password is `student`.
 
-```bash
+```shell-session
 $ # change the working dir
 $ cd ~/work
 $ # download the archive
@@ -45,7 +45,7 @@ For this lab you will need to install the `389-directory-service` module from
 the `@389` group, `cockpit` and some additional packages. You can use the
 commands below to install them:
 
-```bash
+```shell-session
 [student@lab-ldap ~]$ sudo dnf copr enable -y @389ds/389-directory-server
 [student@lab-ldap ~]$ sudo dnf install 389-ds-base cockpit cockpit-389-ds
 ```
@@ -71,7 +71,7 @@ You will need it to query the database later.
 The password **must not** contain any spaces.
 :::
 
-```bash
+```shell-session
 [student@lab-ldap ~]$ sudo dscreate interactive
 Install Directory Server (interactive mode)
 ===========================================
@@ -113,7 +113,7 @@ Completed installation for instance: slapd-lab-ldap
 You can check that the service and the instance are running using the commands
 below:
 
-```bash
+```shell-session
 [student@lab-ldap ~]$ sudo dsctl lab-ldap status
 Instance "lab-ldap" is running
 [student@lab-ldap ~]$ sudo ss -lntp | egrep '389|636'
@@ -138,7 +138,7 @@ the server and attempts to query its contents using two types of parameters:
 To extract all the entries in the database that we have created, we can use the
 following command:
 
-```bash
+```shell-session
 [student@lab-ldap ~]$ ldapsearch -x -b 'dc=lab-ldap,dc=scgc,dc=ro'
 # extended LDIF
 #

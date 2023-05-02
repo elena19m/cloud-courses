@@ -22,7 +22,7 @@ We will consider our internal network `192.168.100.0/24`.
 
 Install Suricata on the host virtual machine:
 
-```bash
+```shell-session
 student@base-lab-ids:~$ sudo apt update
 student@base-lab-ids:~$ sudo add-apt-repository ppa:oisf/suricata-stable
 Suricata IDS/IPS/NSM stable packages
@@ -42,7 +42,7 @@ or networks, you can use the list format. In contrast, `EXTERNAL_NET` is,
 usually, everything that your internal network is not (hence the `!` (not)
 marker).
 
-```
+```yaml
 [...]
 HOME_NET: "[192.168.100.0/24]"
 EXTERNAL_NET: "!$HOME_NET"
@@ -59,7 +59,7 @@ We need to specify the interface we want Suricata to monitor. Edit the
 `/etc/suricata/suricata.yaml` file and setup `af-packet` -> `interface` and
 `pcap` -> `interface` to `virbr-labs` and restart Suricata.
 
-```bash
+```shell-session
 student@base-lab-ids:~$ sudo grep -A 2 -B 2 "virbr-labs" /etc/suricata/suricata.yaml
 # Linux high speed capture support
 af-packet:
@@ -120,7 +120,7 @@ You can manually download and add signatures for Suricata. However, the
 recommended way of installing rulesets using the `suricata-update` tool.
 On your host virtual machine, run the following command:
 
-```bash
+```shell-session
 student@base-lab-ids:~$ sudo suricata-update
 ```
 
@@ -146,7 +146,7 @@ lab, we will work with the default settings.
 After installing, you will not be able to see any output in `fast.log` since
 there are no alerts, yet. An example output can be seen below:
 
-```bash
+```shell-session
 student@base-lab-ids:~$ tail -n 5 /var/log/suricata/fast.log
 05/14/2022-21:00:11.560255  [**] [1:2029994:1] ET HUNTING Suspicious NULL DNS Request [**] [Classification: Misc activity] [Priority: 3] {UDP} 192.168.100.82:52694 -> 192.168.100.254:53
 05/14/2022-21:00:11.562117  [**] [1:2030555:1] ET INFO Outbound RRSIG DNS Query Observed [**] [Classification: Potentially Bad Traffic] [Priority: 2] {UDP} 192.168.100.254:53 -> 192.168.100.82:52694
@@ -160,7 +160,7 @@ There is a specific rule in Suricata we can use to check if the Intrusion
 Detection System (IDS) works properly. From VM2, run the following command and
 check the `fast.log` and `eve.json` files.
 
-```bash
+```shell-session
 [student@lab-ids-2 ~]$ curl http://testmynids.org/uid/index.html
 [...]
 student@base-lab-ids:~$ tail -n 1 /var/log/suricata/fast.log
@@ -185,7 +185,7 @@ You can check whether Suricata has finished loading the rules by inspecting the
 You can download additional rulesets using the `suricata-update` tool.
 
 First, let's see all the available rulesets:
-```
+```shell-session
 student@base-lab-ids:~$ sudo suricata-update list-sources
 [...]
 Name: et/open
@@ -223,7 +223,7 @@ Some of the rulesets require a subscription (see the entries with the
 require a subscription, the OISF (Open Information Security Foundation) Traffic
 ID ruleset.
 
-```
+```shell-session
 student@base-lab-ids:~$ sudo suricata-update enable-source oisf/trafficid
 6/5/2022 -- 08:35:59 - <Info> -- Using data-directory /var/lib/suricata.
 6/5/2022 -- 08:35:59 - <Info> -- Using Suricata configuration /etc/suricata/suricata.yaml
@@ -236,7 +236,7 @@ student@base-lab-ids:~$ sudo suricata-update enable-source oisf/trafficid
 
 We must run `suricata-update` to fetch and use the rules from the ruleset:
 
-```bash
+```shell-session
 student@base-lab-ids:~$ sudo suricata-update
 ```
 
@@ -246,13 +246,13 @@ file: `/var/lib/suricata/rules/suricata.rules`. Check the last lines from the
 
 From VM2 try to access `twitter.com` using the following command:
 
-```bash
+```shell-session
 [student@lab-ids-2 ~]$ curl twitter.com
 ```
 
 Check the logs from the `eve.log` and `fast.log` files:
 
-```bash
+```shell-session
 student@base-lab-ids:~$ grep '"event_type":"alert"' /var/log/suricata/eve.json | grep twitter
 {"timestamp":"2022-05-06T08:44:48.476995+0000","flow_id":404555317665412,"in_iface":"virbr-labs","event_type":"alert","src_ip":"192.168.100.82","src_port":56648,"dest_ip":"104.244.42.193","dest_port":80,"proto":"TCP","tx_id":0,"alert":{"action":"allowed","gid":1,"signature_id":2013028,"rev":6,"signature":"ET POLICY curl User-Agent Outbound","category":"Attempted Information Leak","severity":2,"metadata":{"created_at":["2011_06_14"],"updated_at":["2021_12_01"]}},"http":{"hostname":"twitter.com","url":"/","http_user_agent":"curl/7.61.1","http_method":"GET","protocol":"HTTP/1.1","status":301,"redirect":"https://twitter.com/","length":0},"app_proto":"http","flow":{"pkts_toserver":4,"pkts_toclient":3,"bytes_toserver":347,"bytes_toclient":496,"start":"2022-05-06T08:44:48.286340+0000"}}
 student@base-lab-ids:~$ tail -n 1 /var/log/suricata/fast.log
@@ -272,7 +272,7 @@ lab.
 Scan the network using `nmap` and `SYN Scan` as a port scanning technique
 (`-sS`):
 
-```
+```shell-session
 student@base-lab-ids:~$ sudo apt install -y nmap
 student@base-lab-ids:~$ sudo nmap -Pn -sS -T3 192.168.100.0/24
 student@base-lab-ids:~$ grep '"dest_ip":"192.168.100.83"' /var/log/suricata/eve.json | grep '"event_type":"alert"'
@@ -296,7 +296,7 @@ You can simulate an external scanning using the following command (update the
 source IP given using `-S` to be your virtual machine's IP in the vlan9
 network):
 
-```bash
+```shell-session
 student@base-lab-ids:~$ sudo nmap -e virbr-labs -S 10.9.X.Y -sS -T3 192.168.100.0/24
 student@base-lab-ids:~$ grep '"dest_ip":"192.168.100.83"' /var/log/suricata/eve.json | grep '"event_type":"alert"'
 student@base-lab-ids:~$ grep "192.168.100.83" /var/log/suricata/fast.log
@@ -330,7 +330,7 @@ so find the one that works.
 To enable a rule from the ruleset (the ones that appear to be commented in the
 `suricata.rules` file), you must edit the `/etc/suricata/enable.conf` file:
 
-```
+```shell-session
 student@base-lab-ids ~$ sudo cat /etc/suricata/enable.conf
 <sid> # the sid (Signature ID) of the rule you want to enable.
 student@base-lab-ids ~$ sudo suricata-update
@@ -351,7 +351,7 @@ As an example, you may see a lot of alerts for Ubuntu package updates, which are
 not usually dangerous, but make it difficult to see the real alerts. You can
 find the rule that triggers that alert by checking the `"signature_id"` field of
 a log line.
-```
+```shell-session
 student@base-lab-ids:~$ sudo cat /etc/suricata/disable.conf
 2013504
 student@base-lab-ids:~$ sudo suricata-update
@@ -381,7 +381,7 @@ Copy the rule you have used to detect the XMAS port scanning in the
 `/var/lib/suricata/rules/custom.rules`. Make sure to change the `sid` to
 something that does not exist.
 
-```bash
+```shell-session
 student@base-lab-ids:~$ sudo cat /var/lib/suricata/rules/custom.rules
 alert tcp $HOME_NET any -> $HOME_NET any (msg:"GPL SCAN nmap XMAS - my updated rule"; flow:stateless; flags:FPU,12; reference:arachnids,30; classtype:attempted-recon; sid:900000001; rev:8; metadata:created_at 2010_09_23, updated_at 2022_05_07;)
 ```
@@ -389,7 +389,7 @@ alert tcp $HOME_NET any -> $HOME_NET any (msg:"GPL SCAN nmap XMAS - my updated r
 Modify the `/etc/suricata/suricata.yaml` file to look like this (add
 `custom.rules` as a source of rules Suricata must take into consideration):
 
-```bash
+```shell-session
 student@base-lab-ids:~$ sudo grep "custom.rules" -B 4 -A 2 /etc/suricata/suricata.yaml
 default-rule-path: /var/lib/suricata/rules
 
@@ -402,7 +402,7 @@ rule-files:
 
 Check if the rules are taken into account:
 
-```bash
+```shell-session
 student@base-lab-ids:~$ sudo suricata -c /etc/suricata/suricata.yaml --dump-config | grep rules
 outputs.5.pcap-log.honor-pass-rules = no
 app-layer.protocols.http2.http1-rules = no
@@ -423,14 +423,14 @@ rule-files.1 = custom.rules
 
 Rerun `suricata-update` and restart `suricata`:
 
-```bash
+```shell-session
 student@base-lab-ids:~$ sudo suricata-update
 student@base-lab-ids:~$ sudo systemctl restart suricata
 ```
 
 Rerun the scanning and check the logs:
 
-```bash
+```shell-session
 student@base-lab-ids:~$ sudo nmap -sX -T3 192.168.100.0/24
 Starting Nmap 7.80 ( https://nmap.org ) at 2022-05-08 18:30 UTC
 student@base-lab-ids:~$ grep \"event_type\"\:\"alert\" /var/log/suricata/eve.json | tail
@@ -479,7 +479,7 @@ vice-versa.
 Modify the `/etc/suricata/suricata.yaml` file to have the following
 configuration in the `af-packet` section:
 
-```bash
+```shell-session
 student@base-lab-ids:~$ sudo grep "af-packet" -A 85 /etc/suricata/suricata.yaml
 af-packet:
   - interface: virbr-labs
@@ -530,7 +530,7 @@ not work, start debugging.
 
 You can also inspect the `/var/log/suricata/suricata.log` file and wait for
 all the rule files to be successfully loaded:
-```
+```shell-session
 student@base-lab-ids:~$ tail -f /var/log/suricata/suricata.log
 15/5/2022 -- 06:46:36 - <Config> - Loading rule file: /var/lib/suricata/rules/suricata.rules
 15/5/2022 -- 06:46:45 - <Config> - Loading rule file: /var/lib/suricata/rules/custom.rules
@@ -551,7 +551,7 @@ student@base-lab-ids:~$ tail -f /var/log/suricata/suricata.log
 ```
 :::
 
-```bash
+```shell-session
 student@base-lab-ids:~$ sudo nmap -sX -T3 192.168.100.0/24
 Starting Nmap 7.80 ( https://nmap.org ) at 2022-05-08 20:06 UTC
 Nmap scan report for 192.168.100.81
@@ -621,7 +621,7 @@ multiple rules you can find online (i.e. on GitHub, like
 
 To simulate a Denial-of-Service attack, we will use the `slowhttptest` tool.
 We will install `slowhttptest` on VM2:
-```
+```shell-session
 [student@lab-ids-2 ~]$ sudo dnf -y install epel-release
 [student@lab-ids-2 ~]$ sudo dnf -y install slowhttptest
 ```
@@ -643,7 +643,7 @@ Let's see how it works. You need four terminals: two to the base VM, one to VM1
 From the first terminal from the base VM, let's inspect the alerts that are
 generated by Suricata:
 
-```bash
+```shell-session
 student@base-lab-ids:~/work$ tail -f /var/log/suricata/fast.log
 [...] # any new logs will be displayed here.
 ```
@@ -651,7 +651,7 @@ student@base-lab-ids:~/work$ tail -f /var/log/suricata/fast.log
 From the second terminal on the base VM, let's check that the web server is
 accessible by running the following command:
 
-```bash
+```shell-session
 student@base-lab-ids:~/work$ for i in $(seq 1 200); do curl 192.168.100.81; sleep 2; done
 Welcome to lab-ids-1
 Welcome to lab-ids-1
@@ -661,7 +661,7 @@ Keep the command running.
 
 From the VM2, run the Slowloris attack using the following command:
 
-```bash
+```shell-session
 [student@lab-ids-2 ~]$ slowhttptest -c 10000 -H -i 10 -r 300 -t GET -u http://192.168.100.81
 Fri May 13 21:02:56 2022:
         slowhttptest version 1.8.1
@@ -692,7 +692,7 @@ service available:   NO
 
 Check the web server's availability:
 
-```
+```shell-session
 student@base-lab-ids:~/work$ for i in $(seq 1 200); do curl 192.168.100.81; sleep 1; done
 Welcome to lab-ids-1
 Welcome to lab-ids-1
@@ -738,7 +738,7 @@ Compare it with the output for `curl http://192.168.100.81`.
 
 Start `tcmpdump` using the following command:
 
-```
+```shell-session
 student@base-lab-ids:~$ sudo tcpdump -nvvvXi virbr-labs src 192.168.100.82 and dst 192.168.100.81
 [...]
 17:25:43.688054 IP (tos 0x0, ttl 64, id 36786, offset 0, flags [DF], proto TCP (6), length 60)
@@ -761,7 +761,7 @@ Note the number of packets that are send through the network for only one
 connection and their size.
 
 And the `access.log` file from the web server:
-```bash
+```shell-session
 student@lab-ids-1:~$ tail -n 2 /var/log/nginx/access.log
 192.168.100.82 - - [13/May/2022:21:10:02 +0300] "GET / HTTP/1.1" 400 0 "TESTING_PURPOSES_ONLY" "Opera/9.80 (Macintosh; Intel Mac OS X 10.7.0; U; Edition MacAppStore; en) Mozilla/5.0 (Macintosh; Intel Mac OS X) AppleWebKit/534.34 (KHTML,like Gecko) PhantomJS/1.9.0 (development) Safari/534.34"
 192.168.100.82 - - [13/May/2022:21:10:02 +0300] "GET / HTTP/1.1" 400 0 "TESTING_PURPOSES_ONLY" "Opera/9.80 (Macintosh; Intel Mac OS X 10.7.0; U; Edition MacAppStore; en) Mozilla/5.0 (Macintosh; Intel Mac OS X) AppleWebKit/534.34 (KHTML,like Gecko) PhantomJS/1.9.0 (development) Safari/534.34"

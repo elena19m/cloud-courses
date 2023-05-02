@@ -108,7 +108,7 @@ they were manually ran inside the current shell. This will make the shell define
 and export the OpenStack variables, so child processes will inherit them. You
 will be asked for your password when the token issuing command runs:
 
-```bash
+```shell-session
 [user.name@fep8 ~]$ source scgc_prj-openrc.sh
 Password:
 ```
@@ -117,7 +117,7 @@ After entering your password, if no error is shown, everything should be set as
 expected and you will now be able to run OpenStack commands. For example, list
 the catalog of installed services using `openstack catalog list`:
 
-```bash
+```shell-session
 [user.name@fep8 ~]$ openstack catalog list
 +-------------+----------------+---------------------------------------------+
 | Name        | Type           | Endpoints                                   |
@@ -145,7 +145,7 @@ the catalog of installed services using `openstack catalog list`:
 Generate a new authentication token to inspect its format using the following
 command:
 
-```bash
+```shell-session
 [user.name@fep8 ~]$ openstack token issue
 ```
 
@@ -155,6 +155,6 @@ parameter.
 After you finish inspecting the tokens, you can revoke them using the following
 command (the ID of the token to revoke must be given as a positional parameter):
 
-```bash
+```shell-session
 [user.name@fep8 ~]$ openstack token revoke gAAAAA[...]
 ```

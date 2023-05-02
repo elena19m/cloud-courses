@@ -34,7 +34,7 @@ We recommend using the system's package managers (`apt` / `dnf`) to install pack
 The shell allows you to interact with the system, inspect or modify files and change the state of various processes.
 For example, to list the contents of a directory, you can use the `ls` command:
 
-```bash
+```shell-session
 $ ls
 file1  file2  conversation
 ```
@@ -76,7 +76,7 @@ content of the opened file:
 
 For example, you can redirect the output of the `echo` command like this:
 
-```bash
+```shell-session
 $ echo "Scripting is cool" > output
 ```
 
@@ -90,7 +90,7 @@ of the files are changed depending on the operator.
 
 You can redirect a command's input to read from a file using the `<` operator as you can see below:
 
-```bash
+```shell-session
 $ cat <input_file
 Test input file
 ```
@@ -102,7 +102,7 @@ You can multiple commands at the same time and redirect the output of one comman
 The following example uses `cat` to print the contents of the `conversation` file and the counts the number of lines in the file
 using `wc -l`:
 
-```bash
+```shell-session
 $ cat conversation | wc -l
 9
 ```
@@ -111,14 +111,14 @@ $ cat conversation | wc -l
 When redirecting the output of a command using `>` or `>>`, the shell attempts to open the file in write mode **before**
 obtaining elevated privileges if the command is ran with `sudo`. This means that the following will fail:
 
-```bash
+```shell-session
 $ sudo touch root_file
 $ sudo echo "Test redirect with sudo" > root_file
 ```
 
 You can still redirect the output to a file that you cannot normally write using the following command:
 
-```bash
+```shell-session
 $ echo "Test redirect with tee" | sudo tee root_file
 ```
 :::
@@ -129,7 +129,7 @@ $ echo "Test redirect with tee" | sudo tee root_file
 Like other programming and scripting languages, the `bash` scripting language allows you to define variables. To define a variable,
 you need to use the following syntax (note the lack of spaces around the `=` sign):
 
-```bash
+```shell-session
 $ variable=value
 ```
 
@@ -137,7 +137,7 @@ To expand the value of a variable, you can use either `$variable` or `${variable
 if you wish to append text to the variable, and that text would otherwise be misinterpreted as part of the variable name.
 For example, in the second example below, the variable `variabletext` does not exist, and is expanded to an empty string:
 
-```bash
+```shell-session
 $ variable=value
 $ echo "$variable"
 value
@@ -153,7 +153,7 @@ valuetext
 In the example above the variable is only visible to the shell process. Other processes that are created by the shell
 will not have the variable defined in their environment. To make it visible to child processes you must use the `export` keyword:
 
-```bash
+```shell-session
 $ variable=value
 $ bash -c 'echo ${variable}'
 
@@ -196,7 +196,7 @@ The most commonly used tool to find text in a file is `grep`. It uses regular ex
 a certain pattern. For example, to find all lines that have been sent by **Bob** in the `conversation` file, we can use
 the following command:
 
-```bash
+```shell-session
 $ grep 'Bob:' conversation
 [10:50:34] Bob: Please send me a copy of the report
 [10:50:44] Bob: Can you encrypt the data?
@@ -217,7 +217,7 @@ To perform various operations on text, such as replacing parts of it with other 
 type of regular expressions as `grep` to match text. For example, to replace **Bob**'s name with **Rudy** in the `conversation`
 file, we can do the following:
 
-```bash
+```shell-session
 $ sed 's/Bob:/Rudy:/g' conversation
 [10:50:20] Alice: We need to review the report on the latest spam emails
 [10:50:34] Rudy: Please send me a copy of the report
@@ -242,7 +242,7 @@ want to save the changes to the file, use the `-i` flag.
 a syntax similar to C or PHP. For example, if we want to get the timestamps of all the messages that were sent by **Alice**,
 we can use `awk` like this:
 
-```bash
+```shell-session
 $ awk '{ if ($2 == "Alice:") { print $1 } }' conversation
 [10:50:20]
 [10:50:40]
@@ -259,7 +259,7 @@ on the line that matches the criteria.
 All commands described in this section can operate on the text they receive as standard input; as such, the following
 are equivalent to the commands above:
 
-```bash
+```shell-session
 $ cat conversation | grep 'Bob:'
 $ cat conversation | sed 's/Bob:/Rudy:/g'
 $ cat conversation | awk '{ if ($2 == "Alice:") { print $1 } }'
@@ -286,7 +286,7 @@ files to make the changes permanent. However, temporary configurations are usual
 
 Use the `ip address show` to see the system's network interfaces and associated configuration parameters:
 
-```bash
+```shell-session
 $ ip address show
 1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1000
     link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
@@ -313,13 +313,13 @@ $ ip address show
 
 To add or delete the IP address of an interface, the `ip` command provides the following commands:
 
-```bash
+```shell-session
 $ sudo ip address add|delete A.B.C.D/M dev interface_name
 ```
 
 For example, to delete the IP address of the `virbr0` interface we can use the following command:
 
-```bash
+```shell-session
 $ sudo ip address delete 192.168.122.1/24 dev virbr0
 $ ip address show
 [...]
@@ -330,7 +330,7 @@ $ ip address show
 
 To add the IP address back, we will perform the same operation, but specifying the `add` option, instead of `delete`:
 
-```bash
+```shell-session
 $ sudo ip address add 192.168.122.1/24 dev virbr0
 $ ip address show
 [...]
@@ -346,7 +346,7 @@ $ ip address show
 
 When debugging issues with internet connectivity, the first step is checking if the system uses the correct default route:
 
-```bash
+```shell-session
 $ ip route show
 default via 10.9.0.1 dev eth0 proto dhcp src 10.9.X.Y metric 100
 [...]
@@ -358,7 +358,7 @@ Since `eth0` is our connection the internet, this is the expected configuration.
 Next, we must check whether the issue is not, in fact, related to internet access, but to the domain name resolution. If we can
 ping a public IP address, such as `1.1.1.1`, but `dig` fails, it means that there is an issue with domain resolution:
 
-```bash
+```shell-session
 $ ping -c1 1.1.1.1
 PING 1.1.1.1 (1.1.1.1) 56(84) bytes of data.
 64 bytes from 1.1.1.1: icmp_seq=1 ttl=56 time=1.66 ms
@@ -374,7 +374,7 @@ $ dig google.com
 
 In such a case, make sure that there is a nameserver specified in `/etc/resolv.conf` before testing the connectivity again:
 
-```bash
+```shell-session
 $ cat /etc/resolv.conf
 nameserver 1.1.1.1
 ```

@@ -28,7 +28,7 @@ For this lab, we will be using **[kind](https://kind.sigs.k8s.io/)** (acronym fo
 
 For creating a cluster on the lab machine, use the `kind create cluster` command:
 
-```bash
+```shell-session
 student@lab-kubernetes:~$ kind create cluster
 Creating cluster "kind" ...
  ✓ Ensuring node image (kindest/node:v1.23.4) 🖼
@@ -55,7 +55,7 @@ The official tool for interacting with a Kubernetes cluster is `kubectl`.
 
 Use `kubectl cluster-info` to show information about the cluster you deployed. You will see that the cluster is running locally:
 
-```bash
+```shell-session
 student@lab-kubernetes:~$ kubectl cluster-info
 Kubernetes control plane is running at https://127.0.0.1:41821
 CoreDNS is running at https://127.0.0.1:41821/api/v1/namespaces/kube-system/services/kube-dns:dns/proxy
@@ -65,7 +65,7 @@ To further debug and diagnose cluster problems, use 'kubectl cluster-info dump'.
 
 Use `kubectl get nodes` to show information about the cluster nodes. You will see just a single node:
 
-```bash
+```shell-session
 student@lab-kubernetes:~$ kubectl get nodes
 NAME                 STATUS   ROLES                  AGE   VERSION
 kind-control-plane   Ready    control-plane,master   19h   v1.23.4

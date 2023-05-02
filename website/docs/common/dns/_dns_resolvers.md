@@ -1,7 +1,7 @@
 In this task we will examine how we ca use two DNS resolvers to query DNS servers.
 The two DNS resolvers we will use are **`host`** and **`dig`**.
 
-```
+```shell-session
 root@dns:~# apt update
 [...]
 root@dns:~# apt install host dnsutils
@@ -10,7 +10,7 @@ root@dns:~# apt install host dnsutils
 
 ### host
 Next, we find out the IP address of a website using **host**.
-```
+```shell-session
 root@dns:~# host acs.pub.ro
 acs.pub.ro has address 141.85.227.151
 acs.pub.ro mail is handled by 10 mx.acs.pub.ro.
@@ -19,7 +19,7 @@ acs.pub.ro mail is handled by 10 mx.acs.pub.ro.
 We can see from this output DNS records, such as NS(name server), MX(mail server), AAAA(IPv6 address), SOA(start of authority).
 
 For more information, we can use the `-v` parameter.
-```
+```shell-session
 root@dns:~# host -v acs.pub.ro
 Trying "acs.pub.ro"
 ;; ->>HEADER<<- opcode: QUERY, status: NOERROR, id: 1805
@@ -78,7 +78,7 @@ Received 173 bytes from 141.85.241.15#53 in 2 ms
 ```
 
 In order to request a specific record we can use the `-t` parameter and the record we want.
-```
+```shell-session
 root@dns:~# host -t ns acs.pub.ro
 acs.pub.ro name server ns2.cs.pub.ro.
 acs.pub.ro name server ns1.cs.pub.ro.
@@ -90,7 +90,7 @@ acs.pub.ro has SOA record ns1.cs.pub.ro. admin.acs.pub.ro. 2017120701 28800 7200
 ```
 
 **host** will query the DNS servers from `/etc/resolv.conf`. If we want to query a specific DNS server, we can use host as such:
-```
+```shell-session
 root@dns:~# host acs.pub.ro 8.8.8.8
 Using domain server:
 Name: 8.8.8.8
@@ -110,7 +110,7 @@ It is noteworthy, that dig and host do not use `/etc/nsswitch.conf` for querying
 DNS servers and they do not use the system's DNS resolver, which is usually a library.
 We can see this from the following commands:
 
-```
+```shell-session
 root@dns:~# strace -e openat host acs.pub.ro
 [...]
 openat(AT_FDCWD, "/etc/resolv.conf", O_RDONLY)      = 6

@@ -16,7 +16,7 @@ The `.qcow2` files will be used to start virtual machines using the `runvm.sh` s
   * Start the virtual machines using `bash runvm.sh`.
   * The username for connecting to the nested VMs is `student` and the password is `student`.
 
-```bash
+```shell-session
 $ # change the working dir
 $ cd ~/work
 $ # download the archive
@@ -43,7 +43,7 @@ You can create and manage software RAID arrays in Linux using the `mdadm` tool.
 Before beginning, make sure that you have it installed on both virtual
 machines.
 
-```bash
+```shell-session
 student@lab-nfs-1:~$ sudo apt update
 student@lab-nfs-1:~$ sudo apt install mdadm
 ```
@@ -54,7 +54,7 @@ student@lab-nfs-1:~$ sudo apt install mdadm
 At this point we can create a new RAID-0 array using `sdb1`, `sdc1` and `sdd1`
 on the first virtual machine.
 
-```bash
+```shell-session
 student@lab-nfs-1:~$ sudo mdadm --create /dev/md0 --level=0 --raid-devices=3 /dev/sdb1 /dev/sdc1 /dev/sdd1
 mdadm: Defaulting to version 1.2 metadata
 mdadm: array /dev/md0 started.
@@ -63,7 +63,7 @@ mdadm: array /dev/md0 started.
 The `/proc/mdstat` pseudo-device provides some information about the existing
 arrays. We can inspect it by printing its contents.
 
-```bash
+```shell-session
 student@lab-nfs-1:~$ sudo cat /proc/mdstat
 Personalities : [linear] [multipath] [raid0] [raid1] [raid6] [raid5] [raid4] [raid10]
 md0 : active raid0 sdd1[2] sdc1[1] sdb1[0]
@@ -78,7 +78,7 @@ From the output above, you can see that we have an active RAID-0 array that uses
 We can retrieve additional information about an array using the `mdadm` command
 with the `--detail` argument.
 
-```bash
+```shell-session
 student@lab-nfs-1:~$ sudo mdadm --detail /dev/md0
 /dev/md0:
            Version : 1.2
@@ -116,7 +116,7 @@ Consistency Policy : none
 
 We will attempt to remove one of the disks from the array:
 
-```bash
+```shell-session
 student@lab-nfs-1:~$ sudo mdadm /dev/md0 --fail /dev/sdd1
 mdadm: set device faulty failed for /dev/sdd1:  Device or resource busy
 ```
@@ -128,7 +128,7 @@ As you can see, the command has failed. Why does this happen?
 Let's remove the existing RAID-0 array and replace it with a RAID-1 array
 containing the same disks. We will begin by stopping the existing array.
 
-```bash
+```shell-session
 student@lab-nfs-1:~$ sudo mdadm --stop /dev/md0
 mdadm: stopped /dev/md0
 student@lab-nfs-1:~$ sudo mdadm --detail /dev/md0
@@ -138,13 +138,13 @@ mdadm: cannot open /dev/md0: No such file or directory
 We can then proceed to remove the data from the previously used disks'
 superblocks to clean them.
 
-```bash
+```shell-session
 student@lab-nfs-1:~$ sudo mdadm --zero-superblock /dev/sdb1 /dev/sdc1 /dev/sdd1
 ```
 
 Finally, we can create the new array.
 
-```bash
+```shell-session
 student@lab-nfs-1:~$ sudo mdadm --create /dev/md0 --level=1 --raid-devices=3 /dev/sdb1 /dev/sdc1 /dev/sdd1
 mdadm: Note: this array has metadata at the start and
     may not be suitable as a boot device.  If you plan to
@@ -188,7 +188,7 @@ Consistency Policy : resync
 
 Let's try to remove a disk from the newly created array. The disk is first
 marked as faulty, and then removed completely.
-```bash
+```shell-session
 student@lab-nfs-1:~$ sudo mdadm /dev/md0 --fail /dev/sdd1
 mdadm: set /dev/sdd1 faulty in /dev/md0
 student@lab-nfs-1:~$ sudo mdadm --detail /dev/md0
@@ -244,7 +244,7 @@ Using partitions `sdb2`, `sdc2` and `sdd2` create the RAID-5 array named `md1`
 on **both** virtual machines. We will be using the RAID-5 arrays later. The
 output should look similar to the one below.
 
-```bash
+```shell-session
 student@lab-nfs-2:~$ sudo mdadm --detail /dev/md1
 /dev/md1:
            Version : 1.2
@@ -287,7 +287,7 @@ On the first virtual machine, mark `sdb2` as faulty and then remove it from the
 RAID-5 array. You should see an output similar to the one below when inspecting
 the configuration.
 
-```bash
+```shell-session
 student@lab-nfs-1:~$ sudo mdadm --detail /dev/md1
 /dev/md1:
            Version : 1.2
@@ -324,7 +324,7 @@ Consistency Policy : resync
 We can add a device back to the RAID array to restore it. In this case,
 we will add the device that we have removed.
 
-```bash
+```shell-session
 student@lab-nfs-1:~$ sudo mdadm /dev/md1 --add /dev/sdb2
 mdadm: added /dev/sdb2
 student@lab-nfs-1:~$ sudo mdadm --detail /dev/md1
@@ -368,7 +368,7 @@ Consistency Policy : resync
 In order to make our RAID configuration persistent, we can run the following
 commands:
 
-```bash
+```shell-session
 student@lab-nfs-1:~$ sudo mdadm --detail --scan | sudo tee /etc/mdadm/mdadm.conf
 ARRAY /dev/md0 metadata=1.2 name=lab-nfs-1:0 UUID=e34cffe9:9243f0c4:bb101f64:912c10fb
 ARRAY /dev/md1 metadata=1.2 name=lab-nfs-1:1 UUID=f7d4fc6c:6bddca12:9333c1c0:c2110b28

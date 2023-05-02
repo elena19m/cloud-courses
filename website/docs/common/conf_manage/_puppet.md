@@ -9,7 +9,7 @@ scripts starts.
 
 To use Puppet you must first install the `puppet` package on your system.
 
-```bash
+```shell-session
 [student@lab-conf-manage ~]$ sudo dnf install puppet
 ```
 
@@ -125,7 +125,7 @@ We want to create the user `worker` so that:
 
 We can create the user with the following command:
 
-```bash
+```shell-session
 [student@lab-conf-manage ~]$ sudo puppet resource user worker ensure=present shell=/bin/sh home=/home/worker
 Notice: /User[worker]/ensure: created
 user { 'worker':
@@ -145,7 +145,7 @@ In order to remove a resource, the `ensure` parameter must be set to `absent`.
 As an example, to remove the `worker` user that we have previously created, we
 can use the following command:
 
-```bash
+```shell-session
 [student@lab-conf-manage ~]$ sudo puppet resource user worker ensure=absent
 Notice: /User[worker]/ensure: removed
 user { 'worker':
@@ -478,7 +478,7 @@ variables in manifests.
 We can use the `facter` command to see a list of all variables that are defined
 by the data engine.
 
-```bash
+```shell-session
 [student@lab-conf-manage ~]$ facter
 augeas => {
   version => "1.12.0"

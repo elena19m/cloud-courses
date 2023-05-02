@@ -11,7 +11,7 @@ We can create a service using `kubectl expose` or using a manifest. We will choo
 
 Let's define a service manifest and apply it:
 
-```bash
+```shell-session
 student@lab-kubernetes:~$ cat hello-app-service.yaml
 apiVersion: v1
 kind: Service
@@ -47,14 +47,14 @@ There are multiple attributes that describe ports:
 
 Before connecting to the service, we must determine the node's IP address:
 
-```bash
+```shell-session
 student@lab-kubernetes:~$ kubectl describe nodes kind-control-plane | grep InternalIP
   InternalIP:  172.18.0.2
 ```
 
 and then connect via `curl`:
 
-```bash
+```shell-session
 student@lab-kubernetes:~$ curl http://172.18.0.2:30080
 Hello, world!
 Version: 1.0.0
@@ -67,7 +67,7 @@ If the traffic to our app increases, we may need to scale the app (create mode p
 
 For example, let's scale `hello-app` to 10 pods. For this, change the value for `replicas` in `hello-app-deployment.yaml` to `10`, and reapply the manifest:
 
-```bash
+```shell-session
 student@lab-kubernetes:~$ kubectl apply -f hello-app-deployment.yaml
 deployment.apps/hello-app configured
 
@@ -87,7 +87,7 @@ hello-app-599bb4bf7f-wh7qx   0/1     ContainerCreating   0          6s
 
 After a while, you'll see that all 10 pods are running. Also, the deployment shows 10 available pods:
 
-```bash
+```shell-session
 student@lab-kubernetes:~$ kubectl get deployments
 NAME        READY   UP-TO-DATE   AVAILABLE   AGE
 hello-app   10/10   10           10          45m
@@ -97,7 +97,7 @@ hello-app   10/10   10           10          45m
 
 What actually happened is that a Kubernetes **replica set** associated with the deployment, of scale `10`, was created:
 
-```bash
+```shell-session
 student@lab-kubernetes:~$ kubectl get replicasets
 NAME                   DESIRED   CURRENT   READY   AGE
 hello-app-599bb4bf7f   10        10        10      1m
@@ -107,7 +107,7 @@ hello-app-599bb4bf7f   10        10        10      1m
 
 Connect multiple times to the service, using `curl`. You will notice that each time, a different pod responds:
 
-```bash
+```shell-session
 student@lab-kubernetes:~$ curl http://172.18.0.2:30080
 Hello, world!
 Version: 1.0.0
@@ -138,14 +138,14 @@ Deploying a different image version is done via editing the manifest and modifyi
 
 Update `hello-app-deployment.yaml` and change the image tag to `2.0`. Then, redeploy the manifest:
 
-```bash
+```shell-session
 student@lab-kubernetes:~$ kubectl apply -f hello-app-deployment.yaml
 deployment.apps/hello-app configured
 ```
 
 To follow the status of the update, use `kubectl rollout status`:
 
-```bash
+```shell-session
 student@lab-kubernetes:~$ kubectl rollout status deployment hello-app
 Waiting for deployment "hello-app" rollout to finish: 5 out of 10 new replicas have been updated...
 [...]
@@ -154,7 +154,7 @@ deployment "hello-app" successfully rolled out
 
 Run a `curl` to confirm that the upgraded application is running:
 
-```bash
+```shell-session
 student@lab-kubernetes:~$ curl http://172.18.0.2:30080
 Hello, world!
 Version: 2.0.0
@@ -165,7 +165,7 @@ Hostname: hello-app-56c5b6c78b-74x9s
 
 After the upgrade, a new replica set with scale `10` and the new image was created, and the old replica set was scaled down to `0`:
 
-```bash
+```shell-session
 student@lab-kubernetes:~$ kubectl get replicasets
 NAME                   DESIRED   CURRENT   READY   AGE
 hello-app-56c5b6c78b   10        10        10      5m55s
@@ -174,14 +174,14 @@ hello-app-599bb4bf7f   0         0         0       60m
 
 For quickly reverting to the previous version (for example, in case of an error), we can use `kubectl rollout undo`:
 
-```bash
+```shell-session
 student@lab-kubernetes:~$ kubectl rollout undo deployment hello-app
 deployment.apps/hello-app rolled back
 ```
 
 Confirm that the rollback was successful:
 
-```bash
+```shell-session
 student@lab-kubernetes:~$ curl http://172.18.0.2:30080
 Hello, world!
 Version: 1.0.0

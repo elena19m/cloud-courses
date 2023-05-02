@@ -13,7 +13,7 @@ The first step is adding a tap interface to each of the virtual machines. We can
 add the interfaces by adding the `-device` and the `-netdev` parameters to
 the `kvm` command.
 
-```bash
+```shell-session
 student@lab-virt-host:~/work$ sudo kvm -smp 2 -m 512 -hda sda-vm1.qcow2 \
     -device e1000,netdev=net0,mac=00:11:22:33:44:55 -netdev tap,id=net0,script=no
 ```
@@ -33,14 +33,14 @@ sure that the device names and MAC addresses are different from the first one's.
 We must manually set the tap interfaces state to up (do the same for the second
 virtual machine's interface):
 
-```bash
+```shell-session
 student@lab-virt-host:~$ sudo ip link set dev tap0 up
 ```
 
 Next, change the hostname on both virtual machines to `vm1`, and `vm2`
 respectively.
 
-```bash
+```shell-session
 student@debian-11:~$ sudo hostnamectl set-hostname vm1
 student@debian-11:~$ echo '127.0.0.1 vm1' | sudo tee -a /etc/hosts
 
@@ -55,7 +55,7 @@ implemented in the Linux kernel).
 
 Start by creating a bridge named `br0` and connect the tap interfaces to it:
 
-```bash
+```shell-session
 student@lab-virt-host:~/work$ sudo brctl addbr br0
 student@lab-virt-host:~/work$ sudo ip link set dev br0 up
 student@lab-virt-host:~/work$ sudo brctl addif br0 tap0
@@ -73,7 +73,7 @@ machines. Verify that you have connectivity between the three systems.
 To get internet access inside the virtual machines, the host system must perform
 NAT address translations. To enable NAT translation, run the following commands:
 
-```bash
+```shell-session
 student@lab-virt-host:~/work$ sudo sysctl -w net.ipv4.ip_forward=1
 net.ipv4.ip_forward = 1
 student@lab-virt-host:~/work$ sudo iptables -t nat -A POSTROUTING -o eth0 -j MASQUERADE

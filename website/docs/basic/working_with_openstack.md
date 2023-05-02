@@ -178,7 +178,7 @@ Then, connect to the virtual machine.
 Pay attention to the IP address that was assigned to your virtual machine and to the keypair name you have previously created and provided to OpenStack.
 Please note that the username you must use when logging in to the virtual machine may also differ. `SCGC Template` uses the username `student`.
 
-```bash
+```shell-session
 [user.name@fep8 ~]$ ssh -i ~/.ssh/id_openstack student@10.9.X.Y
 The authenticity of host '10.9.X.Y (10.9.X.Y)' can't be established.
 ...
@@ -197,7 +197,7 @@ Notice that the first time you want to connect to a new virtual machine, the SSH
 
 When connecting through SSH, the following issues may appear:
   *  the virtual machine has started, but the SSH daemon has not started yet. In this case, you may see a connenction refused message. In this case, if the service should start at boot time, wait until the virtual machine finishes the booting process.
-```bash
+```shell-session
 [user.name@fep8 ~]$ ssh -i ~/.ssh/id_openstack student@10.9.X.Y
 ssh: connect to host 10.9.X.Y port 22: Connection refused
 ```
@@ -212,7 +212,7 @@ Someone could be eavesdropping on you right now (man-in-the-middle attack)!
 ...
 ```
   * the virtual machine refused the SSH key (and will probably request password authentication). This is likely because the public SSH key is not in the virtual machine user's ''~/.ssh/authorized_keys'', because it was either removed, or not properly injected through ''cloud-init''. To check if the key was injected, click on the virtual machine in the ''Project'' &rarr; ''Compute'' &rarr; ''Instances'' section, and then navigate to the ''Log'' tab. If the key was added properly, you should see an output like the following towards the end of the log. If the key was not added, or was removed after logging in and you cannot access the virtual machine, you must remove and create the virtual machine again.
-```bash
+```
 ci-info: +++++++++Authorized keys from /home/student/.ssh/authorized_keys for user student++++++++++
 ci-info: +---------+-------------------------------------------------+---------+-------------------+
 ci-info: | Keytype |                Fingerprint (md5)                | Options |      Comment      |
@@ -237,7 +237,7 @@ you can use the `-X` option when connecting to the remote system.
 If you must go through multiple systems when connecting (e.g., you connect to **fep** before connecting to the Openstack virtual machine),
 you must set this flag for each connection.
 
-```bash
+```shell-session
 user@workstation ~ $ ssh -X user.name@fep.grid.pub.ro
 ...
 [user.name@fep8 ~]$ ssh -X -i ~/.ssh/id_openstack student@10.9.X.Y
@@ -274,7 +274,7 @@ afterwards, use the steps described for the Linux client.
 To test that X11 forwarding works, we will use some simple apps.
 On the virtual machine, install `x11-apps` and the run `xeyes` or `xclock`.
 If X11 port forwarding works properly, you should see a newly opened window on your system, with a pair of eyes that follow your mouse pointer, or an analog clock, respectively.
-```bash
+```shell-session
 student@scgc-lab00:~$ sudo apt install -y x11-apps
 student@scgc-lab00:~$ xeyes
 student@scgc-lab00:~$ xclock

@@ -8,7 +8,7 @@
   * The username for connecting to the VM is `student`.
   * For the following exercises, the resources can be found in the laboratory archive:
 
-```bash
+```shell-session
 $ cd work/
 $ wget https://repository.grid.pub.ro/cs/scgc/laboratoare/lab-cert.zip
 $ unzip lab-cert.zip

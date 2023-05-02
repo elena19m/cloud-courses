@@ -11,13 +11,13 @@ as a front-end for libvirt.
 To use libvirt we need to install the `virtinst`, `libvirt-clients`,
 `virt-top`, `virt-viewer`, and `libvirt-daemon-system` packages.
 
-```bash
+```shell-session
 student@lab-virt-host:~/work$ sudo apt install virtinst libvirt-clients virt-top virt-viewer libvirt-daemon-system
 ```
 
 As a first step, we must enable the networking service provided by libvirt:
 
-```bash
+```shell-session
 student@lab-virt-host:~/work$ sudo virsh -c qemu:///system net-start default
 ```
 
@@ -38,7 +38,7 @@ error: Requested operation is not valid: network is already active
 The `virt-install` tool can be used to start managing a virtual machine using
 libvirt:
 
-```bash
+```shell-session
 student@lab-virt-host:~/work$ sudo virt-install --connect qemu:///system --name VM1 --hvm --ram 512 --disk path=debian-11.qcow2 --network network=default --vnc --noautoconsole --import
 WARNING  No operating system detected, VM performance may suffer. Specify an OS with --os-variant for optimal results.
 
@@ -71,7 +71,7 @@ We can use the `virsh` console to manage the libvirt virtual machines. Connect
 to the local daemon and list the running instances (you can also run the tool in
 interactive mode if you do not specify a command):
 
-```bash
+```shell-session
 student@lab-virt-host:~/work$ sudo virsh list
  Id   Name   State
 ----------------------
@@ -85,7 +85,7 @@ machine's ID.
 To connect to the VNC server, we must first identify the VNC port the virtual
 machine's server listens on, and then connect to it.
 
-```bash
+```shell-session
 student@lab-virt-host:~/work$ sudo virsh vncdisplay VM1
 127.0.0.1:0
 
@@ -97,7 +97,7 @@ running in the background.
 
 To stop the virtual machine we can use the `shutdown` command:
 
-```bash
+```shell-session
 student@lab-virt-host:~/work$ sudo virsh shutdown VM1
 Domain VM1 is being shutdown
 
@@ -109,7 +109,7 @@ student@lab-virt-host:~/work$ sudo virsh list
 Stopped virtual machines are not displayed in the `list` command by default. You
 must add the `--all` parameter to see them:
 
-```bash
+```shell-session
 student@lab-virt-host:~/work$ sudo virsh list --all
  Id   Name   State
 -----------------------
@@ -118,7 +118,7 @@ student@lab-virt-host:~/work$ sudo virsh list --all
 
 To restart a virtual machine you can use the `start` command:
 
-```bash
+```shell-session
 student@lab-virt-host:~/work$ sudo virsh start VM1
 Domain VM1 started
 
@@ -131,7 +131,7 @@ student@lab-virt-host:~/work$ sudo virsh list
 To completely delete the virtual machine, you can use the `undefine` and
 `destroy` commands together.
 
-```bash
+```shell-session
 student@lab-virt-host:~/work$ sudo virsh destroy VM1
 Domain VM1 destroyed
 

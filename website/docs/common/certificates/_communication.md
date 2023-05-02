@@ -6,19 +6,19 @@
 First, in a separate terminal, start a `tcpdump` session to dump traffic on the loopback interface.
 We will also use this for the next task.
 
-```bash
+```shell-session
 $ sudo tcpdump -A -i lo port 12345
 ```
 
 Now, start a simple server listening on the port `tcpdump` is monitoring.
 
-```bash
+```shell-session
 $ nc -l 12345
 ```
 
 To connect to the server, run the following in another terminal.
 
-```bash
+```shell-session
 $ nc localhost 12345
 ```
 
@@ -33,7 +33,7 @@ Also, the messages can be seen in plaintext in the `tcpdump` log.
 Use `openssl s_server` to start a server listening on the same port as the previous exercise.
 Use the `server.tld` certificate previously generated.
 
-```bash
+```shell-session
 $ openssl s_server -key server.key -cert server.crt -accept 12345
 Using default temp DH parameters
 ACCEPT
@@ -41,7 +41,7 @@ ACCEPT
 
 Connect to the server using `openssl s_client`.
 
-```bash
+```shell-session
 $ openssl s_client -connect localhost:12345
 CONNECTED(00000003)
 Can't use SSL_get_servername
@@ -65,7 +65,7 @@ The validation of the server certificate has failed.
 
 Attempt the connection again, this time specifying the CA certificate.
 
-```bash
+```shell-session
 $ openssl s_client -CAfile ca/ca.crt -connect localhost:12345
 CONNECTED(00000003)
 Can't use SSL_get_servername

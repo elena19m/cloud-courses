@@ -3,7 +3,7 @@
 As mentioned before, we will be using cockpit to configure the LDAP server.
 To enable the cockpit service, run the following command:
 
-```bash
+```shell-session
 [student@lab-ldap ~]$ sudo systemctl enable --now cockpit.socket
 ```
 
@@ -33,7 +33,7 @@ the "Connecting to virtual machines from your system" section in the
 
 To create a dynamic port forward between your system and the virtual machine
 run one of the following commands:
-```bash
+```shell-session
 user@local:~$ ssh -fN -D 8220 openstack-10.9.X.Y
 # or
 user@local:~$ ssh -i ~/.ssh/id_openstack -J user.name@fep.grid.pub.ro -fN -D 8220 student@10.9.X.Y
@@ -83,14 +83,14 @@ create (to fep, and then to the virtual machine).
 
 For example, when connecting to fep, you can use the following command:
 
-```bash
+```shell-session
 user@local:~$ ssh user.name@fep.grid.pub.ro -X -C -o ServerAliveInterval=100
 ```
 
 After connecting to the OpenStack virtual machine, install the latest verion
 of Firefox and start a window.
 
-```bash
+```shell-session
 student@openstack-vm:~$ sudo apt update
 student@openstack-vm:~$ sudo apt install firefox
 student@openstack-vm:~$ firefox
@@ -190,7 +190,7 @@ has been created by querying the database from the command line. However,
 to be able to access the information, you will need to authenticate as the
 Directory Manager.
 
-```bash
+```shell-session
 [student@lab-ldap ~]$ ldapsearch -W -D 'cn=Directory Manager' -x -b 'dc=lab-ldap,dc=scgc,dc=ro'
 Enter LDAP Password:
 # extended LDIF

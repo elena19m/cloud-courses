@@ -14,7 +14,7 @@ scripts for Windows systems.
 
 We are going to install and configure Ansible on the host system:
 
-```bash
+```shell-session
 student@lab-conf-manage-host:~$ sudo apt update
 student@lab-conf-manage-host:~$ sudo apt install ansible
 ```
@@ -23,7 +23,7 @@ Make sure to check the version of Ansible that you have installed. Later
 versions of Ansible may rename modules and add functionality, so you must ensure
 that you use the correct documentation for your version.
 
-```bash
+```shell-session
 student@lab-conf-manage-host:~$ ansible --version
 ansible 2.9.6
   config file = /etc/ansible/ansible.cfg
@@ -77,7 +77,7 @@ We can test our connection to the hosts in the inventory file. To run the `ping`
 module (tests that we can connect to the system) against `localhost` we can run
 the following command:
 
-```bash
+```shell-session
 student@lab-conf-manage-host:~$ ansible -i inventory.yml -m ping localhost
 localhost | SUCCESS => {
     "ansible_facts": {
@@ -93,7 +93,7 @@ all hosts in the group (in this case, just the `192.168.100.91` virtual machine)
 using SSH keys. The following command runs the `ping` module on all servers in
 the `remotes` group.
 
-```bash
+```shell-session
 student@lab-conf-manage-host:~$ ansible -i inventory.yml -m ping remotes
 vm | SUCCESS => {
     "ansible_facts": {
@@ -113,7 +113,7 @@ information about the task that was executed.
 Ansible has a fact gathering engine similar to Puppet. To gather facts about the
 remote hosts we can use the `setup` module.
 
-```bash
+```shell-session
 student@lab-conf-manage-host:~$ ansible -i inventory.yml -m setup vm
 vm | SUCCESS => {
     "ansible_facts": {
@@ -147,7 +147,7 @@ authenticator configuration file on the host. To install the required packages
 and create a Google authenticator configuration file with sensible defaults we
 can use the following commands:
 
-```bash
+```shell-session
 student@lab-conf-manage-host:~$ sudo apt install libpam-google-authenticator qrencode
 student@lab-conf-manage-host:~$ google-authenticator -t -d -Q UTF8 -r 3 -R 30 -w 3 -e 5
 ```
@@ -182,7 +182,7 @@ We will begin by copying the existing configuration files from the virtual
 machine to the host. The files must be updated to enable the Google
 authenticator PAM plugin.
 
-```bash
+```shell-session
 student@lab-conf-manage-host:~$ mkdir files
 # Copy the `/etc/pam.d/sshd` and `/etc/ssh/sshd_config` files from the VM to the `files` directory.
 # The files should be named `pam_sshd` and `sshd_config`.
@@ -264,7 +264,7 @@ you can also add the entire file as-is to the vault. However, since its contents
 do not have to be human-readable in the configuration, converting it makes the
 configuration simpler. Run the command below and copy the output.
 
-```bash
+```shell-session
 student@lab-conf-manage-host:~$ base64 ~/.google_authenticator | paste -s -d ''
 ```
 
@@ -274,7 +274,7 @@ password will be requested when the vault is read or edited, so make sure to use
 a password that you will remember (you can also keep it in a separate file that
 is usually not accessible to the Ansible server).
 
-```bash
+```shell-session
 student@lab-conf-manage-host:~$ ansible-vault create files/vault
 New Vault password:
 Confirm New Vault password:
@@ -298,7 +298,7 @@ After closing the editor, the configuration file is automatically encrypted.
 Confirm that the file is encrypted and you can view it using the `ansible-vault`
 command again.
 
-```bash
+```shell-session
 student@lab-conf-manage-host:~$ cat files/vault
 $ANSIBLE_VAULT;1.1;AES256
 [...]
@@ -426,7 +426,7 @@ vm                         : ok=8    changed=5    unreachable=0    failed=0    s
 You can test the connection to the virtual machine using the following command
 to force using the `keyboard-interactive` authentication method:
 
-```bash
+```shell-session
 student@lab-conf-manage-host:~$ ssh 192.168.100.91 -o PreferredAuthentications=keyboard-interactive
 ```
 
@@ -435,7 +435,7 @@ You may notice that you are **not** able to login on the remote system if it is
 running a RedHat operating system (e.g., Alma Linux). Inspect the journal logs on
 the system to identify the problem:
 
-```bash
+```shell-session
 [student@lab-conf-manage ~]$ sudo journalctl -xe -u sshd
 ```
 

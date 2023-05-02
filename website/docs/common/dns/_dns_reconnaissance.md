@@ -11,8 +11,10 @@ You can discover new hosts, maybe ones not exposed to the Internet
 From there, you can start the next attack step.
 
 Add the following zone to your DNS server:
-```
+```shell-session
 $ cat /etc/bind/db.demoscgc.ro
+```
+```dns-zone
 ;
 ; BIND data file for local loopback interface
 ;
@@ -56,13 +58,13 @@ Don't forget to add another zone to the `/etc/bind/named.conf.local` file.
 Restart `bind`.
 
 Install `dnsrecon` on the **BASE VM**:
-```
+```shell-session
 $ sudo apt update
 $ sudo apt install dnsrecon
 ```
 
 Start a scan over your DNS Server:
-```
+```shell-session
 $ dnsrecon -d demoscgc.ro -n 192.168.100.11 -t std,brt
 [*] Performing General Enumeration of Domain:demoscgc.ro
 [-] DNSSEC is not configured for demoscgc.ro

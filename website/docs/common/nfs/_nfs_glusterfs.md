@@ -18,7 +18,7 @@ of filesystems are also supported.
 The `xfsprogs` package is required to manage XFS filesystems. Make sure that it
 is installed on both virtual machines.
 
-```bash
+```shell-session
 student@lab-nfs-1:~$ sudo apt install xfsprogs
 ```
 
@@ -26,7 +26,7 @@ Proceed by creating an XFS partition on the `md1` disk that you have created
 before. We will first create a partition that covers the entire disk, and
 then create the filesystem inside the partition.
 
-```bash
+```shell-session
 student@lab-nfs-1:~$ sudo fdisk /dev/md1
 
 Welcome to fdisk (util-linux 2.34).
@@ -74,7 +74,7 @@ this example.
 The mount will use the newly created partition `p1` on the `md1` device.
 :::
 
-```bash
+```shell-session
 student@lab-nfs-1:~$ sudo mkdir -p /export
 student@lab-nfs-1:~$ echo '/dev/md1p1 /export xfs defaults 1 2' | sudo tee -a /etc/fstab
 /dev/md1p1 /export xfs defaults 1 2
@@ -97,7 +97,7 @@ Repeat the steps on the second virtual machine.
 Install the GlusterFS daemon, and then enable and start it on both virtual
 machines.
 
-```bash
+```shell-session
 student@lab-nfs-1:~$ sudo apt install glusterfs-server
 student@lab-nfs-1:~$ sudo systemctl enable --now glusterd
 ```
@@ -107,7 +107,7 @@ systems. You **must** first add hostname-IP mappings for the two storage
 servers in `/etc/hosts` on both virtual machines. Afterwards, you
 can run the following commands to check that a GlusterFS cluster can be created:
 
-```bash
+```shell-session
 student@lab-nfs-1:~$ sudo gluster peer probe lab-nfs-2
 peer probe: success.
 student@lab-nfs-1:~$ sudo gluster peer status
@@ -121,7 +121,7 @@ State: Peer in Cluster (Connected)
 If the hosts are connected, we can create a GlusterFS volume using the
 partitions that we have created in the RAID arrays on the two virtual machines.
 
-```bash
+```shell-session
 student@lab-nfs-1:~$ sudo gluster volume create gluster-vol transport tcp lab-nfs-1:/export/brick1 lab-nfs-2:/export/brick1
 volume create: gluster-vol: success: please start the volume to access data
 student@lab-nfs-1:~$ sudo gluster volume info gluster-vol
@@ -145,7 +145,7 @@ nfs.disable: on
 After setting up the volume, we can configure network access and start the
 volume.
 
-```bash
+```shell-session
 student@lab-nfs-1:~$ sudo gluster volume set gluster-vol auth.allow 192.168.100.*
 volume set: success
 student@lab-nfs-1:~$ sudo gluster volume start gluster-vol
@@ -158,7 +158,7 @@ volume start: gluster-vol: success
 If the setup went smoothly, we can mount the volume on the host virtual machine
 (the one created in OpenStack).
 
-```bash
+```shell-session
 student@lab-nfs-host:~/work$ sudo apt update
 student@lab-nfs-host:~/work$ sudo apt install glusterfs-client
 student@lab-nfs-host:~/work$ sudo mkdir /export
@@ -189,7 +189,7 @@ that maximizes storage size. Afterwards, use GlusterFS to provide redundancy.
 
 To remove an existing GlusterFS volume, do the following:
 
-```bash
+```shell-session
 # On the host virtual machine
 student@lab-nfs-host:~/work$ sudo umount /export
 # On one of the storage virtual machines

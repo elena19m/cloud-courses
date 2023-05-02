@@ -17,7 +17,7 @@ Your DNS zone must have at least an A record and a NS record for this exercise.
 The helper VM has a Alma Linux 8 operating system, which has some differences in the setup of the DNS server.
 
 To install **BIND** use the following command:
-```
+```shell-session
 [student@helper ~]$ sudo dnf install bind
 ```
 
@@ -28,11 +28,11 @@ On Red-Hat-based distributions bind will have the following characteristics:
 
 In order to transfer the zone from the master DNS server, we need to make the following configurations:
   * on the dns VM add the following line in the `/etc/bind/named.conf.local` file for the zone created in the preceding subtask:
-```
+```nginx
     allow-transfer { 192.168.100.12; }; // replace with the slave VM IP address
 ```
   * on the helper VM
-```
+```nginx
 zone "lab.scgc.ro." {
     type slave;
     file "/var/named/slaves/db.lab.scgc.ro"; //the zone file
@@ -48,14 +48,14 @@ Do **not** create the zone file. This file will be created by bind when the zone
 After making these configurations restart both servers.
 :::note
 To restart the **named** service on Alma Linux, use the following command:
-```
+```shell-session
 [root@helper ~]# systemctl restart named.service
 ```
 
 :::
 
 To check that everything went well you can check the status on the helper VM:
-```
+```shell-session
 [root@helper ~]# systemctl status named.service
 named.service - Berkeley Internet Name Domain (DNS)
    Loaded: loaded (/usr/lib/systemd/system/named.service; disabled)
@@ -81,7 +81,7 @@ feb 27 14:20:06 slave named[20552]: zone lab.scgc.ro/IN: sending notifies (seria
 ```
 
 To test that the zone has indeed been transferred you can now query the helper server for the zone which was transferred.
-```
+```shell-session
 [root@helper ~]# host -v lab.scgc.ro localhost
 Trying "lab.scgc.ro"
 Using domain server:

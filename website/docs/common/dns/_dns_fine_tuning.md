@@ -4,7 +4,7 @@ By default, bind will make recursive queries for any unknown query received.
 Recursive queries are quite costly, therefore they should only be allowed explicitly.
 We can check this by quering for `google.com` from the dns and helper VMs:
 
-```
+```shell-session
 root@dns:~# host google.com localhost
 Using domain server:
 Name: localhost
@@ -36,7 +36,7 @@ google.com mail is handled by 50 alt4.aspmx.l.google.com.
 
 In order to restrict who can make recursive queries, we have to edit the `/etc/bind/named.conf.options` file and add the following lines:
 
-```
+```nginx
 acl goodguys { 192.168.100.11; 127.0.0.1; ::1; };
 
 options {
@@ -51,7 +51,7 @@ Do not forget to restart the BIND service after changing the configuration.
 
 Now, if we query again for `google.com`, from the dns VM the query should suceed and from the helper VM it should now fail.
 
-```
+```shell-session
 [root@helper ~]# host google.com dns
 Using domain server:
 Name: 192.168.100.11

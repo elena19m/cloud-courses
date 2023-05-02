@@ -10,7 +10,7 @@ Launching a pod is very similar to launching a Docker container. We will use the
 
 We will use the `gitlab.cs.pub.ro:5050/scgc/cloud-courses/hello-app:1.0` image, which is a simple HTTP server that echoes a message when receiving a request.
 
-```bash
+```shell-session
 student@lab-kubernetes:~$ kubectl run hello-app --image=gitlab.cs.pub.ro:5050/scgc/cloud-courses/hello-app:1.0
 pod/hello-app created
 ```
@@ -19,7 +19,7 @@ pod/hello-app created
 
 For displaying a summary about pods or a certain pod, we can use `kubectl get pods`:
 
-```bash
+```shell-session
 student@lab-kubernetes:~$ kubectl get pods
 NAME                         READY   STATUS    RESTARTS   AGE
 hello-app                    1/1     Running   0          12s
@@ -27,7 +27,7 @@ hello-app                    1/1     Running   0          12s
 
 For detailed information, we can use `kubectl describe`:
 
-```bash
+```shell-session
 student@lab-kubernetes:~$ kubectl describe pods hello-app
 Name:         hello-app
 Namespace:    default
@@ -47,7 +47,7 @@ For debugging purposes, we can enter a pod and run commands, using `kubectl exec
 
 We will test that the container is working, by sending a request to its own HTTP endpoint:
 
-```bash
+```shell-session
 student@lab-kubernetes:~$ kubectl exec -it hello-app /bin/sh
 kubectl exec [POD] [COMMAND] is DEPRECATED and will be removed in a future version. Use kubectl exec [POD] -- [COMMAND] instead.
 / # wget -q -O - localhost:8080
@@ -61,7 +61,7 @@ Hostname: hello-app
 
 Similar to Docker, you can view the logs from a pod, using `kubectl logs`:
 
-```bash
+```shell-session
 student@lab-kubernetes:~$ kubectl logs hello-app
 2022/04/08 13:36:58 Server listening on port 8080
 2022/04/08 13:37:34 Serving request: /
@@ -71,7 +71,7 @@ student@lab-kubernetes:~$ kubectl logs hello-app
 
 A pod is removed with the `kubectl delete` command:
 
-```bash
+```shell-session
 student@lab-kubernetes:~$ kubectl delete pods hello-app
 pod "hello-app" deleted
 ```

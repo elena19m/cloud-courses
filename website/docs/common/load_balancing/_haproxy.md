@@ -10,14 +10,14 @@ we are interested in configuring it as an HTTP proxy.
 
 To use HAProxy, it must first be installed on the load balancer system:
 
-```bash
+```shell-session
 student@load-balancer:~$ sudo apt update
 student@load-balancer:~$ sudo apt install haproxy
 ```
 
 Make sure to enable and start the HAProxy.
 
-```bash
+```shell-session
 student@load-balancer:~$ sudo systemctl enable --now haproxy
 ```
 
@@ -129,7 +129,7 @@ We can extract information about the cached data using the administration
 socket. To do this, we will use `socat` to connect to the socket and enter
 commands:
 
-```bash
+```shell-session
 student@load-balancer:~$ echo 'show cache' | sudo socat - /run/haproxy/admin.sock
 ```
 
@@ -146,7 +146,7 @@ second web server. Edit the `/etc/nginx/sites-available/default` page on the
 `real-server-2` server and add the following configuration in the `server`
 section.
 
-```
+```nginx
 location /index.html {
         add_header Cache-Control no-cache;
 }
@@ -173,13 +173,13 @@ from the first server.
 We will use the `httperf` tool to test performance. Install the tool on the host
 system:
 
-```bash
+```shell-session
 student@lab-lb-host:~$ sudo apt install httperf
 ```
 
 To start testing using the index file, use the following command:
 
-```bash
+```shell-session
 student@lab-lb-host:~$ httperf --server 192.168.100.251 --port 80 --num-conns 10000 --rate 1000 --timeout 5
 ```
 

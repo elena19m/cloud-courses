@@ -15,7 +15,7 @@ the certificate belonging to the server can be verified and, consequently, the i
 
 Begin by inspecting the certificate found in the `houdini.cs.pub.ro.crt-roedunet` file.
 
-```bash
+```shell-session
 $ cd cert-inspect
 $ openssl x509 -in houdini.cs.pub.ro.crt-roedunet -noout -text
 ```
@@ -34,7 +34,7 @@ In the output you can find information about:
 
 Specific information regarding the certificate can be printed by replacing the `-text` argument with the one or more of the following:
 
-```bash
+```shell-session
 $ openssl x509 -in houdini.cs.pub.ro.crt-roedunet -noout -pubkey
 $ openssl x509 -in houdini.cs.pub.ro.crt-roedunet -noout -startdate
 $ openssl x509 -in houdini.cs.pub.ro.crt-roedunet -noout -enddate
@@ -46,7 +46,7 @@ $ openssl x509 -in houdini.cs.pub.ro.crt-roedunet -noout -modulus
 
 To verify the certificate using a certificate chain, use the following command:
 
-```bash
+```shell-session
 $ openssl verify -CAfile terena-ca-chain.pem houdini.cs.pub.ro.crt-roedunet
 houdini.cs.pub.ro.crt-roedunet: OU = Domain Control Validated, CN = houdini.cs.pub.ro
 error 10 at 0 depth lookup:certificate has expired
@@ -61,7 +61,7 @@ Use `man openssl-verify` to check other error codes.
 
 Check the information in certificate chain:
 
-```bash
+```shell-session
 $ cat terena-ca-chain.pem
 -----BEGIN CERTIFICATE-----
 ...
@@ -77,7 +77,7 @@ $ cat terena-ca-chain.pem
 Notice there are multiple certificates in the file.
 Although `openssl` does not provide direct support for printing information about each certificate in the chain, the following workaround can be used:
 
-```bash
+```shell-session
 $ openssl crl2pkcs7 -nocrl -certfile terena-ca-chain.pem | openssl pkcs7 -print_certs -noout
 subject=/C=NL/ST=Noord-Holland/L=Amsterdam/O=TERENA/CN=TERENA SSL CA 2
 issuer=/C=US/ST=New Jersey/L=Jersey City/O=The USERTRUST Network/CN=USERTrust RSA Certification Authority
@@ -100,7 +100,7 @@ Find the ''issuer'' for each of the certificates and use the appropriate certifi
 
 Connect to `aero.curs.pub.ro` using a secure connection to obtain its certificate.
 
-```bash
+```shell-session
 $ echo | openssl s_client -connect aero.curs.pub.ro:443
 CONNECTED(00000003)
 depth=2 C = US, ST = New Jersey, L = Jersey City, O = The USERTRUST Network, CN = USERTrust RSA Certification Authority
@@ -126,7 +126,7 @@ The received certificate appears to be for `*.curs.pub.ro`.
 This is a wildcard certificate that is available for all subdomains of `curs.pub.ro`.
 Such certificates can be used when all subdomains are secured by the same server (web server or load balancer). Let's inspect the certificate:
 
-```bash
+```shell-session
 $ echo | openssl s_client -connect aero.curs.pub.ro:443 2>/dev/null | sed -ne '/-BEGIN CERTIFICATE-/,/-END CERTIFICATE-/p' | openssl x509 -noout -text
 Certificate:
     Data:
@@ -228,13 +228,13 @@ The steps required when generating a certificate are as follows:
 
 We will generate a CSR for `server.tld`. Use the `cert-gen` directory.
 
-```bash
+```shell-session
 $ cd cert-gen
 ```
 
 First, generate a private key:
 
-```bash
+```shell-session
 $ openssl genrsa -out server.key 2048
 Generating RSA private key, 2048 bit long modulus
 ...............................................+++
@@ -244,7 +244,7 @@ e is 65537 (0x10001)
 
 Then, generate the signing request:
 
-```bash
+```shell-session
 $ openssl req -new -key server.key -out server.csr
 ...
 ```
@@ -261,7 +261,7 @@ The other fields can be completed as desired.
 Usually, at this point, the request would be sent to a trusted CA in order to be signed.
 Instead, we will sign the certificate using the `ca.crt` certificate from the resource archive.
 
-```bash
+```shell-session
 $ openssl ca -config ca.cnf -policy signing_policy -extensions signing_req -in server.csr -out server.crt
 Using configuration from ca.cnf
 Check that the request matches the signature
@@ -283,7 +283,7 @@ A more complex OpenSSL configuration file can be found at `/etc/ssl/openssl.cnf`
 
 Verify that the signed certificate matches the generated key.
 
-```bash
+```shell-session
 $ openssl x509 -in server.crt -noout -modulus | md5sum
 d80db122c02c6ef6eabb3b4cbd8b8f40  -
 $ openssl rsa -in server.key -noout -modulus | md5sum
@@ -291,7 +291,7 @@ d80db122c02c6ef6eabb3b4cbd8b8f40  -
 ```
 
 Furthermore, verify the certificate using the `ca.crt` certificate.
-```bash
+```shell-session
 $ openssl verify -CAfile ca/ca.crt server.crt
 server.crt: OK
 ```

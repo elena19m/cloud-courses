@@ -1,7 +1,7 @@
 A common DNS Denial-of-Service attack is NXDOMAIN attack.
 `NXDOMAIN` (Non eXistent DOMAIN) is the error you receive when checking for an nonexistent domain name:
 
-```bash
+```shell-session
 $ host magic.scgc.ro
 Host magic.scgc.ro not found: 3(NXDOMAIN)
 ```
@@ -18,14 +18,14 @@ For the sake of this task, enable recursion for the helper VM. This should be al
 Connect to the helper VM.
 Clone the following repository and change the working directory:
 
-```bash
+```shell-session
 [student@helper ~]$ git clone https://github.com/shiroe41/DNS-NXDOMAIN-FLood-Attack
 [student@helper ~]$ cd DNS-NXDOMAIN_FLood-Attack/src
 ```
 
 Modify the source code to use your DNS server IP address and compile the code:
 
-```bash
+```shell-session
 [student@helper ~]$ grep dest_sock_addr.sin_addr.s_addr dos_attack.c
     dest_sock_addr.sin_addr.s_addr = inet_addr("192.168.100.11");  /* target DNS server ip address */
     ip_header->ip_dst.s_addr = dest_sock_addr.sin_addr.s_addr;
@@ -38,7 +38,7 @@ Interrogate your DNS server to check if everything works fine (both from the bas
 Use <your_last_name>.scgc.ro (the domain you configured earlier) for testing. In the following examples we will be using scgc.ro as our domain.
 :::
 
-```bash
+```shell-session
 $ host scgc.ro dns
 Using domain server:
 Name: 192.168.100.11
@@ -51,19 +51,19 @@ scgc.ro mail is handled by 60 mail2.scgc.ro.
 
 From the base VM, run `tcpdump`:
 
-```bash
+```shell-session
 $ sudo tcpdump -i virbr-labs udp port 53 # we check only the DNS traffic
 ```
 
 From the first terminal, start the attack:
 
-```bash
+```shell-session
 [student@helper ~]$ sudo ./dos_attack
 ```
 
 While the attack is running, from the base VM, test the DNS server:
 
-```bash
+```shell-session
 $ host scgc.ro 192.168.100.11
 Using domain server:
 Name: 192.168.100.11
@@ -76,7 +76,7 @@ The server will hardly respond or will fail.
 
 Stop the attack and the tcpdump. Inspect the tcpdump output:
 
-```bash
+```shell-session
 ...
 23:26:48.364788 IP 10.0.2.20.29264 > 192.168.100.11.domain: 40664+ A? idcdy.fuawv.lulix. (35)
 23:26:48.364829 IP 10.0.2.20.8518 > 192.168.100.11.domain: 11612+ A? lsrae.olszf.lkttp. (35)
@@ -101,7 +101,7 @@ Another workaround is to limit the response rate. By adding the following lines 
 your `/etc/bind/named.conf.options` file, you can limit the number of unique responses
 that are delivered each second:
 
-```
+```nginx
 ...
 options {
 ...

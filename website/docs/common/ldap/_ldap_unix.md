@@ -13,7 +13,7 @@ Before using LDAP to manage access on a system, the `sssd` package and some
 dependencies are required. You can install the packages using the
 following command on the same virtual machine as the LDAP server:
 
-```bash
+```shell-session
 [student@lab-ldap ~]$ dnf install nss-pam-ldapd sssd sssd-ldap oddjob-mkhomedir
 ```
 
@@ -21,7 +21,7 @@ We can now configure the system to use our local LDAP deployment as a trusted
 source using the command below (please note that the `--force` parameter
 may not always be required):
 
-```bash
+```shell-session
 [student@lab-ldap ~]$ authselect select sssd --force
 ```
 
@@ -69,7 +69,7 @@ on the virtual machine:
 Do not confuse the `SSSD` service with the SSH daemon (sshd).
 :::
 
-```bash
+```shell-session
 [student@lab-ldap ~]$ getent passwd luke
 luke:*:9900:9900:Luke:/home/luke:
 [student@lab-ldap ~]$ su luke
@@ -85,7 +85,7 @@ the user's home directory is not created. To automatically create home
 directories, the functionality must be enabled using `authselect` and the
 `oddjob` service must be running.
 
-```bash
+```shell-session
 [student@lab-ldap ~]$ sudo authselect enable-feature with-mkhomedir
 Make sure that SSSD service is configured and enabled. See SSSD documentation for more information.
 

@@ -35,7 +35,7 @@ while some objects can be renamed.
 Images are managed by the `Glance` service. We can list them using the following
 command:
 
-```
+```shell-session
 [user.name@fep8 ~]$ openstack image list
 +--------------------------------------+------------------------------------------+--------+
 | ID                                   | Name                                     | Status |
@@ -53,7 +53,7 @@ specific ID, as shown in the output of the `openstack image list` command. We
 can get more information about this image using the `openstack image show`
 command:
 
-```
+```shell-session
 [user.name@fep8 ~]$ openstack image show xxxxxxxx-yyyy-zzzz-tttt-xxxxxxxxxx12
 +------------------+------------------------------------------------------------------+
 | Field            | Value                                                            |
@@ -86,7 +86,7 @@ command:
 Flavors are managed by the `Nova` service (the compute service). We will list
 the available flavors using `openstack flavor list`:
 
-```
+```shell-session
 [user.name@fep8 ~]$ openstack flavor list
 +--------------------------------------+----------------+------+------+-----------+-------+-----------+
 | ID                                   | Name           |  RAM | Disk | Ephemeral | VCPUs | Is Public |
@@ -102,7 +102,7 @@ the available flavors using `openstack flavor list`:
 Let's find more information about the `m1.tiny` flavor, which has the ID of
 `xxxxxxxx-yyyy-zzzz-tttt-xxxxxxxxxx21`, using `openstack flavor show`:
 
-```
+```shell-session
 [user.name@fep8 ~]$ openstack flavor show xxxxxxxx-yyyy-zzzz-tttt-xxxxxxxxxx21
 +----------------------------+--------------------------------------+
 | Field                      | Value                                |
@@ -129,7 +129,7 @@ Let's find more information about the `m1.tiny` flavor, which has the ID of
 SSH key pairs are also managed by the `Nova` service. To list available
 resources, we will use the following command:
 
-```
+```shell-session
 [user.name@fep8 ~]$ openstack keypair list
 +------+-------------------------------------------------+------+
 | Name | Fingerprint                                     | Type |
@@ -150,7 +150,7 @@ different project's private images).
 You can use the `openstack keypair show` command to get more details on the
 resource:
 
-```
+```shell-session
 [user.name@fep8 ~]$ openstack keypair show fep
 +-------------+-------------------------------------------------+
 | Field       | Value                                           |
@@ -172,7 +172,7 @@ resource:
 Networks are managed by the `Neutron` service. We will use the `openstack net
 list` command to list all available networks:
 
-```
+```shell-session
 [user.name@fep8 ~]$ openstack net list
 +--------------------------------------+----------+--------------------------------------+
 | ID                                   | Name     | Subnets                              |
@@ -188,7 +188,7 @@ Let's see the available details about:
   * the `vlan9` network, using `openstack net show`;
   * its associated subnet, using `openstack subnet show`.
 
-```
+```shell-session
 [user.name@fep8 ~]$ openstack net show xxxxxxxx-yyyy-zzzz-tttt-xxxxxxxxxx31
 +---------------------------+--------------------------------------+
 | Field                     | Value                                |
@@ -223,7 +223,7 @@ Let's see the available details about:
 +---------------------------+--------------------------------------+
 ```
 
-```
+```shell-session
 [user.name@fep8 ~]$ openstack subnet show xxxxxxxx-yyyy-zzzz-tttt-xxxxxxxxxx35
 +----------------------+--------------------------------------+
 | Field                | Value                                |
@@ -259,7 +259,7 @@ Let's see the available details about:
 Security groups are managed by the `Neutron` service. We will use the following
 command to list them:
 
-```
+```shell-session
 [user.name@fep8 ~]$ openstack security group list
 +--------------------------------------+----------+------------------------+----------------------------------+------+
 | ID                                   | Name     | Description            | Project                          | Tags |
@@ -272,7 +272,7 @@ command to list them:
 For a verbose description of the security group we can run `openstack security
 group show` followed by the ID of the group we want to inspect:
 
-```
+```shell-session
 [user.name@fep8 ~]$ openstack security group show xxxxxxxx-yyyy-zzzz-tttt-xxxxxxxxxx42
 +-----------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 | Field           | Value                                                                                                                                                                           |
@@ -302,7 +302,7 @@ instance. We will use:
 
 We will run the following command to create the instance:
 
-```
+```shell-session
 [user.name@fep8 ~]$ openstack server create --flavor m1.tiny --image xxxxxxxx-yyyy-zzzz-tttt-xxxxxxxxxx12 --nic net-id=xxxxxxxx-yyyy-zzzz-tttt-xxxxxxxxxx31 --security-group default --key-name fep user.name-vm
 +-----------------------------+------------------------------------------------------------+
 | Field                       | Value                                                      |
@@ -355,7 +355,7 @@ an instance.
 
 We can use the `openstack server list` to list all virtual machine instances:
 
-```
+```shell-session
 [user.name@fep8 ~]$ openstack server list
 +--------------------------------------+--------------+--------+------------------+---------------------+-----------+
 | ID                                   | Name         | Status | Networks         | Image               | Flavor    |
@@ -366,7 +366,7 @@ We can use the `openstack server list` to list all virtual machine instances:
 
 Use the `openstack server show` to get details about the running instance:
 
-```
+```shell-session
 [user.name@fep8 ~]$ openstack server show xxxxxxxx-yyyy-zzzz-tttt-xxxxxxxxxx71
 +-----------------------------+------------------------------------------------------------+
 | Field                       | Value                                                      |
@@ -411,7 +411,7 @@ user.
 To stop the instance without deleting it, we can use the `openstack server stop`
 command. This is equivalent to shutting the instance down.
 
-```
+```shell-session
 [user.name@fep8 ~]$ openstack server stop xxxxxxxx-yyyy-zzzz-tttt-xxxxxxxxxx71
 [user.name@fep8 ~]$ openstack server list
 +--------------------------------------+--------------+---------+------------------+---------------------+-----------+
@@ -427,7 +427,7 @@ command. This is equivalent to shutting the instance down.
 After being stopped, an instance can be started using the `openstack server
 start` command:
 
-```
+```shell-session
 [user.name@fep8 ~]$ openstack server start xxxxxxxx-yyyy-zzzz-tttt-xxxxxxxxxx71
 ```
 
@@ -442,7 +442,7 @@ After starting the instance:
 
 Terminate the instance using the `openstack server delete` command:
 
-```
+```shell-session
 [user.name@fep8 ~]$ openstack server delete xxxxxxxx-yyyy-zzzz-tttt-xxxxxxxxxx71
 [user.name@fep8 ~]$ openstack server list
 +----+------+--------+----------+-------+--------+
@@ -460,7 +460,7 @@ is called a `day-0 configuration` and is implemented by the `cloud-init` module.
 To use this functionality you must first create an initialization script (on
 fep), that will be injected when the instance runs for the first time:
 
-```bash
+```shell-session
 [user.name@fep8 ~]$ cat day0.txt
 #!/bin/bash
 echo test > /tmp/test.txt
@@ -513,7 +513,7 @@ management connection in the `vlan9` network:
 
 Create the network using the following command:
 
-```
+```shell-session
 [user.name@fep8 ~]$ openstack net create user.name-network
 +---------------------------+--------------------------------------+
 | Field                     | Value                                |
@@ -563,7 +563,7 @@ The next step is to create a subnet for the `user.name-network`. We will use the
   * `user.name-subnet` for name;
   * no gateway (the virtual machines will have a gateway set through `vlan9`).
 
-```
+```shell-session
 [user.name@fep8 ~]$ openstack subnet create user.name-subnet --network user.name-network --subnet-range 172.16.X.0/24
 +----------------------+--------------------------------------+
 | Field                | Value                                |
@@ -614,7 +614,7 @@ The `--nic` parameter can be specified multiple times.
 Connect to both virtual machines using SSH and request IPs through DHCP for the
 second network interface:
 
-```bash
+```shell-session
 ubuntu@user.name-vm-1:~$ sudo dhclient ens4
 ubuntu@user.name-vm-2:~$ sudo dhclient ens4
 ```
@@ -723,6 +723,6 @@ Review the [software configuration][] page for configuration examples.
 
 Before disconnecting, revoke your authentication token:
 
-```bash
+```shell-session
 [user.name@fep8 ~]$ openstack token revoke $OS_TOKEN
 ```

@@ -1,6 +1,6 @@
 Now that we have seen how we can query DNS servers, let's configure our very own DNS server on the dns VM using **bind**.
 
-```
+```shell-session
 root@dns:~# apt install bind9 bind9utils
 ```
 
@@ -17,7 +17,7 @@ In the following examples we will be using `scgc.ro` as our domain.
 
 First, we will configure our DNS server to listen for queries received from outside the server.
 For this we have to add the following line to the `/etc/bind/named.conf.options` file:
-```
+```nginx
 options {
 [...]
         dnssec-validation no;
@@ -35,7 +35,7 @@ the DNS service whenever you make a change in the configuration files.
 :::note
 The IP address 192.168.100.11, used in the example may not be the IP address that you will use when configuring your server.
 Replace it with your own IP address, which can be determined by using the `ip` command:
-```
+```shell-session
 root@dns:~# ip a
 [...]
 2: eth0: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1450 qdisc pfifo_fast state UP group default qlen 1000
@@ -51,7 +51,7 @@ Next, we will configure the local file(`/etc/bind/named.conf.local`), to specify
 Aside from a few comments, the file should be empty.
 
 Add the zone with the following lines (substitute the zone name with your own):
-```
+```nginx
 zone "scgc.ro" {
 	type master;
 	file "/etc/bind/db.scgc.ro"; # zone file path
@@ -59,14 +59,16 @@ zone "scgc.ro" {
 ```
 
 We will base our zone file on the sample `db.local` zone file.
-```bash
+```shell-session
 cp /etc/bind/db.local /etc/bind/db.scgc.ro
 ```
 
 Initially, it will look something like the following:
 
-```
+```shell-session
 root@dns:~# cat /etc/bind/db.scgc.ro
+```
+```dns-zone
 ;
 ; BIND data file for local loopback interface
 ;
@@ -87,7 +89,7 @@ First, you will want to edit the SOA record.
 Replace the `localhost` with your domain name.
 Also, every time you edit a zone file, you should increment the serial value before you restart the named process; we will increment it to `3`.It should look something like this:
 
-```
+```dns-zone
 @	IN	SOA	scgc.ro. root.scgc.ro. (
 			      3		; Serial
 ```
@@ -97,7 +99,7 @@ If you're not sure which lines to delete, they are marked with a `delete this li
 
 At the end of the file, add your nameserver record with the following line (replace the name with your own).
 Note that the second column specifies that these are `NS` records:
-```
+```dns-zone
 ; name servers - NS records
     IN      NS      ns1.scgc.ro.
 ```
@@ -107,14 +109,14 @@ This includes any server whose name we want to end with `.scgc.ro`
 (substitute the names and IP addresses).
 Using our example names and private IP addresses, we will add `A` records for `ns1`,
 and a host corresponding to the `www.scgc.ro`, like so:
-```
+```dns-zone
 ; name servers - A records
 ns1.scgc.ro.          IN      A      192.168.100.11
 www.scgc.ro.          IN      A      192.168.100.11
 ```
 
 Our final example forward zone file looks like the following:
-```
+```dns-zone
 $TTL	604800
 @	IN	SOA	scgc.ro. root.scgc.ro. (
 			      3		; Serial
@@ -135,7 +137,7 @@ www.scgc.ro.          IN      A      192.168.100.11
 
 Now that we have the a minimal configuration, let us check that it works.
 Run the following command to check the syntax of the `named.conf*` files:
-```
+```shell-session
 root@dns:~# named-checkconf
 ```
 
@@ -147,20 +149,20 @@ Its first argument specifies a zone name, and the second argument specifies the
 corresponding zone file, which are both defined in `named.conf.local`.
 
 For example, to check the `scgc.ro` zone configuration, run the following command (change the names to match your zone and file):
-```
+```shell-session
 root@dns:~# named-checkzone scgc.ro /etc/bind/db.scgc.ro
 zone scgc.ro/IN: loaded serial 3
 OK
 ```
 
 When all of your configuration and zone files have no errors in them, you should be ready to restart the BIND service:
-```
+```shell-session
 root@dns:~# service bind9 restart
 ```
 
 Now we should be able to test our DNS server.
 We will be using `host`, however feel free to use `dig` or any other command to test your server:
-```
+```shell-session
 root@dns:~# host www.scgc.ro localhost
 Using domain server:
 Name: 192.168.100.11
@@ -186,7 +188,7 @@ ns1.scgc.ro has address 192.168.100.11
 
 Now let's try to query from outside the server.
 We will test that the `helper` VM will receive the same response(replace with the appropriate name and IP address):
-```
+```shell-session
 [root@helper ~]# host www.scgc.ro dns
 Using domain server:
 Name: 192.168.100.11

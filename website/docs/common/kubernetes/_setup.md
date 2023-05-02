@@ -15,7 +15,7 @@ Use: `wget https://repository.grid.pub.ro/cs/scgc/laboratoare/lab-kubernetes.zip
   * Start the virtual machines using `bash runvm.sh`.
   * The username for connecting to the nested VMs is `student` and the password is `student`.
 
-```bash
+```shell-session
 $ # change the working dir
 $ cd ~/work
 $ # download the archive
