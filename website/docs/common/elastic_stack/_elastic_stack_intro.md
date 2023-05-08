@@ -5,7 +5,7 @@ We will be using a virtual machine in the [faculty's cloud](http://cloud.grid.pu
 When creating a virtual machine in the Launch Instance window:
   * Select **Boot from image** in **Instance Boot Source** section
   * Select **SCGC Template** in **Image Name** section
-  * Select the **m1.large** flavor.
+  * Select the **m1.elk** flavor.
 
 In the base virtual machine:
   * Download the laboratory archive from [here](https://repository.grid.pub.ro/cs/scgc/laboratoare/lab-elk.zip) in the `work` directory.
@@ -21,7 +21,7 @@ $ # change the working dir
 $ cd ~/work
 $ # download the archive
 $ wget https://repository.grid.pub.ro/cs/scgc/laboratoare/lab-elk.zip
-$ unzip lab-dns.zip
+$ unzip lab-elk.zip
 $ # start VMs; it may take a while
 $ bash runvm.sh
 $ # check if the VMs booted
@@ -41,9 +41,9 @@ Stack VM by using Beats, a collection of lightweight data shippers.
 ![Topology](./assets/topology-light.svg#light)![Topology](./assets/topology-dark.svg#dark) <!-- .element height="200%" width="200%" -->
 
 As presented in the scheme above, our architecture is the following:
-  * the `elk` VM. This will run the Elastic Stack components (Elasticsearck, 
+  * the `elk` VM - this will run the Elastic Stack components (Elasticsearch, 
   Kibana and Logstash)
-  * the `helper` VM. This will play the role of a monitored host in our 
+  * the `helper` VM - this will play the role of a monitored host in our 
   environment. We will install various Beats and services with the purpose
   of collecting data from it.
 
