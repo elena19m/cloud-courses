@@ -355,7 +355,7 @@ Don’t forget to open the port in the firewall.
 :::
 
 Connect to the Kibana instance on port 5601 using a browser and `ssh` as a SOCKS proxy. 
-Revisit the LDAP lab if you do not remember how to do that.
+Revisit the [LDAP lab](../../security/ldap.mdx) if you do not remember how to do that.
 
 Login using the credentials printed by Elasticsearch in the installation process
 and wait for the initial setup to be done. Check that you can access the Kibana
