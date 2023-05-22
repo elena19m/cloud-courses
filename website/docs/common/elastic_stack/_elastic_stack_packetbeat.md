@@ -33,7 +33,7 @@ Installing Packetbeat follows the same steps as Filebeat.
 
 The configuration file can be found at `/etc/packetbeat/packetbeat.yml`. Since
 we are using Linux, we can change the sniffer type to a more efficient one than
-the default by changing `packetbeat.interfaces.type` to `af_packet`. On other
+the default by adding `packetbeat.interfaces.type` to `af_packet`. On other
 platforms you need to use `libpcap`. Make sure it is installed on your system in
 that case.
 
@@ -44,6 +44,39 @@ interested only in the traffic that flows through interface `eth0`.
 In the same file we can see the configurations for the protocols we want to 
 sniff. It contains the most popular protocols and we will use it as is, but you
 can define your own if needed.
+
+<details>
+<summary>Example configuration file</summary>
+
+```yaml
+# =============================== Network device ===============================
+
+#[...]
+
+# highlight-start
+packetbeat.interfaces.device: eth0
+packetbeat.interfaces.type: af_packet
+# highlight-end
+
+# Specify the amount of time between polling for changes in the default
+# route. This option is only used when one of the default route devices
+# is specified.
+packetbeat.interfaces.poll_default_route: 1m
+
+# The network CIDR blocks that are considered "internal" networks for
+# the purpose of network perimeter boundary classification. The valid
+# values for internal_networks are the same as those that can be used
+# with processor network conditions.
+#
+# For a list of available values see:
+# https://www.elastic.co/guide/en/beats/packetbeat/current/defining-processors.html#condition-network
+packetbeat.interfaces.internal_networks:
+  - private
+
+[...]
+```
+
+</details>
 
 #### Connecting to Elasticsearch and Kibana
 
@@ -57,9 +90,6 @@ Enter value for ES_USERNAME:
 Successfully updated the keystore
 root@helper:~# packetbeat keystore add ES_PWD
 Enter value for ES_PWD:
-Successfully updated the keystore
-root@helper:~# packetbeat keystore add ES_CA_FINGERPRINT
-Enter value for ES_CA_FINGERPRINT:
 Successfully updated the keystore
 ```
 

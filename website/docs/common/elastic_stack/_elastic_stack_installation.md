@@ -16,17 +16,18 @@ install the Beats.
 
 ### Elasticsearch
 
+We will install Elasticsearch on the `lab-elk-1` (`lab-elk`) VM.
 Download the RPM package and its signature using the commands below.
 
 ```shell-session
-$ wget https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-8.7.0-x86_64.rpm
-$ wget https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-8.7.0-x86_64.rpm.sha512
+[root@elk ~] wget https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-8.7.0-x86_64.rpm
+[root@elk ~] wget https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-8.7.0-x86_64.rpm.sha512
 ```
 
 Don’t forget to check the hash in order to protect from supply chain attacks.
 
 ```shell-session
-[student@elk ~]$ sha512sum -c elasticsearch-8.7.0-x86_64.rpm.sha512
+[root@elk ~]$ sha512sum -c elasticsearch-8.7.0-x86_64.rpm.sha512
 elasticsearch-8.7.0-x86_64.rpm: OK
 ```
 
@@ -42,7 +43,7 @@ important information (such as the password of the default `elastic` user).
 :::
 
 ```shell-session
-[student@elk ~]$ sudo rpm --install elasticsearch-8.7.0-x86_64.rpm
+[root@elk ~]$ rpm --install elasticsearch-8.7.0-x86_64.rpm
 warning: elasticsearch-8.7.0-x86_64.rpm: Header V4 RSA/SHA512 Signature, key ID d88e42b4: NOKEY
 Creating elasticsearch group... OK
 Creating elasticsearch user... OK
@@ -136,7 +137,7 @@ related tools and configuration files can be found:
     This is where various elasticsearch related tools are located
     
     ```shell-session
-    [root@elk elasticsearch]# ls -la
+    [root@elk ~]# ls -la /usr/share/elasticsearch
     total 2228
     drwxr-xr-x.  7 root root     129 Apr 19 16:27 .
     drwxr-xr-x. 76 root root    4096 Apr 19 16:27 ..
@@ -159,7 +160,7 @@ related tools and configuration files can be found:
 - `/etc/elasticsearch` - the main configuration directory
     
     ```shell-session
-    [root@elk elasticsearch]# ls -la
+    [root@elk ~]# ls -la /etc/elasticsearch
     total 60
     drwxr-s---.  4 root elasticsearch  4096 Apr 19 16:38 .
     drwxr-xr-x. 79 root root           8192 Apr 19 16:28 ..
@@ -189,7 +190,7 @@ related tools and configuration files can be found:
     and used for secure communication between the Elastic Stack components.
     
     ```shell-session
-    [root@elk elasticsearch]# ls -la certs
+    [root@elk ~]# ls -la /etc/elasticsearch/certs
     total 28
     drwxr-x---. 2 root elasticsearch    62 Apr 19 16:28 .
     drwxr-s---. 4 root elasticsearch  4096 Apr 19 16:38 ..
@@ -203,15 +204,15 @@ As of now, elasticsearch is only installed. In order to enable and start the
 service use
 
 ```shell-session
-[student@elk ~]$ sudo systemctl daemon-reload
-[student@elk ~]$ sudo systemctl enable --now elasticsearch
+[root@elk ~]$ systemctl daemon-reload
+[root@elk ~]$ systemctl enable --now elasticsearch
 ```
 
 We can check that everything is working correctly by sending a request to the
 Elasticsearch instance.
 
 ```shell-session
-[student@elk ~]$ sudo curl --cacert /etc/elasticsearch/certs/http_ca.crt -u elastic https://localhost:9200
+[root@elk ~]$ curl --cacert /etc/elasticsearch/certs/http_ca.crt -u elastic https://localhost:9200
 Enter host password for user 'elastic':
 {
   "name" : "elk",
@@ -279,11 +280,11 @@ First, download the Kibana RPM package and checksum, check the checksum and
 install.
 
 ```shell-session
-[student@elk ~]$ wget https://artifacts.elastic.co/downloads/kibana/kibana-8.7.0-x86_64.rpm
-[student@elk ~]$ wget https://artifacts.elastic.co/downloads/kibana/kibana-8.7.0-x86_64.rpm.sha512
-[student@elk ~]$ sha512sum -c kibana-8.7.0-x86_64.rpm.sha512
+[root@elk ~]$ wget https://artifacts.elastic.co/downloads/kibana/kibana-8.7.0-x86_64.rpm
+[root@elk ~]$ wget https://artifacts.elastic.co/downloads/kibana/kibana-8.7.0-x86_64.rpm.sha512
+[root@elk ~]$ sha512sum -c kibana-8.7.0-x86_64.rpm.sha512
 kibana-8.7.0-x86_64.rpm: OK
-[student@elk ~]$ sudo rpm --install kibana-8.7.0-x86_64.rpm
+[root@elk ~]$ rpm --install kibana-8.7.0-x86_64.rpm
 warning: kibana-8.7.0-x86_64.rpm: Header V4 RSA/SHA512 Signature, key ID d88e42b4: NOKEY
 Creating kibana group... OK
 Creating kibana user... OK
@@ -353,12 +354,13 @@ Don’t forget to open the port in the firewall.
 `firewall-cmd --add-service=kibana`
 :::
 
-Connect to the Kibana instance using a browser and `ssh` as a SOCKS proxy. 
+Connect to the Kibana instance on port 5601 using a browser and `ssh` as a SOCKS proxy. 
 Revisit the LDAP lab if you do not remember how to do that.
 
 Login using the credentials printed by Elasticsearch in the installation process
-and wait for the initial setup to be done. This might take a few minutes on the
-lab infrastructure. You can read the next section in the meantime.
+and wait for the initial setup to be done. Check that you can access the Kibana
+UI. This might take a few minutes on the lab infrastructure. You can read the 
+next section in the meantime.
 
 ### Alternative installation methods
 

@@ -7,21 +7,21 @@ Auditbeat installation is identical to the other Beats.
 - Download the DEB package and signature
     
     ```shell-session
-    student@helper:~$ wget https://artifacts.elastic.co/downloads/beats/auditbeat/auditbeat-8.7.0-amd64.deb
-    student@helper:~$ wget https://artifacts.elastic.co/downloads/beats/auditbeat/auditbeat-8.7.0-amd64.deb.sha512
+    root@helper:~$ wget https://artifacts.elastic.co/downloads/beats/auditbeat/auditbeat-8.7.0-amd64.deb
+    root@helper:~$ wget https://artifacts.elastic.co/downloads/beats/auditbeat/auditbeat-8.7.0-amd64.deb.sha512
     ```
     
 - Check the signature is ok
     
     ```shell-session
-    student@helper:~$ sha512sum -c auditbeat-8.7.0-amd64.deb.sha512
+    root@helper:~$ sha512sum -c auditbeat-8.7.0-amd64.deb.sha512
     auditbeat-8.7.0-amd64.deb: OK
     ```
     
 - Install using `dpkg`
     
     ```shell-session
-    student@helper:~$ sudo dpkg -i auditbeat-8.7.0-amd64.deb
+    root@helper:~$ dpkg -i auditbeat-8.7.0-amd64.deb
     Selecting previously unselected package auditbeat.
     (Reading database ... 41359 files and directories currently installed.)
     Preparing to unpack auditbeat-8.7.0-amd64.deb ...

@@ -24,21 +24,21 @@ The installation process is similar to Elaticsearch and Kibana:
 - Download the DEB package and signature
     
     ```shell-session
-    student@helper:~$ wget https://artifacts.elastic.co/downloads/beats/filebeat/filebeat-8.7.0-amd64.deb
-    student@helper:~$ wget https://artifacts.elastic.co/downloads/beats/filebeat/filebeat-8.7.0-amd64.deb.sha512
+    root@helper:~# wget https://artifacts.elastic.co/downloads/beats/filebeat/filebeat-8.7.0-amd64.deb
+    root@helper:~# wget https://artifacts.elastic.co/downloads/beats/filebeat/filebeat-8.7.0-amd64.deb.sha512
     ```
     
 - Check the signature is ok
     
     ```shell-session
-    student@helper:~$ sha512sum -c filebeat-8.7.0-amd64.deb.sha512
+    root@helper:~# sha512sum -c filebeat-8.7.0-amd64.deb.sha512
     filebeat-8.7.0-amd64.deb: OK
     ```
     
 - Install using `dpkg`
     
     ```shell-session
-    student@helper:~$ sudo dpkg -i filebeat-8.7.0-amd64.deb
+    root@helper:~# dpkg -i filebeat-8.7.0-amd64.deb
     Selecting previously unselected package filebeat.
     (Reading database ... 38899 files and directories currently installed.)
     Preparing to unpack filebeat-8.7.0-amd64.deb ...
@@ -52,7 +52,7 @@ Before we start sending log data we need to configure a few things.
 
 Filebeat comes with multiple modules. Each module is responsible for parsing
 specific application logs and sending them to Elasticsearch (or Logstash) with
-minimal configuration necessary. To see a list of all the modules you can run
+minimal configuration necessary. To see a list of all the modules you can run:
 
 ```shell-session
 root@helper:~# filebeat modules list
@@ -85,6 +85,40 @@ This renames the sample file `/etc/filebeat/modules.d/nginx.yml.disabled` to
 disabled. **We need to edit the file and enable access and error log collection**
 **by setting the `access.enabled` and `error.enabled` keys to `true`.**
 
+```yaml
+# Module: nginx
+# Docs: https://www.elastic.co/guide/en/beats/filebeat/master/filebeat-module-nginx.html
+
+- module: nginx
+  # Access logs
+  # highlight-start
+  access:
+    enabled: true
+  # highlight-end
+
+    # Set custom paths for the log files. If left empty,
+    # Filebeat will choose the paths depending on your OS.
+    #var.paths:
+
+  # Error logs
+  # highlight-start
+  error:
+    enabled: true
+  # highlight-end
+
+    # Set custom paths for the log files. If left empty,
+    # Filebeat will choose the paths depending on your OS.
+    #var.paths:
+
+  # Ingress-nginx controller logs. This is disabled by default. It could be used in Kubernetes environments to parse ingress-nginx logs
+  ingress_controller:
+    enabled: false
+
+    # Set custom paths for the log files. If left empty,
+    # Filebeat will choose the paths depending on your OS.
+    #var.paths:
+```
+
 #### Connecting to Elasticsearch and Kibana
 
 Finally, we need to tell Filebeat how to connect to the Elasticsearch and
@@ -92,21 +126,31 @@ Kibana instances.
 
 Before modifying the config we need to do two things:
 
-- get the Elasticsearch server’s CA certificate fingerprint in order to verify
-the self-signed certificate when connecting
-- set up a Filebeat keystore for secure storage of the username, password and CA
-certificate fingerprint
+- get the Elasticsearch server’s CA certificate
+- copy it on the `helper` VM and install it
 
-In order to get the CA server fingerprint, you can use the command below on the
-`elk` machine. Save it somewhere, as it will be needed for future steps as well.
+In order to get the CA server certificate, you can use the command below on the
+`elk` machine.
 
 ```shell-session
-[root@elk student]# openssl x509 -fingerprint -sha256 -in /etc/elasticsearch/certs/http_ca.crt | head -1 | cut -d'=' -f2 | tr -d ':' | tr '[:upper:]' '[:lower:]'
-48373e7f6653665b0ef8dd9b59ee7983af42e15824e43ca0b16642373b93c826
+[root@elk ~]# scp /etc/elasticsearch/certs/http_ca.crt student@192.168.100.102:~
 ```
 
+In order to install the certificate, you can use the following commands on the
+`helper` machine.
+
+```shell-session
+root@helper:~$ mkdir -p /usr/local/share/ca-certificates/extra
+root@helper:~$ cp /home/student/http_ca.crt /usr/local/share/ca-certificates/extra/elastic.crt
+root@helper:~$ update-ca-certificates
+```
+
+We will be using keystores in order to securely store usernames and passwords,
+instead of simply writing them unencrypted in the configuration file.
+
 In order to create a keystore and insert secrets, we can use the commands below.
-Enter your username, password and fingerprint when prompted.
+Enter your username (`elastic`) and password (the password for the `elastic` user,
+printed when setting up Elasticsearch).
 
 :::danger
 The `filebeat keystore` command needs to be run as the same user that will run
@@ -122,11 +166,7 @@ Successfully updated the keystore
 root@helper:~# filebeat keystore add ES_PWD
 Enter value for ES_PWD:
 Successfully updated the keystore
-root@helper:~# filebeat keystore add ES_CA_FINGERPRINT
-Enter value for ES_CA_FINGERPRINT:
-Successfully updated the keystore
 root@helper:~# filebeat keystore list
-ES_CA_FINGERPRINT
 ES_PWD
 ES_USERNAME
 ```
@@ -148,7 +188,6 @@ output.elasticsearch:
   password: "${ES_PWD}"
   tls:
     enabled: true
-    ca_trusted_fingerprint: "${ES_CA_FINGERPRINT}"
 ```
 
 Also, setup the Kibana location
@@ -157,6 +196,10 @@ Also, setup the Kibana location
 setup.kibana:
   host: "192.168.100.101:5601"
 ```
+
+:::tip
+You can run `filebeat test config -e` in order to test the Filebeat configuration.
+:::
 
 To enable the default dashboards for the enabled module run
 
