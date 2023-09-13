@@ -27,7 +27,7 @@ const FeatureList = [
     description: (
       <>
 	A cloud infrastructure abstracts the cluster and the grid and provides
-	a unifor view of the resources that are allocated to the user.
+	a uniform view of the resources that are allocated to the user.
       </>
     ),
   },
