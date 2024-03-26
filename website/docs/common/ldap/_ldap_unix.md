@@ -14,7 +14,7 @@ dependencies are required. You can install the packages using the
 following command on the same virtual machine as the LDAP server:
 
 ```shell-session
-[student@lab-ldap ~]$ dnf install nss-pam-ldapd sssd sssd-ldap oddjob-mkhomedir
+[student@lab-ldap ~]$ sudo dnf install nss-pam-ldapd sssd sssd-ldap oddjob-mkhomedir
 ```
 
 We can now configure the system to use our local LDAP deployment as a trusted
@@ -22,7 +22,7 @@ source using the command below (please note that the `--force` parameter
 may not always be required):
 
 ```shell-session
-[student@lab-ldap ~]$ authselect select sssd --force
+[student@lab-ldap ~]$ sudo authselect select sssd --force
 ```
 
 :::danger
