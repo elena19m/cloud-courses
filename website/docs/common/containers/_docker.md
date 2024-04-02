@@ -178,7 +178,7 @@ student@lab-docker:~$ sudo docker network create test-net
 69643d63f7a785c07d4b93cf77a8b921e97595da778344e9aa8f62ac9cb6909a
 student@lab-docker:~$ sudo docker run -d --hostname db --network test-net -e "MYSQL_ROOT_PASSWORD=somewordpress" -e "MYSQL_DATABASE=wordpress" -e "MYSQL_USER=wordpress" -e "MYSQL_PASSWORD=wordpress" mysql:5.7
 657e3c4a23e120adf0eb64502deead82e156e070f7e9b47eff522d430279d3e1
-student@lab-docker:~$ sudo docker run -d --hostname wordpress --network test-net -p "8000:80" -e "WORDPRESS_DB_HOST=db" -e "WORDPRESS_DB_USER=wordpress" -e "WORDPRESS_DB_PASSWORD=wordpress" wordpress:latest
+student@lab-docker:~$ sudo docker run -d --hostname wordpress --network test-net -p "8000:80" -e "WORDPRESS_DB_HOST=db" -e "WORDPRESS_DB_USER=wordpress" -e "WORDPRESS_DB_PASSWORD=wordpress" gitlab.cs.pub.ro:5050/scgc/cloud-courses/wordpress:latest
 Unable to find image 'wordpress:latest' locally
 latest: Pulling from library/wordpress
 c229119241af: Pull complete
