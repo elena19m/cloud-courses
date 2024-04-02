@@ -5,7 +5,7 @@
 To start an application inside a Docker container use the following command:
 
 ```
-student@lab-docker:~$ sudo docker run -it ubuntu:18.04 bash
+student@lab-docker:~$ sudo docker run -it gitlab.cs.pub.ro:5050/scgc/cloud-courses/ubuntu:18.04 bash
 Unable to find image 'ubuntu:18.04' locally
 18.04: Pulling from library/ubuntu
 11323ed2c653: Already exists
@@ -31,7 +31,7 @@ The `docker` command was run using the following parameters:
 We can also run a non-interactive command in a container as follows:
 
 ```
-student@lab-docker:~$ sudo docker run ubuntu:18.04 ps -ef
+student@lab-docker:~$ sudo docker run gitlab.cs.pub.ro:5050/scgc/cloud-courses/ubuntu:18.04 ps -ef
 UID          PID    PPID  C STIME TTY          TIME CMD
 root           1       0  0 12:01 ?        00:00:00 ps -ef
 ```
@@ -44,7 +44,7 @@ However, we do not want to always run containers in the foreground. If we want t
 
 To start a container in the background, use the `-d` option for the` docker run` command as follows:
 ```
-student@lab-docker:~$ sudo docker run -d ubuntu:18.04 sleep 10000
+student@lab-docker:~$ sudo docker run -d gitlab.cs.pub.ro:5050/scgc/cloud-courses/ubuntu:18.04 sleep 10000
 a63ee06826a33c0dfab825a0cb2032eee2459e0721517777ee019f59e69ebc02
 student@lab-docker:~$ sudo docker ps
 CONTAINER ID   IMAGE          COMMAND         CREATED         STATUS         PORTS     NAMES
@@ -87,7 +87,7 @@ student@lab-docker:~$
 
 ### Exercise: Starting a container
 
-* Start a container in the background based on the `centos: 7` image.
+* Start a container in the background based on the `gitlab.cs.pub.ro:5050/scgc/cloud-courses/centos:7` image.
 * Connect to the container just turned on and run the `yum install bind-utils` command.
 * Disconnect from container.
 
@@ -115,7 +115,7 @@ We could add automation by running a script, but in this case we'd lose one of t
 In order to create a container we need to define a `Dockerfile` file as follows:
 
 ```
-FROM ubuntu:18.04
+FROM gitlab.cs.pub.ro:5050/scgc/cloud-courses/ubuntu:18.04
 
 ARG DEBIAN_FRONTEND=noninteractive
 ARG DEBCONF_NONINTERACTIVE_SEEN=true
@@ -151,7 +151,7 @@ This list contains both internally downloaded and locally built containers.
 
 ### Exercise: Generate a container image
 
-* Write a `Dockerfile.centos` file containing a recipe for generating a container image based on the` centos:7` container in which to install the `bind-utils` tool.
+* Write a `Dockerfile.centos` file containing a recipe for generating a container image based on the `gitlab.cs.pub.ro:5050/scgc/cloud-courses/centos:7` container in which to install the `bind-utils` tool.
 
 :::note
 To generate a container using a file other than the default `Dockerfile` we use the` -f` option.
