@@ -9,7 +9,7 @@ For this, we will use a **deployment** resource, which is an abstration that enc
 Let's create a deployment for `hello-app` using the `kubectl create` command:
 
 ```shell-session
-student@lab-kubernetes:~$ kubectl create deployment hello-app --image=gcr.io/google-samples/hello-app:1.0
+student@lab-kubernetes:~$ kubectl create deployment hello-app --image=gitlab.cs.pub.ro:5050/scgc/cloud-courses/hello-app:1.0
 deployment.apps/hello-app created
 ```
 
