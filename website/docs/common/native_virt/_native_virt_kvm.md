@@ -62,12 +62,13 @@ To verify that the processor supports the hardware extensions we can run the
 following command:
 
 ```shell-session
-student@lab-virt-host:~$ grep vmx /proc/cpuinfo
+student@lab-virt-host:~$ grep -E 'vmx|svm' /proc/cpuinfo
 flags           : fpu vme [...] vmx ssse3 [...]
 ```
 
-The `flags` section must include `vmx` on Intel systems, or `svm` on AMD systems
-to be able to fully take advantage of virtualization.
+The `flags` section must include `vmx` (Virtual Machine eXtensions) on Intel
+systems, or `svm` (Secure Virtual Machine) on AMD systems to be able to fully
+take advantage of virtualization.
 
 To use KVM we need to install the `qemu-kvm` package that contains the `qemu`
 userspace tool. `qemu` can be used to create and manage virtual machines by
@@ -114,10 +115,10 @@ mentioned above.
 
 Let's create a virtual machine that has `512MB` of RAM (the `-m` parameter), 2
 virtual CPU cores (the `-smp` parameter) and a virtual disk backed by the
-`debian-11.qcow2` disk image (the `-hda` parameter):
+`debian-12.qcow2` disk image (the `-hda` parameter):
 
 ```shell-session
-student@lab-virt-host:~/work$ sudo kvm -hda debian-11.qcow2 -m 512 -smp 2
+student@lab-virt-host:~/work$ sudo kvm -hda debian-12.qcow2 -m 512 -smp 2
 qemu-system-x86_64: warning: dbind: Couldn't connect to accessibility bus: Failed to connect to socket 0000a: Connection refused
 qemu-system-x86_64: warning: host doesn't support requested feature: CPUID.80000001H:ECX.svm [bit 2]
 qemu-system-x86_64: warning: host doesn't support requested feature: CPUID.80000001H:ECX.svm [bit 2]
@@ -137,12 +138,12 @@ running the following command:
 
 ```shell-session
 student@lab-virt-host:~/work$ ps -efL | grep kvm
-root        5368    5344    5368  0    1 00:50 pts/1    00:00:00 sudo kvm -m 512 -smp 2 -hda debian-11.qcow2
-root        5369    5368    5369  4    5 00:50 pts/1    00:00:00 qemu-system-x86_64 -enable-kvm -m 512 -smp 2 -hda debian-11.qcow2
-root        5369    5368    5370  0    5 00:50 pts/1    00:00:00 qemu-system-x86_64 -enable-kvm -m 512 -smp 2 -hda debian-11.qcow2
-root        5369    5368    5371  1    5 00:50 pts/1    00:00:00 qemu-system-x86_64 -enable-kvm -m 512 -smp 2 -hda debian-11.qcow2
-root        5369    5368    5374 87    5 00:50 pts/1    00:00:09 qemu-system-x86_64 -enable-kvm -m 512 -smp 2 -hda debian-11.qcow2
-root        5369    5368    5375  0    5 00:50 pts/1    00:00:00 qemu-system-x86_64 -enable-kvm -m 512 -smp 2 -hda debian-11.qcow2
+root        5368    5344    5368  0    1 00:50 pts/1    00:00:00 sudo kvm -m 512 -smp 2 -hda debian-12.qcow2
+root        5369    5368    5369  4    5 00:50 pts/1    00:00:00 qemu-system-x86_64 -enable-kvm -m 512 -smp 2 -hda debian-12.qcow2
+root        5369    5368    5370  0    5 00:50 pts/1    00:00:00 qemu-system-x86_64 -enable-kvm -m 512 -smp 2 -hda debian-12.qcow2
+root        5369    5368    5371  1    5 00:50 pts/1    00:00:00 qemu-system-x86_64 -enable-kvm -m 512 -smp 2 -hda debian-12.qcow2
+root        5369    5368    5374 87    5 00:50 pts/1    00:00:09 qemu-system-x86_64 -enable-kvm -m 512 -smp 2 -hda debian-12.qcow2
+root        5369    5368    5375  0    5 00:50 pts/1    00:00:00 qemu-system-x86_64 -enable-kvm -m 512 -smp 2 -hda debian-12.qcow2
 ```
 
 :::note Inspect
@@ -161,7 +162,7 @@ console. Using the `-vnc` option, `kvm` will start a VNC server and export the
 virtual machine's console through it.
 
 ```shell-session
-student@lab-virt-host:~/work$ sudo kvm -m 512 -smp 2 -hda debian-11.qcow2 -vnc :1
+student@lab-virt-host:~/work$ sudo kvm -m 512 -smp 2 -hda debian-12.qcow2 -vnc :1
 qemu-system-x86_64: warning: host doesn't support requested feature: CPUID.80000001H:ECX.svm [bit 2]
 qemu-system-x86_64: warning: host doesn't support requested feature: CPUID.80000001H:ECX.svm [bit 2]
 ```
@@ -171,7 +172,7 @@ the process is still in foreground. To avoid this, we add the `--daemonize`
 parameter:
 
 ```shell-session
-student@lab-virt-host:~/work$ sudo kvm -m 512 -smp 2 -hda debian-11.qcow2 -vnc :1 --daemonize
+student@lab-virt-host:~/work$ sudo kvm -m 512 -smp 2 -hda debian-12.qcow2 -vnc :1 --daemonize
 ```
 
 The `-vnc :1` parameter starts a VNC server on the first VNC port.
@@ -188,9 +189,9 @@ the `xtightvncviewer` package is installed.
 ## Virtual machine disk storage
 
 In the previous section we have started a virtual machine using an already
-existing disk image - `debian-11.qcow2`. The **qcow2** extension stands for
+existing disk image - `debian-12.qcow2`. The **qcow2** extension stands for
 "QEMU Copy-on-Write" and allows us to create multiple layered images on top of
-a read-only base image. Using the `debian-11.qcow2` image as base, for each
+a read-only base image. Using the `debian-12.qcow2` image as base, for each
 virtual machine that we want to start, we will create a new qcow2 image that
 will host all changes for the specific virtual machine. Examples on how to
 create this layered setup will be shown in the following sections.
@@ -257,7 +258,7 @@ You can stop the installation process after it begins.
 
 KVM is able to use multiple disk images on a single virtual machine.
 
-For this task we will start a new virtual machine with the `debian-11.qcow2`
+For this task we will start a new virtual machine with the `debian-12.qcow2`
 image as its primary boot device. Create an additional 1GB qcow2 disk image and
 include it in the virtual machine's parameters. **Hint:** use the `-hdb`
 parameter.
@@ -289,12 +290,12 @@ file. This means that we can create a template file and then run multiple
 virtual machines without copying the template for each one of them.
 
 For this task we aim to create two virtual machines from the same
-`debian-11.qcow2` image. Before being able to do this, we must first create a
-disk image based on `debian-11.qcow2` for each of the virtual machines.
+`debian-12.qcow2` image. Before being able to do this, we must first create a
+disk image based on `debian-12.qcow2` for each of the virtual machines.
 
 ```shell-session
-student@lab-virt-host:~/work$ qemu-img create -f qcow2 -b debian-11.qcow2 sda-vm1.qcow2
-Formatting 'sda-vm1.qcow2', fmt=qcow2 size=8589934592 backing_file=debian-11.qcow2 cluster_size=65536 lazy_refcounts=off refcount_bits=16
+student@lab-virt-host:~/work$ qemu-img create -f qcow2 -b debian-12.qcow2 sda-vm1.qcow2
+Formatting 'sda-vm1.qcow2', fmt=qcow2 size=8589934592 backing_file=debian-12.qcow2 cluster_size=65536 lazy_refcounts=off refcount_bits=16
 student@lab-virt-host:~/work$ du -sh sda-vm1.qcow2
 196K    sda-vm1.qcow2
 ```
@@ -321,14 +322,14 @@ going through the installation process again. We can use the `convert`
 subcommand to achieve this:
 
 ```shell-session
-student@lab-virt-host:~/work$ qemu-img convert -O vdi debian-11.qcow2 debian-11.vdi
+student@lab-virt-host:~/work$ qemu-img convert -O vdi debian-12.qcow2 debian-12.vdi
 ```
 
 We can then inspect the image, both before, and after conversion using `qemu-img
 info`.
 ```shell-session
-student@lab-virt-host:~/work$ qemu-img info debian-11.qcow2
-image: debian-11.qcow2
+student@lab-virt-host:~/work$ qemu-img info debian-12.qcow2
+image: debian-12.qcow2
 file format: qcow2
 virtual size: 8 GiB (8589934592 bytes)
 disk size: 1 GiB
@@ -341,8 +342,8 @@ Format specific information:
     lazy refcounts: false
     refcount bits: 16
     corrupt: false
-student@lab-virt-host:~/work$ qemu-img info debian-11.vdi
-image: debian-11.vdi
+student@lab-virt-host:~/work$ qemu-img info debian-12.vdi
+image: debian-12.vdi
 file format: vdi
 virtual size: 8 GiB (8589934592 bytes)
 disk size: 1.16 GiB
