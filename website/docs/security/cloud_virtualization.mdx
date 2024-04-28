@@ -12,19 +12,17 @@ the command line, and not the web interface.
 
 # Native virtualization
 
-import NVkvm, {toc as NVkvmTOC} from '../common/native_virt/_native_virt_kvm.md';
+import NVkvm from '../common/native_virt/_native_virt_kvm.md';
 
 <NVkvm/>
 
 
 # OpenStack
 
-import OSsetup, {toc as OSsetupTOC} from '../common/openstack/_setup.md';
+import OSsetup from '../common/openstack/_setup.md';
 
 <OSsetup/>
 
-import OSmanage, {toc as OSmanageTOC} from '../common/openstack/_management.md';
+import OSmanage from '../common/openstack/_management.md';
 
 <OSmanage/>
-
-export const toc = [...NVkvmTOC, ...OSsetupTOC, ...OSmanageTOC]

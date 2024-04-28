@@ -39,20 +39,18 @@ You will not need to use the virtual machines for the first part of the lab.
 :::
 
 
-import CertBasics, {toc as CertBasicsTOC} from '../common/certificates/_basics.md';
+import CertBasics from '../common/certificates/_basics.md';
 
 <CertBasics/>
 
-import CertComm, {toc as CertCommTOC} from '../common/certificates/_communication.md';
+import CertComm from '../common/certificates/_communication.md';
 
 <CertComm/>
 
-import LBtopology, {toc as LBtopologyTOC} from '../common/load_balancing/_topology.md';
+import LBtopology from '../common/load_balancing/_topology.md';
 
 <LBtopology/>
 
-import LBhaproxy, {toc as LBhaproxyTOC} from '../common/load_balancing/_haproxy.md';
+import LBhaproxy from '../common/load_balancing/_haproxy.md';
 
 <LBhaproxy/>
-
-export const toc = [...CertBasicsTOC, ...CertCommTOC, ...LBtopologyTOC, ...LBhaproxyTOC]

@@ -1,8 +1,7 @@
 // @ts-check
 // Note: type annotations allow type checking and IDEs autocompletion
 
-const lightCodeTheme = require('prism-react-renderer/themes/vsLight');
-const darkCodeTheme = require('prism-react-renderer/themes/oceanicNext');
+import { themes as prismThemes } from 'prism-react-renderer';
 
 /** @type {import('@docusaurus/types').Config} */
 const config = {
@@ -114,8 +113,8 @@ const config = {
         copyright: `Copyright © ${new Date().getFullYear()} Cluster & Grid Team, Facultatea de Automatică și Calculatoare, Universitatea Politehnica București. Built with Docusaurus.`,
       },
       prism: {
-        theme: lightCodeTheme,
-        darkTheme: darkCodeTheme,
+        theme: prismThemes.vsLight,
+        darkTheme: prismThemes.oceanicNext,
         additionalLanguages: ['puppet', 'shell-session', 'systemd', 'nginx', 'dns-zone-file'],
       },
       docs: {

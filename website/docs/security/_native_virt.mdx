@@ -4,16 +4,14 @@ sidebar_position: 4
 
 # Native virtualization
 
-import NVkvm, {toc as NVkvmTOC} from '../common/native_virt/_native_virt_kvm.md';
+import NVkvm from '../common/native_virt/_native_virt_kvm.md';
 
 <NVkvm/>
 
-import NVnetworking, {toc as NVnetworkingTOC} from '../common/native_virt/_native_virt_networking.md';
+import NVnetworking from '../common/native_virt/_native_virt_networking.md';
 
 <NVnetworking/>
 
-import NVlibvirt, {toc as NVlibvirtTOC} from '../common/native_virt/_native_virt_libvirt.md';
+import NVlibvirt from '../common/native_virt/_native_virt_libvirt.md';
 
 <NVlibvirt/>
-
-export const toc = [...NVkvmTOC, ...NVnetworkingTOC, ...NVlibvirtTOC]

@@ -35,7 +35,7 @@ Modify the source code to use your DNS server IP address and compile the code:
 Interrogate your DNS server to check if everything works fine (both from the base VM and from the helper VM).
 
 :::note
-Use <your_last_name>.scgc.ro (the domain you configured earlier) for testing. In the following examples we will be using scgc.ro as our domain.
+Use `<your_last_name>.scgc.ro` (the domain you configured earlier) for testing. In the following examples we will be using scgc.ro as our domain.
 :::
 
 ```shell-session

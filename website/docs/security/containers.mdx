@@ -35,20 +35,18 @@ $ # check if the VMs booted
 $ virsh net-dhcp-leases labvms
 ```
 
-import ContainerBasics, {toc as ContainerBasicsTOC} from '../common/containers/_basics.md';
+import ContainerBasics from '../common/containers/_basics.md';
 
 <ContainerBasics/>
 
-import ContainerDocker, {toc as ContainerDockerTOC} from '../common/containers/_docker.md';
+import ContainerDocker from '../common/containers/_docker.md';
 
 <ContainerDocker/>
 
-import ContainerLXC, {toc as ContainerLXCTOC} from '../common/containers/_lxc.md';
+import ContainerLXC from '../common/containers/_lxc.md';
 
 <ContainerLXC/>
 
-import ContainerLXD, {toc as ContainerLXDTOC} from '../common/containers/_lxd.md';
+import ContainerLXD from '../common/containers/_lxd.md';
 
 <ContainerLXD/>
-
-export const toc = [...ContainerBasicsTOC, ...ContainerDockerTOC, ...ContainerLXCTOC, ...ContainerLXDTOC]
