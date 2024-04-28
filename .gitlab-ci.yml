@@ -21,8 +21,8 @@ test:
       - website/node_modules/
   script:
   - cd website
-  - npm install
-  - npm run build
+  - yarn install --audit
+  - yarn build
   rules:
     - if: $CI_COMMIT_REF_NAME != $CI_DEFAULT_BRANCH
 
@@ -34,8 +34,8 @@ pages:
       - website/node_modules/
   script:
   - cd website
-  - npm install
-  - npm run build
+  - yarn install --audit
+  - yarn build
   - mv ./build ../public
   artifacts:
     paths:
