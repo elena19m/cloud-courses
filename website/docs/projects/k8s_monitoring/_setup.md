@@ -1,6 +1,7 @@
 ### Setup
 
 We will be using a virtual machine in the [faculty's cloud](http://cloud.grid.pub.ro/).
+All virtual machines **must** be created under the `scgc_hw_prj` OpenStack project.
 
 When creating a virtual machine in the Launch Instance window:
   * Set the following **Instance Name**: `HW-<Your LDAP username>` (e.g., `HW-anamaria.popescu`).
