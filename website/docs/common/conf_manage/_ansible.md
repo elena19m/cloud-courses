@@ -452,5 +452,5 @@ In this case, you must fix the issue:
   * update the location of the secrets file in the PAM configuration;
   * run the Ansible playbook again;
   * test the connection.
-[Google authenticator man page]: https://man.archlinux.org/man/community/libpam-google-authenticator/pam_google_authenticator.8.en
+[Google authenticator man page]: https://github.com/google/google-authenticator-libpam#module-options
 :::
