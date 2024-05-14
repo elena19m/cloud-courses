@@ -24,7 +24,6 @@ Activating compression for the video stream can improve performance.
 You can use compression by also appending the `-C` parameter to the SSH command.
 You can get more details in the [Working with OpenStack][] lab.
 :::
-[Working with OpenStack]: ../../basic/working_with_openstack.md
 
 If you intend to use the `root` account to run the commands in this lab, you
 must fetch the `xauth` token created for the `student` user.
@@ -217,8 +216,6 @@ The installation process requires an installation medium (in ISO format). Begin
 by downloading the latest Debian installer ISO, SHA512 checksums and signature
 files from the [Debian download page][]. Verify the ISO's integrity and
 that the checksum is signed using an [official signature][].
-[Debian download page]: https://cdimage.debian.org/debian-cd/current/amd64/iso-cd/
-[official signature]: https://www.debian.org/CD/verify
 
 ```shell-session
 student@lab-virt-host:~/work$ sha512sum -c --ignore-missing SHA512SUMS
@@ -349,3 +346,8 @@ virtual size: 8 GiB (8589934592 bytes)
 disk size: 1.16 GiB
 cluster_size: 1048576
 ```
+
+
+[Working with OpenStack]: ../../basic/working_with_openstack.md
+[Debian download page]: https://cdimage.debian.org/debian-cd/current/amd64/iso-cd/
+[official signature]: https://www.debian.org/CD/verify

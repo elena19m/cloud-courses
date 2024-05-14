@@ -1,7 +1,6 @@
 This lab's tasks will be performed in the faculty's [OpenStack cloud][]. We will
 create, modify and delete different cloud objects (instances, networks,
 subnets).
-[OpenStack cloud]: https://cloud.grid.pub.ro/
 
 To interact with OpenStack, we will use the official OpenStack client. The
 client is already installed on `fep.grid.pub.ro`.
@@ -20,7 +19,6 @@ All operations performed in OpenStack require authentication. As such,
 before using the OpenStack client, we must provide the necessary authentication
 parameters. This is usually done using an [OpenStack RC file][] that defines
 some variables to set up a certain environment inside the shell.
-[Openstack RC file]: https://docs.openstack.org/ocata/user-guide/common/cli-set-environment-variables-using-openstack-rc.html
 
 
 ### OpenStack RC
@@ -28,7 +26,6 @@ some variables to set up a certain environment inside the shell.
 To obtain your OpenStack RC file from the [Horizon dashboard][], go to `Project`
 &rarr; `API Access`, click on the `Download OpenStack RC File` dropdown and
 select `OpenStack RC File`.
-[Horizon dashboard]: https://cloud.grid.pub.ro/
 
 :::note Copy the RC file to fep
 You must copy the configuration file to your home on `fep.grid.pub.ro`.
@@ -68,7 +65,6 @@ plugins][]. We will use token-based authentication, which uses tokens to only
 grant access to some OpenStack services. Furthermore, the token has an
 expiration date attached to it, which reduces the impact of a potential
 information leak, but also means that the token must be periodically renewed.
-[authentication plugins]: https://docs.openstack.org/python-openstackclient/wallaby/cli/authentication.html
 
 To use token-based authentication, you must update the RC file according to the
 following patch (remove the lines starting with `-` and add the lines starting
@@ -158,3 +154,9 @@ command (the ID of the token to revoke must be given as a positional parameter):
 ```shell-session
 [user.name@fep8 ~]$ openstack token revoke gAAAAA[...]
 ```
+
+
+[Openstack RC file]: https://docs.openstack.org/ocata/user-guide/common/cli-set-environment-variables-using-openstack-rc.html
+[OpenStack cloud]: https://cloud.grid.pub.ro/
+[Horizon dashboard]: https://cloud.grid.pub.ro/
+[authentication plugins]: https://docs.openstack.org/python-openstackclient/wallaby/cli/authentication.html

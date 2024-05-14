@@ -72,8 +72,6 @@ pages (an `index.html` file), you cannot use the default health check method
 (`OPTIONS`). You will have to use the `GET` method instead. To change the used
 method, use the [http-check send][] directive and configure it to use the `GET`.
 
-[http-check send]: https://docs.haproxy.org/2.2/configuration.html#4.2-http-check%20send
-
 A fully functional application written using a programming language / framework
 like PHP or NodeJS will likely handle the `OPTIONS` HTTP method without issues.
 :::
@@ -322,3 +320,6 @@ on the `server` directives to specify the certificate of the CA (or the
 certificate files in case of self-signed certificates) that HAProxy should
 trust.
 :::
+
+
+[http-check send]: https://docs.haproxy.org/2.2/configuration.html#4.2-http-check%20send

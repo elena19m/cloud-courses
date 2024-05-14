@@ -225,7 +225,6 @@ need to present a valid SSH key, and the OTP code afterwards), the
 We could also use a module like [lineinfile][] to update parts of the
 configuration files directly on the remote system, but this approach does not
 guarantee that the content that we do not update is correct.
-[lineinfile]: https://docs.ansible.com/ansible/2.9/modules/lineinfile_module.html
 :::
 
 
@@ -250,7 +249,6 @@ default [Ansible vault tool][].
 The Google authenticator information is confidential information, since anyone
 with access to the file would be able to extract the secret code from it,
 removing any benefit of implementing multi-factor authentication.
-[Ansible vault tool]: https://docs.ansible.com/ansible/latest/cli/ansible-vault.html
 :::
 
 We first need to create a vault for the secret values:
@@ -452,5 +450,9 @@ In this case, you must fix the issue:
   * update the location of the secrets file in the PAM configuration;
   * run the Ansible playbook again;
   * test the connection.
-[Google authenticator man page]: https://github.com/google/google-authenticator-libpam#module-options
 :::
+
+
+[lineinfile]: https://docs.ansible.com/ansible/2.9/modules/lineinfile_module.html
+[Ansible vault tool]: https://docs.ansible.com/ansible/latest/cli/ansible-vault.html
+[Google authenticator man page]: https://github.com/google/google-authenticator-libpam#module-options

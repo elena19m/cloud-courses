@@ -473,7 +473,6 @@ before.
 :::tip
 Read the documentation of the [server create][] subcommand and find how you can
 inject the configuration script as user data.
-[server create]: https://docs.openstack.org/python-openstackclient/wallaby/cli/command-objects/server.html#server-create
 :::
 
 :::note Verify that the script ran
@@ -695,7 +694,6 @@ resources:
 You do not need to enter your LDAP account's password in the field with the
 label `Password for user "user.name"`. The meaning of the stack parameters is
 presented in the [Launch and manage stacks][] page.
-[Launch and manage stacks]: https://docs.openstack.org/mitaka/user-guide/dashboard_stacks.html
 :::
 
 :::note Inspect the stack
@@ -715,7 +713,6 @@ instances with an initial configuration:
 
 :::tip
 Review the [software configuration][] page for configuration examples.
-[software configuration]: https://docs.openstack.org/heat/wallaby/template_guide/software_deployment.html
 :::
 
 
@@ -726,3 +723,8 @@ Before disconnecting, revoke your authentication token:
 ```shell-session
 [user.name@fep8 ~]$ openstack token revoke $OS_TOKEN
 ```
+
+
+[server create]: https://docs.openstack.org/python-openstackclient/wallaby/cli/command-objects/server.html#server-create
+[Launch and manage stacks]: https://docs.openstack.org/mitaka/user-guide/dashboard_stacks.html
+[software configuration]: https://docs.openstack.org/heat/wallaby/template_guide/software_deployment.html

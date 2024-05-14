@@ -255,7 +255,6 @@ Some types of resources define additional states for the attribute. For example,
 
 Define a manifest that creates a symbolic link to `/tmp/my_file`. Use the Puppet
 documentation for the [file type resource][] for more details.
-[file type resource]: https://puppet.com/docs/puppet/6/types/file.html
 
 :::tip
 The `target` attribute must also be set when the `ensure => link` attribute is
@@ -268,7 +267,6 @@ set.
 Create a new manifest file and define a [ssh_authorized_key type resource][].
 The resource must allow the `student` user on the host to authenticate as the
 `student` user on the virtual machine using an SSH key.
-[ssh_authorized_key type resource]: https://forge.puppet.com/modules/puppetlabs/sshkeys_core
 
 :::tip
 You must generate an SSH key on the host system, and copy its public key to the
@@ -288,7 +286,7 @@ cases, we must define resource dependencies.
 The [Puppet relationships docs][] provide a more detailed overview of how
 resource relationships work. We will provide some examples in the following
 sections.
-[Puppet relationships docs]: https://puppet.com/docs/puppet/6/lang_relationships.html
+
 
 #### Before / require
 
@@ -314,7 +312,6 @@ type of resource is not usually used since other resource types provide built-in
 checks to verify if resource application is required. The `logoutput` attribute
 specifies that the output of the command must also be passed to Puppet's
 notification output.
-[exec type resource]: https://puppet.com/docs/puppet/6/types/exec.html
 
 :::note Observe the execution order
 Apply the manifest above and observe the order in which the resources are
@@ -346,7 +343,6 @@ Some resources require running an action that has the effect of a "refresh"
 (e.g. a service that needs to reload its configuration). The behaviour of some
 resources (e.g. [service type resource][]) may differ depending on whether the
 resource is refreshed or not.
-[service type resource]: https://puppet.com/docs/puppet/6/types/service.html
 
 If in addition to resource dependencies we need to refresh a second resource
 when the first one is changed, we can either:
@@ -537,8 +533,6 @@ that will:
 Use the [case conditional][] statement to create the index files in the
 appropriate directories.
 
-[case conditional]: https://puppet.com/docs/puppet/6/lang_conditional.html#lang_condition_case
-
 :::note Facts dictionary
 Depending on the version of Puppet that you use, the facts may change their
 position in the facts dictionary. Review the output of the `facter` command to
@@ -557,3 +551,11 @@ nginx configuration files differ as follows:
   * on Debian systems, the root HTML directory is `/var/www/html` and the
     service runs as the `www-data` user.
 :::
+
+
+[case conditional]: https://puppet.com/docs/puppet/6/lang_conditional.html#lang_condition_case
+[file type resource]: https://puppet.com/docs/puppet/6/types/file.html
+[ssh_authorized_key type resource]: https://forge.puppet.com/modules/puppetlabs/sshkeys_core
+[Puppet relationships docs]: https://puppet.com/docs/puppet/6/lang_relationships.html
+[exec type resource]: https://puppet.com/docs/puppet/6/types/exec.html
+[service type resource]: https://puppet.com/docs/puppet/6/types/service.html

@@ -598,7 +598,6 @@ If you compare this output with the previous one, you can see that the
 discovered ports have the [open|filtered][] status which means that the port is
 not closed, but somewhere on the route, something blocked the packets (usually a
 firewall).
-[open|filtered]: https://nmap.org/book/man-port-scanning-basics.html
 
 </details>
 
@@ -795,3 +794,6 @@ making it difficult to catch using a typical IDS rules.
 
 Run a Denial of Service attack from VM2 to VM1. Check the logs to see if the
 rule above detects RUDY or not.
+
+
+[open|filtered]: https://nmap.org/book/man-port-scanning-basics.html
