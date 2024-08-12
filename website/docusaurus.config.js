@@ -23,7 +23,7 @@ const config = {
         docs: {
           editUrl: 'https://gitlab.cs.pub.ro/scgc/cloud-courses/-/blob/main/website',
         },
-        blog: false,
+        blog: {},
         theme: {
           customCss: require.resolve('./src/css/custom.css'),
         },
@@ -64,6 +64,11 @@ const config = {
             to: '/docs/security',
             label: 'SCGC',
             position: 'left'
+          },
+          {
+            to: '/blog',
+            label: 'SysDevOps & Security Corner',
+            position: 'right'
           },
           {
             href: 'https://gitlab.cs.pub.ro/SCGC/cloud-courses',
