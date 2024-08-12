@@ -6,6 +6,8 @@ EXPOSE 3000
 
 COPY --chown=node:node website/ /app/website
 
+RUN chown node:node /app/website
+
 USER node
 RUN yarn install --audit
 
