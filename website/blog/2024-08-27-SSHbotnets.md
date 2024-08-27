@@ -84,7 +84,7 @@ fi
 However, the script seems to be pretty well crafted. The next code snippets
 highlight the most interesting things we have discovered while inspecting the script.
 
-**Insight 1**. The script kills other miners before starting .
+**Insight 1**. The script kills other miners before starting
 
 ```bash
 crontab -r
@@ -128,7 +128,7 @@ WantedBy=multi-user.target
 EOF
 ```
 **Insight 4**. Sets up a service that periodically kills processes connecting to
-some IPs (probably other miners). This is the ``rsyslgd` file which is a bash script (see below)
+some IPs (probably other miners). This is the `rsyslgd` file which is a bash script (see below)
 
 ```bash
 #!/bin/bash
