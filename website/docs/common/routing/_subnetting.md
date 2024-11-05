@@ -9,15 +9,11 @@
 - In hybrid binary form, the large network address is `78.78.001000|00.00000000/22`. We used the pipe character | to separate the network part from the host part.
 - Since we have 4 subnets, we need 2 additional bits for subnetting: 00, 01, 10, 11. This means the subnets will have a mask of /22 + 2 bits = /24. Therefore, each subnet will have `2^8 − 2 = 254 assignable hosts`.
 
-<!-- -->
-
 - The 4 subnets will have the following addresses:
     - `78.78.00100000.00000000/24` = `78.78.32.0/24`
     - `78.78.00100001.00000000/24` = `78.78.33.0/24`
     - `78.78.00100010.00000000/24` = `78.78.34.0/24`
     - `78.78.00100011.00000000/24` = `78.78.35.0/24`
-
-<!-- -->
 
 - The broadcast address for each subnet will be:
     - `78.78.00100000.11111111/24` = `78.78.32.255/24`
@@ -25,15 +21,11 @@
     - `78.78.00100010.11111111/24` = `78.78.34.255/24`
     - `78.78.00100011.11111111/24` = `78.78.35.255/24`
 
-<!-- -->
-
 - The first assignable address in each subnet will be:
     - `78.78.00100000.00000001/24` = `78.78.32.1/24`
     - `78.78.00100001.00000001/24` = `78.78.33.1/24`
     - `78.78.00100010.00000001/24` = `78.78.34.1/24`
     - `78.78.00100011.00000001/24` = `78.78.35.1/24`
-
-<!-- -->
 
 - The last assignable address in each subnet will be:
     - `78.78.00100000.11111110/24` = `78.78.32.254/24`

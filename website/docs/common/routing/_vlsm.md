@@ -14,8 +14,6 @@
     2. `17.18.19.128/25`
 - We allocate the first subnet to the first department: A - 17.18.19.0/25.
 
-<!-- -->
-
 - We then further divide the second subnet (17.18.19.128/25).
 - We need to use the remaining space for the other two subnets (B and C) with 60 and 50 hosts, respectively.
 - We need 6 bits for the host part of each subnet, which gives us a /26 mask. We divide the new subnet into two subnets:
@@ -24,18 +22,10 @@
 - We allocate each of the resulting two subnets to the two departments: `B - 17.18.19.128/26` and `C - 17.18.19.192/26`.
 -  Since the initial space was divided into subnets with different masks, we call this process *Variable Length Subnet Mask* (VLSM).
 
-<!-- -->
-
 - The process is illustrated in the image below:
 
-<p align="center">
-    <img src="../../basic/assets/img/vlsm-presentation.svg" alt="VLSM presentation"/>
-</p>
-
-<!--
 This doen not align the image in the center
-![VLSM subnet](./assets/img/vlsm-presentation.svg)
--->
+![VLSM subnet](./assets/vlsm-presentation-light.svg#light)![VLSM subnet](./assets/vlsm-presentation-dark.svg#dark)
 
 :::note VLSM
 - A company has a /25 address space and a router with multiple interfaces.

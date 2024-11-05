@@ -2,8 +2,6 @@
 
 -   IP addresses are represented in groups of 8 bits. Therefore, you need good binary skills.
 
-<!-- -->
-
 - When converting a number to binary, it's best to break it down into powers of 2. For example:
     * `17 = 16 + 1 = 2^4 + 2^0`; results in the representation (in 8-bit binary) `00010001`
     * `173 = 128 + 32 + 8 + 4 + 1 = 2^7 + 2^5 + 2^3 + 2^2 + 2^0`; results in the representation (in 8-bit binary) `10101101`

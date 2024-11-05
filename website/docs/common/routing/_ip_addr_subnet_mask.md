@@ -11,8 +11,6 @@
         `11111111.00000000.00000000.00000000 = 255.0.0.0.`. Due to the special property of consecutive 1 bits, another form you will find for the subnet mask is the prefix form: /X, where X represents the number of 1 bits:
         `11111111.00000000.00000000.00000000 = 255.0.0.0 = /8`.
 
-<!-- -->
-
 - Starting from the IP address and subnet mask, we can identify two other properties of a network (for illustration, we will use the IP address 192.168.100.200/255.255.255.0):
     - **network address** - obtained by performing a **bitwise AND** between the IP address bits and the subnet mask bits
         - `192.168.100.200 & 255.255.255.0 = 192.168.100.0`
@@ -26,21 +24,16 @@
     - A **host part** which spans the remaining space (32 - the number of 1 bits of the subnet mask). It is 8 bits for a /24 mask (32-24 = 8), 16 bits for a /16 mask (32-16 = 16), or 12 bits for a /20 mask (32-20 = 12).
 - With this division, we will obtain the same values for the address 192.168.100.200/24 as calculated above, as reflected in the figure below.
 
-<p align="center">
-    <img src="../../basic/assets/img/ip-addr-detailed.svg" alt="IP address construction"/>
-</p>
-<!--
 This version doen not align the image in the center
-![IP address construction](./assets/img/ip-addr-detailed.svg)
--->
+![IP address construction](./assets/ip-addr-detailed.svg)
+
+![IP address construction](./assets/ip-addr-detailed-light.svg#light)![IP address construction](./assets/ip-addr-detailed-dark.svg#dark)
 
 ------------------------------------------------------------------------
 
 - Let's obtain the network address and broadcast address for the address `172.16.200.100/20`.
 - We convert the address into a hybrid address by placing bits of 0 where the subnet mask is located: in the third octet of the four in the IP address: `172.16.1100|1000.xxxxxxxx`.
 - We used the | (pipe) operator to separate the **network part** (the first 20 bits, related to the network) from the host part (the remaining bits (32-20 = 12 bits) related to the station). The bits of the last octet are not relevant for our calculation, so we placed xxxxxxxx in their place.
-
-<!-- -->
 
 - The network address has **all host bits set to 0**, so it will be `172.16.1100|0000.00000000`. Thus, the network address is `172.16.192.0/20`.
 - The broadcast address has **all host bits set to 1**, so it will be 172.16.1100|1111.11111111. Thus, the broadcast address is 172.16.207.255/20.
