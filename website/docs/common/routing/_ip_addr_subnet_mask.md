@@ -24,9 +24,6 @@
     - A **host part** which spans the remaining space (32 - the number of 1 bits of the subnet mask). It is 8 bits for a /24 mask (32-24 = 8), 16 bits for a /16 mask (32-16 = 16), or 12 bits for a /20 mask (32-20 = 12).
 - With this division, we will obtain the same values for the address 192.168.100.200/24 as calculated above, as reflected in the figure below.
 
-This version doen not align the image in the center
-![IP address construction](./assets/ip-addr-detailed.svg)
-
 ![IP address construction](./assets/ip-addr-detailed-light.svg#light)![IP address construction](./assets/ip-addr-detailed-dark.svg#dark)
 
 ------------------------------------------------------------------------

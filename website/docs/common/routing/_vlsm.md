@@ -24,7 +24,6 @@
 
 - The process is illustrated in the image below:
 
-This doen not align the image in the center
 ![VLSM subnet](./assets/vlsm-presentation-light.svg#light)![VLSM subnet](./assets/vlsm-presentation-dark.svg#dark)
 
 :::note VLSM

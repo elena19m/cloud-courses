@@ -2,7 +2,6 @@
 
 - A company receives the address space 45.67.89.0/24 to use internally. The company defines its topology as shown in the image below.
 
-This does not align the image in the center
 ![VLSM Topology](./assets/advanced-vlsm-light.svg#light)![VLSM Topology](./assets/advanced-vlsm-dark.svg#dark)
 
 - The topology contains 5 networks:
