@@ -47,11 +47,11 @@
 - With this division, we will obtain the same values for the address 192.168.100.200/24 as calculated above, as reflected in the figure below.
 
 <p align="center">
-    <img src="./assets/img/ip-addr-detailed.png" alt="IP address construction"/>
+    <img src="./assets/img/ip-addr-detailed.svg" alt="IP address construction"/>
 </p>
 <!--
 This version doen not align the image in the center
-![IP address construction](./assets/img/ip-addr-detailed.png){ width:"400" }
+![IP address construction](./assets/img/ip-addr-detailed.svg)
 -->
 
 ------------------------------------------------------------------------
@@ -213,12 +213,12 @@ __NOTE__ The membership of an IP address to a network can only be determined by 
 - The process is illustrated in the image below:
 
 <p align="center">
-    <img src="./assets/img/vlsm-presentation.png" alt="IP address construction"/>
+    <img src="./assets/img/vlsm-presentation.svg" alt="VLSM presentation"/>
 </p>
 
 <!--
 This doen not align the image in the center
-![VLSM subnet](./assets/img/vlsm_presentation.png)
+![VLSM subnet](./assets/img/vlsm-presentation.svg)
 -->
 
 :::note VLSM
@@ -231,12 +231,12 @@ This doen not align the image in the center
 - A company receives the address space 45.67.89.0/24 to use internally. The company defines its topology as shown in the image below.
 
 <p align="center">
-    <img src="./assets/img/advanced-vlsm.png" alt="IP address construction"/>
+    <img src="./assets/img/advanced-vlsm.svg" alt="Advanced VLSM"/>
 </p>
 
 <!--
 This does not align the image in the center
-![VLSM Topology](./assets/img/advanced_vlsm.png)
+![VLSM Topology](./assets/img/advanced-vlsm.svg)
 -->
 
 - The topology contains 5 networks:
