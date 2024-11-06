@@ -2,7 +2,7 @@
 sidebar_position: 6
 ---
 
-# Routing
+# IP Subnetting
 
 import Bits from '../common/routing/_bits.md'
 
