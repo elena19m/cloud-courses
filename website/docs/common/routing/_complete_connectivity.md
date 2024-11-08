@@ -3,7 +3,7 @@
 We want to ensure full connectivity between all stations in the topology. The blue station must be configured accordingly.
 
 :::note
-Configure class 10.10.30.0/24 IP addresses on the link between the host station and the blue station (ie between host(veth-blue) and blue(blue-eth0)).
+Configure class `10.10.30.0/24` IP addresses on the link between the host station and the blue station (ie between host(veth-blue) and blue(blue-eth0)).
 :::
 
 :::info

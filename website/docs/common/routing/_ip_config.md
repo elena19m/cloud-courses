@@ -2,16 +2,16 @@
 
 We first want to ensure connectivity between the host and red stations. In this tutorial we will use the iproute suite on Linux to perform common layer 3 (IP addressing) configurations.
 
-We will configure one IP address from the 192.168.0.0/24 class on the link interfaces between the host station and the red station. That is, between host(veth-red) (the veth-red interface on the host station) and red(red-eth0) (the red-eth0 interface on the red station).
+We will configure one IP address from the `192.168.0.0/24` class on the link interfaces between the host station and the red station. That is, between host(veth-red) (the veth-red interface on the host station) and red(red-eth0) (the red-eth0 interface on the red station).
 
 :::note
-On the veth-red interface on the host station we will configure the IP address 192.168.0.1 with the mask 255.255.255.0 (/24 in the prefixed form):
+On the veth-red interface on the host station we will configure the IP address `192.168.0.1` with the mask `255.255.255.0` (`/24` in the prefixed form):
 ```shell-command
 root@host:~# ip address add 192.168.0.1/24 dev veth-red
 ```
 :::
 
-Note that the iproute2 suite (ie the ip utility) uses the mask in prefixed format: /24.
+Note that the iproute2 suite (ie the ip utility) uses the mask in prefixed format: `/24`.
 
 Immediately after a network configuration run a command to validate the configuration. In our case it is the command to display the level 3 (Network) configuration, that is, the IP address:
 
@@ -23,7 +23,7 @@ root@host:~# ip address show dev veth-red
 ```
 
 :::note
-On the red-eth0 interface on the red station we will configure the IP address 192.168.0.2 with the mask 255.255.255.0 (/24 in the prefixed form):
+On the red-eth0 interface on the red station we will configure the IP address `192.168.0.2` with the mask `255.255.255.0` (`/24` in the prefixed form):
 ```shell-command
 root@host:~# go red
 [...]

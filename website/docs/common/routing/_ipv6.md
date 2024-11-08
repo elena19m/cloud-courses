@@ -21,9 +21,9 @@ root@host:~# ip -6 address show dev veth-red
 ```
 :::
 
-On the red-eth0 interface on the red station we will configure the IP address 2201::2/64:
+On the red-eth0 interface on the red station we will configure the IP address `2201::2/64`:
 :::note
-Configure on the host-blue link IPv6 addresses from the 2202::/64 network and on the host-green link IPv6 addresses from the 2203::/64 network.
+Configure on the host-blue link IPv6 addresses from the `2202::/64` network and on the host-green link IPv6 addresses from the `2203::/64` network.
 
 Enable routing for IPv6 on the host station:
 ```shell-command

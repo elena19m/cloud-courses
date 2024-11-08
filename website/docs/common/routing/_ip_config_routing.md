@@ -17,7 +17,7 @@ default via 10.10.10.1 dev red-eth0
 ```
 
 :::info
-The IP address 10.10.10.1 represents the IP address of the veth-red interface on the host station.
+The IP address `10.10.10.1` represents the IP address of the veth-red interface on the host station.
 :::
 
 :::note

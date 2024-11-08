@@ -9,7 +9,7 @@ After running the script the red station was restarted and the configurations we
 ```shell-command
 root@host:~# go red
 ```
-The script configures the IP address 7.7.7.1 on the veth-red interface of the host station and the IP address 7.7.7.2 on the red-eth0 interface of the red station. To display the IP configuration on the two interfaces use the commands:
+The script configures the IP address `7.7.7.1` on the veth-red interface of the host station and the IP address `7.7.7.2` on the red-eth0 interface of the red station. To display the IP configuration on the two interfaces use the commands:
 ```shell-command
 root@host:~# ip address show veth-red
 47: veth-red: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc pfifo_fast state UP qlen 1000
@@ -25,7 +25,7 @@ root@red:~# ip address show red-eth0
  inet6 fe80::216:3eff:fe8e:8421/64 scope link
  valid_lft forever preferred_lft forever
 ```
-Use the ping command to test connectivity between the two IP addresses (7.7.7.1 and 7.7.7.2) on the two stations. Notice that there is no connectivity.
+Use the ping command to test connectivity between the two IP addresses (`7.7.7.1` and `7.7.7.2`) on the two stations. Notice that there is no connectivity.
 
 :::note
 To troubleshoot this problem, we follow the routing table of each station:
@@ -44,7 +44,7 @@ default via 10.9.0.1 dev eth0
 192.168.3.0/24 dev veth-blue proto kernel scope link src 192.168.3.1
 ```
 
-Notice that the relevant route (7.7.7.0/24) does not appear on the host in the routing table. Either the interface is disabled or the configuration is wrong.
+Notice that the relevant route (`7.7.7.0/24`) does not appear on the host in the routing table. Either the interface is disabled or the configuration is wrong.
 
 Look carefully at the level 3 information:
 ```shell-command
@@ -64,7 +64,7 @@ root@red:~# ip address show red-eth0
 ```
 :::
 
-We can see that the interfaces are up (`UP`). But one of these addresses (7.7.7.1) has the `/32` mask. This means that they cannot network with each other and also explains the absence of the relevant route from the routing table.
+We can see that the interfaces are up (`UP`). But one of these addresses (`7.7.7.1`) has the `/32` mask. This means that they cannot network with each other and also explains the absence of the relevant route from the routing table.
 
 Fixing this error is done by adding the IP address with the correct mask `7.7.7.1/24` on the `veth-red` interface on the host. Verify that you have connectivity between `host` and `red`.
 
