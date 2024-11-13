@@ -4,6 +4,10 @@ sidebar_position: 7
 
 # Routing
 
+import RoutingSetup from '../common/routing/_setup.md';
+
+<RoutingSetup/>
+
 # Topology
 
 import Topology from '../common/routing/_topology.md'

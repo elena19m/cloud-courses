@@ -2,18 +2,18 @@
 
 We want to provide IPv6 connectivity between host station and red. In this tutorial we will use the `iproute` suite from Linux to perform the necessary configurations. Use the -6 parameter to make IPv6 related settings.
 
-We will configure one `2201::/64` class IP address on the link interfaces between the host station and the red station. That is, between host(`veth-red`) (the `veth-red` interface on the `host` station) and `red(red-eth0)` (the `red-eth0` interface on the `red` station).
+We will configure one `2201::/64` class IP address on the link interfaces between the host station and the red station. That is, between host(`usernet`) (the `usernet` interface on the `host` station) and `red(red-eth0)` (the `red-eth0` interface on the `red` station).
 
 :::note
-On the `veth-red` interface on the `host` station we will configure the IP address `2201::1/64`:
+On the `usernet` interface on the `host` station we will configure the IP address `2201::1/64`:
 ```shell-command
-root@host:~# ip -6 address add 2201::1/64 dev veth-red
+root@host:~# ip -6 address add 2201::1/64 dev usernet
 ```
 
 Immediately after a network configuration run a command to validate the configuration. In our case it is the IPv6 address display command:
 ```shell-command
-root@host:~# ip -6 address show dev veth-red
-47: veth-red: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 state UP qlen 1000
+root@host:~# ip -6 address show dev usernet
+47: usernet: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 state UP qlen 1000
  inet6 2201::1/64 scope global
  valid_lft forever preferred_lft forever
  inet6 fe80::215:5dff:fe5b:a38e/64 scope link

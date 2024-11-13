@@ -32,10 +32,10 @@ PING 10.10.30.2 (10.10.30.2) 56(84) bytes of data.
 Watch the ARP table again:
 ```shell-command
 root@host:~# ip neighbor show
-10.10.10.2 dev veth-red laddr 00:16:3e:8e:84:21 REACHABLE
-10.10.20.2 dev veth-green laddr 00:16:3e:d1:b2:95 REACHABLE
-10.10.30.2 dev veth-blue laddr 00:16:3e:32:0f:ae REACHABLE
-10.8.0.1 dev eth0 laddr 0a:00:27:00:00:00 REACHABLE
+10.10.10.2 dev usernet laddr 00:16:3e:8e:84:21 REACHABLE
+10.10.20.2 dev usernet laddr 00:16:3e:d1:b2:95 REACHABLE
+10.10.30.2 dev usernet laddr 00:16:3e:32:0f:ae REACHABLE
+10.9.0.1 dev eth0 laddr 0a:00:27:00:00:00 REACHABLE
 ```
 Notice that each station (red, green and blue) has a corresponding entry in the ARP table marked REACHABLE (valid entry). The additional input is the communication of the virtual machine (host station) with the fep.grid.pub.ro system.
 

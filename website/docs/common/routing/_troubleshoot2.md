@@ -2,7 +2,7 @@
 
 We aim to troubleshoot a connectivity issue. To "generate" the problem run the preparation script with the new argument ex7:
 ```shell-command
-root@host:~# start_lab ip ex7
+root@host:~# start_lab ex7
 ```
 
 :::tip

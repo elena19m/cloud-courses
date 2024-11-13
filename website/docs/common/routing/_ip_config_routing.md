@@ -17,7 +17,7 @@ default via 10.10.10.1 dev red-eth0
 ```
 
 :::info
-The IP address `10.10.10.1` represents the IP address of the veth-red interface on the host station.
+The IP address `10.10.10.1` represents the IP address of the usernet interface on the host station.
 :::
 
 :::note
@@ -43,7 +43,7 @@ Start the ping command from the red station to the green station.
 
 Open a new terminal and run on the host station the command:
 ```shell-command
-root@host:~# tcpdump -n -i veth-red
+root@host:~# tcpdump -n -i usernet
 listening on Ethernet, link-type EN10MB (Ethernet), capture size 65535 bytes
 18:46:48.783576 IP red.local > 10.10.20.2: ICMP echo request, id 434, seq 163, length 64
 18:46:48.783622 IP 10.10.20.2 > red.local: ICMP echo reply, id 434, seq 163, length 64
