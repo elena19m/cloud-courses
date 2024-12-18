@@ -68,7 +68,7 @@ in a very short time (so you have to respond ASAP and not lose the opportunity).
   - the large amount of money this good samaritan wants to donate to you (Why you?
 Who knows? They must have found your CV somewhere and you impressed them so so much).
 
-Here (https://blog.google/technology/safety-security/how-to-spot-scams-and-what-to-do-if-you-encounter-one/#spotwebscamshttps://blog.google/technology/safety-security/how-to-spot-scams-and-what-to-do-if-you-encounter-one/#spotwebscams) you have a very comprehensive blog post on how you can spot scams and keep your digital data secure. Other interesting (and recent) articles on this topic can be found here:
+[Here](https://blog.google/technology/safety-security/how-to-spot-scams-and-what-to-do-if-you-encounter-one/#spotwebscamshttps://blog.google/technology/safety-security/how-to-spot-scams-and-what-to-do-if-you-encounter-one/#spotwebscams) you have a very comprehensive blog post on how you can spot scams and keep your digital data secure. Other interesting (and recent) articles on this topic can be found here:
   - https://blog.google/products/gmail/gmail-holidays-2024-spam-scam/
   - https://thehackernews.com/2024/12/ongoing-phishing-and-malware-campaigns.html
   - https://news.trendmicro.com/2024/12/17/christmas-scams-2024/
