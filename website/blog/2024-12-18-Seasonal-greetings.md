@@ -1,7 +1,7 @@
 ---
 title: Ho, ho, ho! Seasonal (spam) greetings!
 description: Ho, ho, ho! Seasonal (spam) greetings!
-slug: soccare-upb
+slug: seasonal-spam
 tags: [SOCcare, security, threat intelligence sharing]
 
 hide_table_of_contents: false
