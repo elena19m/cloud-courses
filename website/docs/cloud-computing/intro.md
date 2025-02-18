@@ -1,6 +1,6 @@
 ---
 sidebar_position: 1
-slug: /cloud
+slug: /cloud-computing
 ---
 
 # Cloud Computing Intro
