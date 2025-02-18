@@ -10,8 +10,8 @@ cache:
     - website/node_modules/
 
 variables:
-  URL: 'https://scgc.pages.upb.ro'
-  BASE_URL: '/cloud-courses/'
+  URL: 'https://cloud-courses.upb.ro'
+  BASE_URL: '/'
 
 test:
   stage: test
