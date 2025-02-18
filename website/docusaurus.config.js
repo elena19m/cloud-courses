@@ -100,8 +100,12 @@ const config = {
                 to: '/docs/basic',
               },
               {
+                label: 'CC',
+                to: '/docs/cloud-computing',
+              },
+              {
                 label: 'CNET',
-                to: '/docs/basic-net',
+                to: '/docs/network',
               },
               {
                 label: 'SPD',
