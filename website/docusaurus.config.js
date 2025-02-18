@@ -55,6 +55,18 @@ const config = {
             activeBaseRegex: `/docs/basic/`,
           },
           {
+            to: '/docs/cloud-computing/',
+            label: 'CC',
+            position: 'left',
+            activeBaseRegex: `/docs/cloud-computing/`,
+          },
+          {
+            to: '/docs/network/',
+            label: 'CNET',
+            position: 'left',
+            activeBaseRegex: `/docs/network/`,
+          },
+          {
             to: '/docs/management/',
             label: 'SPD',
             position: 'left',
@@ -86,6 +98,10 @@ const config = {
               {
                 label: 'Intro',
                 to: '/docs/basic',
+              },
+              {
+                label: 'CNET',
+                to: '/docs/basic-net',
               },
               {
                 label: 'SPD',
