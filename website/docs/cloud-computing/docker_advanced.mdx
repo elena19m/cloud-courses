@@ -1,0 +1,45 @@
+---
+sidebar_position: 3
+---
+
+# Containers: Docker (Part 2)
+
+We will be using a virtual machine in the [faculty's cloud](http://cloud.grid.pub.ro/).
+
+When creating a virtual machine in the `Launch Instance` window:
+  * Name your VM using the following convention: `cc_lab_<username>`, where `<username>` is your institutional account.
+  * Select **Boot from image** in **Instance Boot Source** section
+  * Select **CC 2024-2025** in **Image Name** section
+  * Select the **m1.large** flavor.
+
+In the virtual machine:
+  * Download the laboratory archive from [here](https://repository.grid.pub.ro/cs/cc/laboratoare/lab-containers-part-1.zip) in the `/home/student` directory.
+Use: `wget https://repository.grid.pub.ro/cs/cc/laboratoare/lab-containers-part-1.zip` to download the archive.
+
+  * Extract the archive using `unzip lab-containers-part-1.zip`
+  * Run chmod u+x ./lab-container-part-1.sh && ./lab-container-part-1.sh to create the lab-container-part-1 directory with the necessary files.
+  * Navigate to the corresponding directory where you will resolve all the tasks using `cd ./lab-container-part-1"
+
+```shell-session
+$ # Download the laboratory archive
+$ wget https://repository.grid.pub.ro/cs/cc/laboratoare/lab-containers-part-1.zip
+$ # Extract the archive
+$ unzip lab-containers-part-1.zip
+$ # Change permissions and execute the setup script
+$ chmod u+x ./lab-container-part-1.sh
+$ # Run the setup script
+$ ./lab-container-part-1.sh
+$ # Navigate to the working directory
+$ cd ./lab-container-part-1
+```
+
+# Recap from the previous laboratory: [Containers: Docker (Part 1)](docker.mdx)
+
+import ContainerBasics from '../common/containers/_basics.md';
+
+<ContainerBasics/>
+
+import ContainerDockerVolumes from '../common/containers/_docker_volumes.md';
+
+<ContainerDockerVolumes/>
+
