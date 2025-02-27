@@ -5,8 +5,6 @@ slug: /cloud-computing
 
 # Cloud Computing Intro
 
-Welcome to the CC labs. During these labs, you will discover stuff about cloud computing.
-
 Welcome to the CC labs. During these labs, you will explore the key concepts of cloud computing, and how applications are deployed and scaled on the cloud.
 
 You will learn how to:
