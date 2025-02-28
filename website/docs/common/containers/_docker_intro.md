@@ -93,7 +93,7 @@ Follow the steps below:
    docker stats cdl-nginx
    ```
 
-   Close the screen by running `Ctrl+c` three times.
+   Close the screen by running `Ctrl+c`.
 
 1. Find out the internal processes of the running Nginx container:
 
