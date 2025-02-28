@@ -319,11 +319,20 @@ docker stats cdl-nginx
 
 The create and start command can be combined in a single command, `docker run`.
 
-Create two more Nginx containers by running `docker run`:
+Create another Nginx container by using `docker run`:
 
 ```console
-docker run --rm --name cdl2-nginx -p 8882:80 nginx:latest
-docker run --rm --name cdl3-nginx -p 8883:80 nginx:latest
+docker run --rm --name cdl1-nginx -p 8882:80 nginx:latest
+```
+
+You can see that, by default, the container is started in foreground.
+Stop the container using `CTRL+C`, (like you would stop any other foreground process).
+
+Now, run two more Nginx containers, in background, using the `-d` argument (or `--detach`):
+
+```console
+docker run -d --rm --name cdl2-nginx -p 8882:80 nginx:latest
+docker run -d --rm --name cdl3-nginx -p 8883:80 nginx:latest
 ```
 
 Check whether they are running:
