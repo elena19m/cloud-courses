@@ -168,27 +168,6 @@ Check to see the list of stopped containers:
 docker ps -a
 ```
 
-### Remove Containers
-
-A stopped container can be removed.
-Once this is done, the container is gone forever.
-It will have to be re-instantiated if needed, as we'll see in section ["Images and Containers"](#images-and-containers).
-
-Remove the `cdl-nginx` container:
-
-```console
-docker rm cdl-nginx
-```
-
-The container is now gone.
-You can use different commands to see if is gone:
-
-```console
-docker ps -a
-docker inspect cdl-nginx
-docker stats cdl-nginx
-```
-
 ### Connect to a Container
 
 You can connect to a container by using `docker exec`.
@@ -230,9 +209,30 @@ It is required, it points to the current directory.
 
 You can see that the container doesn't need to be running.
 
+### Remove Containers
+
+A stopped container can be removed.
+Once this is done, the container is gone forever.
+It will have to be re-instantiated if needed, as we'll see in section ["Images and Containers"](#images-and-containers).
+
+Remove the `cdl-nginx` container:
+
+```console
+docker rm cdl-nginx
+```
+
+The container is now gone.
+You can use different commands to see if is gone:
+
+```console
+docker ps -a
+docker inspect cdl-nginx
+docker stats cdl-nginx
+```
+
 ### Exercise: Interact with Docker instances
 
-Make sure all four containers are started: `cdl-nginx`, `ctf-piece_of_pie`, `cdl-caddy`, `cdl-debian-bash`.
+Make sure the following three containers are started: `ctf-piece_of_pie`, `cdl-caddy`, `cdl-debian-bash`.
 Start them if they are not stared.
 
 Copy files to and from containers.
@@ -244,7 +244,6 @@ Copy files to and from containers.
 1. Create a directory for each available container:
 
    ```console
-   mkdir container-cdl-nginx
    mkdir container-ctf-piece_of_pie
    mkdir container-cdl-caddy
    mkdir container-cdl-debian-bash
