@@ -230,6 +230,8 @@ Follow similar steps to fix the issue with the creation of the `dropbox` image.
 Search the Internet (GitHub or otherwise) for two Dockerfiles.
 Build images from those two Dockerfiles.
 
+<!--- TODO: add resources for the following exercises
+
 ### Exercise: Python Server
 
 Go to the `python-server` directory and build the container using the following command:
@@ -300,3 +302,5 @@ To bypass this issue we will create a GitHub Container Registry (GHCR) account a
 Follow the [GHCR tutorial](https://docs.github.com/en/packages/working-with-a-github-packages-registry/working-with-the-container-registry#authenticating-to-the-container-registry) to create a GHCR account.
 
 Login to the account the same as you did with the DockerHub account and tag the `assignment-checker` image to be pushed to GHCR.
+
+-->
