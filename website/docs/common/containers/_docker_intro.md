@@ -249,10 +249,9 @@ Copy files to and from containers.
    mkdir container-cdl-debian-bash
    ```
 
-   Copy the `/bin/bash` binary from each available container to their respective directory.
+   Copy the `/bin/cat` binary from each available container to their respective directory.
 
-   Copy the `/etc/os-release` file from each available container to their respective directory.
-   Check the contents to see what Linux distro was used to construct the filesystem.
+   Copy the `/etc/hosts` file from each available container to their respective directory.
 
 ## Docker Images
 

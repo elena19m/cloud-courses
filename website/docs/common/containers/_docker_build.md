@@ -45,76 +45,13 @@ This list contains both internally downloaded and locally built containers.
 
 ### Exercise: Generate a container image
 
-* Write a `Dockerfile.centos` file containing a recipe for generating a container image based on the `gitlab.cs.pub.ro:5050/scgc/cloud-courses/centos:7` container in which to install the `bind-utils` tool.
+* Write a `Dockerfile.alma` file containing a recipe for generating a container image based on the `almalinux:9` container in which to install the `bind-utils` tool.
 
 :::note
 To generate a container using a file other than the default `Dockerfile` we use the` -f` option.
 :::
 
 * Start the container generated in the previous exercise and run the command `nslookup hub.docker.com` to verify the installation of the package.
-
-### Downloading containers
-
-Another important principle, both in the use of containers and in programming in general, is reusability. Instead of developing a new solution for every problem we encounter, we can use a solution that has already been implemented and submitted to a public repository.
-
-For example, if we want to use a MySQL database to store information, instead of using a basic Ubuntu container and installing and configuring the server ourselves, we can download a container that already has the package installed.
-
-### Running commands in an unloaded container
-
-We will use as an example, a set of containers consisting of a MySQL database and a WordPress service.
-
-To start the two containers we will use the following commands:
-
-```
-student@lab-docker:~$ sudo docker network remove test-net
-test-net
-student@lab-docker:~$ sudo docker network create test-net
-69643d63f7a785c07d4b93cf77a8b921e97595da778344e9aa8f62ac9cb6909a
-student@lab-docker:~$ sudo docker run -d --hostname db --network test-net -e "MYSQL_ROOT_PASSWORD=somewordpress" -e "MYSQL_DATABASE=wordpress" -e "MYSQL_USER=wordpress" -e "MYSQL_PASSWORD=wordpress" mysql:5.7
-657e3c4a23e120adf0eb64502deead82e156e070f7e9b47eff522d430279d3e1
-student@lab-docker:~$ sudo docker run -d --hostname wordpress --network test-net -p "8000:80" -e "WORDPRESS_DB_HOST=db" -e "WORDPRESS_DB_USER=wordpress" -e "WORDPRESS_DB_PASSWORD=wordpress" gitlab.cs.pub.ro:5050/scgc/cloud-courses/wordpress:latest
-Unable to find image 'wordpress:latest' locally
-latest: Pulling from library/wordpress
-c229119241af: Pull complete
-47e86af584f1: Pull complete
-e1bd55b3ae5f: Pull complete
-1f3a70af964a: Pull complete
-0f5086159710: Pull complete
-7d9c764dc190: Pull complete
-ec2bb7a6eead: Pull complete
-9d9132470f34: Pull complete
-fb23ab197126: Pull complete
-cbdd566be443: Pull complete
-be224cc1ae0f: Pull complete
-629912c3cae4: Pull complete
-f1bae9b2bf5b: Pull complete
-19542807523e: Pull complete
-59191c568fb8: Pull complete
-30be9b012597: Pull complete
-bb41528d36dd: Pull complete
-bfd3efbb7409: Pull complete
-7f19a53dfc12: Pull complete
-23dc552fade0: Pull complete
-5133d8c158a7: Pull complete
-Digest: sha256:df2edd42c943f0925d4634718d1ed1171ea63e043a39201c0b6cbff9d470d571
-Status: Downloaded newer image for wordpress:latest
-b019fd009ad4bf69a9bb9db3964a4d446e9681b64729ffb850af3421c1df070c
-```
-
-The useful options above are:
-
-* `-e` sets an environment variable. This variable will be received by the container;
-* `-p` exposes an internal port of the container (` 80`) to a port on the host machine (`8000`);
-* `--hostname` makes it so the container uses a specific hostname;
-* `--network` connects the container to a network other than the default.
-
-We noticed in the output that we created the `test-net` network. We did this because in the default docker configuration, containers cannot communicate between themselves
-
-We can connect using the Firefox browser to the virtual machine on port `8000` to configure the WordPress server.
-
-### Exercise: Running commands in the container
-
-Start a container that hosts the NextCloud file sharing service. To connect to the NextCloud service, you need to expose the HTTP server running in the virtual machine. To do this, follow the example above. The container image name is `nextcloud`.
 
 ### Build More Images from Dockerfiles
 
