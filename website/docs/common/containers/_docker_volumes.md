@@ -4,7 +4,7 @@ While it makes sense to run Docker containers by themselves as services, all the
 
 To provide an input to the containers and a permanent storage for them we use volumes.
 
-Volumes are used to save outputs of files permanently. Start a container based on the image you can build and call `infinite-wrier`in the background using the following command:
+Volumes are used to save outputs of files permanently. Start a container based on the image you can build and call `perpetual-writer`in the background using the following command:
 
 ```console
 docker run -d --name perpetual-writer -v perpetual-storage:/var/perpetual-storage -t perpetual-writer
@@ -17,10 +17,6 @@ Enter the container and check the content of the `/perpetual-storage/logs` file.
 The files are still stored on disk but in the `/var/lib/docker` directory.
 To find local mount point of the volume run the `docker volume inspect` command.
 List the content of that directory.
-
-Run the scripts in `TODO`.
-Identify for each container what volume it is using and what is the path to that volume on disk.
-There are three containers.
 
 ### Bind mounts
 
@@ -38,4 +34,3 @@ Change the above command to mount the `better-website` directory instead.
 See what has changed.
 
 Add an additional mount point to the above command to mount the `nginx-confs/nginx.conf` file as the Nginx configuration file fount at `/etc/nginx/nginx.conf`.
-
