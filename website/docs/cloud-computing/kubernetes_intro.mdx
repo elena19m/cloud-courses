@@ -1,4 +1,4 @@
-# Kubernetes (part 1)
+# Kubernetes (Part 1)
 
 ## Setup
 
@@ -8,26 +8,23 @@ When creating a virtual machine in the Launch Instance window:
   * Name your VM using the following convention: `cc_lab<no>_<username>`,
 where `<no>` is the lab number and `<username>` is your institutional account.
   * Select **Boot from image** in **Instance Boot Source** section
-  * Select **SCGC Template** in **Image Name** section
+  * Select **CC 2024-2025** in **Image Name** section
   * Select the **m1.xlarge** flavor.
 
 In the base virtual machine:
-  * Download the laboratory archive from [here](https://repository.grid.pub.ro/cs/scgc/laboratoare/lab-kubernetes.zip) in the `work` directory.
-Use: `wget https://repository.grid.pub.ro/cs/scgc/laboratoare/lab-kubernetes.zip` to download the archive.
+  * Download the laboratory archive from [here](https://repository.grid.pub.ro/cs/cc/laboratoare/lab-kubernetes-part1.zip) in the `work` directory.
+Use: `wget https://repository.grid.pub.ro/cs/cc/laboratoare/lab-kubernetes-part1.zip` to download the archive.
   * Extract the archive.
-  * Start the virtual machines using `bash runvm.sh`.
-  * The username for connecting to the nested VMs is `student` and the password is `student`.
+  * Run the setup script `bash lab-kubernetes-part-1.sh`.
 
 ```shell-session
 $ # change the working dir
 $ cd ~/work
 $ # download the archive
-$ wget https://repository.grid.pub.ro/cs/scgc/laboratoare/lab-kubernetes.zip
-$ unzip lab-kubernetes.zip
-$ # start VMs; it may take a while
-$ bash runvm.sh
-$ # check if the VMs booted
-$ virsh net-dhcp-leases labvms
+$ wget https://repository.grid.pub.ro/cs/cc/laboratoare/lab-kubernetes-part1.zip
+$ unzip lab-kubernetes-part-1.zip
+$ # run setup script; it may take a while
+$ bash lab-kubernetes-part-1.sh
 ```
 
 import K8sInstall from '../common/kubernetes/_install.md';
@@ -38,32 +35,17 @@ import K8sPods from '../common/kubernetes/_pods.md';
 
 <K8sPods/>
 
-### Exercise: Working with pods
-1. Start a new pod from the `quay.io/linuxserver.io/openssh-server` image.
+import K8sPodsPractice from '../common/kubernetes/_pods_practice.md';
 
-2. Check the logs and the list of pods to make sure the pod has started successfully
-
-3. Run the command `netstat -tlnp` inside the pod and check the port on which the SSH server is listening.
-
-4. Finally, remove the pod.
+<K8sPodsPractice/>
 
 import K8sDeployments from '../common/kubernetes/_deployments.md';
 
 <K8sDeployments/>
 
-### Exercise: Baby's first ~steps~ deployment
+import K8sDeploymentsPractice from '../common/kubernetes/_deployments_practice.md';
 
-1. Create a deployment using the `quay.io/linuxserver.io/openssh-server`
-
-2. Read [the documentation for this container](https://docs.linuxserver.io/images/docker-openssh-server) and add the following configurations to your deployment:
-
-    a. Use a different user inside the container.
-
-    b. Generate an SSH keypair (`ssh-keygen`) and set that public key for the user.
-
-    c. Apply the deployment.
-
-3. Don't worry, we can't connect using SSH just yet. Execute a command inside the container to verify that the user has been created and the key has been copied to `~/.ssh/authorized_keys`.
+<K8sDeploymentsPractice/>
 
 ## Exposing an app
 
@@ -186,37 +168,22 @@ Version: 1.0.0
 Hostname: hello-app-599bb4bf7f-fcsf2
 ```
 
-### Exercise: LET ME IN
+import K8sAppsServicesPractice from '../common/kubernetes/_apps_services_practice.md';
 
-1. Create a service for your `OpenSSH` deployment in order to allow SSH connections on port `1111` from outside the cluster.
-Connect to the pod using SSH.
-
-2. Update the deployment in order to give your user `sudo` access without a password.
-Connect to the pod using SSH and check if you can use `sudo`.
-
-3. Now roll back to the previous version where your user did not have `sudo` access.
-Connect to the pod using SSH and check if you can use `sudo`.
+<K8sAppsServicesPractice/>
 
 import K8sStorage from '../common/kubernetes/_persistent_storage.md';
 
 <K8sStorage/>
 
-### Exercise: custom sshd config
+import K8sStoragePractice from '../common/kubernetes/_persistent_storage_practice.md';
 
-1. Copy the sshd config file from the pod.
-Check the documentation of the `linxuserver.io/openssh-server` image for its location.
-
-2. Edit the configuration file in order to allow TCP port forwarding and X11 display forwarding.
-
-3. Create a ConfigMap from this configuration and create a deployment that mounts this file in the pod.
-
-4. Connect using SSH and try to do a port forwarding.
+<K8sStoragePractice/>
 
 import K8sNamespaces from '../common/kubernetes/_namespaces.md';
 
 <K8sNamespaces/>
 
-### Exercise: LET ME... IN?
+import K8sNamespacesPractice from '../common/kubernetes/_namespaces_practice.md';
 
-1. Recreate the previous deployment with a different name and user, inside a different namespace.
-Can you connect from this deployment to the first one?
+<K8sNamespacesPractice/>
