@@ -6,9 +6,9 @@ As we can see from the above example, we can start containers using the `docker 
 This is simple when we only need to start two containers, but if we want to start more than two containers, or if we want to offer users a "one click" solution and we have a suite of containers needed for our solution, running in an ordered manner for each container does not scale.
 
 The solution to this issue is the Docker Compose mechanism.
-It allows an administrator to write a specification for a work environment, including options for running containers, volumes running containers, and networks where containers will communicate.
+It allows an administrator to write a specification for a work environment, including options for running containers, creating volumes, and networks where containers will communicate.
 
-The command is called `docker-compose`, and it uses `docker-compose.yaml` files which look like this:
+The command is called `docker-compose`, and it uses `docker-compose.yaml` files which looßk like this:
 
 ```
 version: "3.3"
@@ -42,6 +42,12 @@ networks:
     wordpress-net:
 ```
 
+Create a `docker-compose.yaml` file with the above content.
+
+:::note
+Make sure all containers from the previous exercises are stopped and removed.
+:::
+
 In order to start the containers we use the `docker-compose up -d` command:
 
 ```
@@ -73,7 +79,7 @@ db_1         | 2022-04-05T03:48:44.339950Z 0 [Warning] CA certificate ca.pem is 
 db_1         | 2022-04-05T03:48:44.547479Z 1 [Warning] root@localhost is created with an empty password ! Please consider switching off the --initialize-insecure option.
 ```
 
-Notice that both containers run in the foreground. In order to start the containers in the background, we have to user the `-d` option.
+Notice that both containers run in background, due to the `-d` option. If we wanted to start the containers in foregroud (for example, for debugging), we need to omit `-d`.
 
 To stop the containers specified in the `docker-compose.yaml` file we use the `docker-compose down` command as follows:
 
@@ -90,6 +96,11 @@ Removing network student_default
 Write a `docker-compose.yaml` file that will automatically start the `nextcloud` container when running the `docker-compose up` command.
 
 ### Using persistent storage in containers
+
+<details>
+<summary>
+Recap: docker volumes
+</summary>
 
 When we work with applications that we install on a cluster, they store data ephemerally. Thus, when deleting the container, all the information in the container is deleted.
 We don't want this to happen in the example of a database, where we rely on information being stored for a long time.
@@ -117,11 +128,11 @@ Hello
 While `docker stop` stops the container from running, the container's data is pruned after running the `docker rm` command.
 :::
 
-The `-v` option attaches the `mysql-volume` to the `mysql` container to the /var/lib/mysql path.
+The `-v` option attaches the `mysql-volume` to the `mysql` container to the `/var/lib/mysql` path.
 We notice that after we connected the volume, we wrote "Hello" in a file and it could be read after we restarted the container.
-Volumes are defaulted to `/var/lib/docker/volumes/`.
+Volumes are by default stored in the `/var/lib/docker/volumes/` directory on the host filesystem.
 
-If we want to mount a directory or file on the host system as persistent storage, we can do so using the path to the directory we want to use, instead of the volume name we want to use. .
+If we want to mount a directory or file on the host system as persistent storage in a container, we can do so using the path to the directory we want to use, instead of the volume name we want to use.
 The following example illustrates this option:
 
 ```
@@ -131,8 +142,9 @@ student@lab-docker:~$ docker exec -it 628de4f3c693b25396de4bbaa951636535ecb1c167
 root@628de4f3c693:/# cat /shared-dir/test-file
 Hello
 ```
+</details>
 
-In the case of containers that are run by `docker-composite`, a volume-type entry will look like this:
+In the case of containers that are run using `docker-compose`, an entry for configuring volumes will look like this:
 
 ```
 version: "3.3"
@@ -171,11 +183,6 @@ networks:
     wordpress-net:
 
 ```
-
-:::note
-Note that when we run the `docker-compose down` command, the volume defined in `docker-compose.yaml` is deleted.
-In order not to delete the volumes from the recipe, we need to run the `docker-compose stop` command to stop the containers defined in the YAML file.
-:::
 
 ### Exercise: Mount a persistent volume in the NextCloud container
 
