@@ -99,7 +99,7 @@ Write a `docker-compose.yaml` file that will automatically start the `nextcloud`
 
 <details>
 <summary>
-Recap: docker volumes
+Recap: **Docker Volumes**
 </summary>
 
 When we work with applications that we install on a cluster, they store data ephemerally. Thus, when deleting the container, all the information in the container is deleted.
@@ -183,6 +183,12 @@ networks:
     wordpress-net:
 
 ```
+
+Stop the previous docker compose deployment and start a new one, using the recipe that contains volumes.
+Check that the volumes were created.
+
+After that, tear down the setup and bring it up again, verifying that the volumes have been kept.
+
 
 ### Exercise: Mount a persistent volume in the NextCloud container
 
