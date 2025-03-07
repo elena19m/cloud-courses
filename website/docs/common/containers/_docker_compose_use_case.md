@@ -112,60 +112,60 @@ We will use the `node-exporter` exporter to collect information about the system
 We will write the following YAML recipe in the `docker-compose.yml` file:
 
 ```bash
- version: '2.1'
+version: '2.1'
 
-        volumes:
-            prometheus_data:
-            grafana_data:
+      volumes:
+          prometheus_data:
+          grafana_data:
 
-        services:
+      services:
 
-          prometheus:
-            image: prom/prometheus:v2.37.9
-            container_name: prometheus
-            volumes:
-              - ./prometheus:/etc/prometheus
-              - prometheus_data:/prometheus
-            command:
-              - '--config.file=/etc/prometheus/prometheus.yml'
-              - '--storage.tsdb.path=/prometheus'
-              - '--web.console.libraries=/etc/prometheus/console_libraries'
-              - '--web.console.templates=/etc/prometheus/consoles'
-              - '--storage.tsdb.retention.time=200h'
-              - '--web.enable-lifecycle'
-            restart: unless-stopped
-            ports:
-              - 9090:9090
+        prometheus:
+          image: prom/prometheus:v2.37.9
+          container_name: prometheus
+          volumes:
+            - ./prometheus:/etc/prometheus
+            - prometheus_data:/prometheus
+          command:
+            - '--config.file=/etc/prometheus/prometheus.yml'
+            - '--storage.tsdb.path=/prometheus'
+            - '--web.console.libraries=/etc/prometheus/console_libraries'
+            - '--web.console.templates=/etc/prometheus/consoles'
+            - '--storage.tsdb.retention.time=200h'
+            - '--web.enable-lifecycle'
+          restart: unless-stopped
+          ports:
+            - 9090:9090
 
-          nodeexporter:
-            image: prom/node-exporter:v1.6.1
-            container_name: nodeexporter
-            volumes:
-              - /proc:/host/proc:ro
-              - /sys:/host/sys:ro
-              - /:/rootfs:ro
-            command:
-              - '--path.procfs=/host/proc'
-              - '--path.rootfs=/rootfs'
-              - '--path.sysfs=/host/sys'
-              - '--collector.filesystem.ignored-mount-points=^/(sys|proc|dev|host|etc)($$|/)'
-            restart: unless-stopped
-            ports:
-              - 9100:9100
+        nodeexporter:
+          image: prom/node-exporter:v1.6.1
+          container_name: nodeexporter
+          volumes:
+            - /proc:/host/proc:ro
+            - /sys:/host/sys:ro
+            - /:/rootfs:ro
+          command:
+            - '--path.procfs=/host/proc'
+            - '--path.rootfs=/rootfs'
+            - '--path.sysfs=/host/sys'
+            - '--collector.filesystem.ignored-mount-points=^/(sys|proc|dev|host|etc)($$|/)'
+          restart: unless-stopped
+          ports:
+            - 9100:9100
 
-          grafana:
-            image: grafana/grafana:9.1.7
-            container_name: grafana
-            volumes:
-              - grafana_data:/var/lib/grafana
-              - ./grafana/provisioning:/etc/grafana/provisioning
-            environment:
-              - GF_SECURITY_ADMIN_USER=admin
-              - GF_SECURITY_ADMIN_PASSWORD=usorules
-              - GF_USERS_ALLOW_SIGN_UP=false
-            restart: unless-stopped
-            ports:
-              - 3000:3000
+        grafana:
+          image: grafana/grafana:9.1.7
+          container_name: grafana
+          volumes:
+            - grafana_data:/var/lib/grafana
+            - ./grafana/provisioning:/etc/grafana/provisioning
+          environment:
+            - GF_SECURITY_ADMIN_USER=admin
+            - GF_SECURITY_ADMIN_PASSWORD=usorules
+            - GF_USERS_ALLOW_SIGN_UP=false
+          restart: unless-stopped
+          ports:
+            - 3000:3000
 ```
 
 This file was generated based on an existing [open source repository](https://github.com/Einsteinish/Docker-Compose-Prometheus-and-Grafana/), adapted for our use case.
@@ -193,11 +193,16 @@ We will be asked to modify this information.
 
 Once authenticated, click on the dashboards button, then on browse and access the `Node Exporter Full` panel by clicking on its name.
 
+:::note
+In the current version of the lab infrastructure, the `Node Exporter Full` dashboard is not automatically imported and you will not see it.
+
+However, you can search online for a similar dashboard and try to import it in Grafana yourself.
+:::
+
 ![services-dashboard.png](./assets/services-dashboards.png)
 
 Displaying information in Grafana is done using dashboards.
 These can be generated dynamically by users, or they can be downloaded as JSON files.
-Within the current infrastructure, we downloaded the `Node Exporter Full` dashboard, where we can track details about resources used, such as network traffic or how much memory is used.
 
 ![services-node-exporter.png](./assets/services-node-exporter.png)
 
@@ -224,7 +229,7 @@ We observe below the complete file hierarchy:
             └── prometheus.yml
 ```
 
-### Exercise: Installing a media hosting service (Plex)
+## Exercise: Installing a media hosting service (Plex)
 
 An example of using Docker containers in an easy way is to host a private media server.
 The service provided is like using the Netflix or Disney+ service hosted on your own computer.
