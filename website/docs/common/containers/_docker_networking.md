@@ -7,10 +7,13 @@ Containers are started in the `bridge` network.
 Let's start a container in the default network and see if we can access it.
 
 ```console
-student@cc:~/build/workshop-docker/python-container$ docker run --name webserver-1 -d -t python-container:latest
-d31fe8c324ac87f2e97281489d89f55a0395dd186198a6eef332e201615fe425
-student@cc:~/build/workshop-docker/python-container$ vim Dockerfile
-student@cc:~/build/workshop-docker/python-container$ cat Dockerfile
+docker run --name webserver-1 -d -t python-container:latest
+```
+
+The container was build with the following Dockerfile:
+
+```console
+$ cat ~/lab-containers-part-2/python-container/Dockerfile
 FROM ubuntu:22.04
 
 # Required to prevent warnings
@@ -27,16 +30,20 @@ COPY ./index.html /var/www
 
 WORKDIR /var/www
 CMD ["/usr/bin/python3", "-m", "http.server",  "8888"]
+```
 
-student@cc:~/build/workshop-docker/python-container$ curl localhost:8888
+Try to connect to the container using `curl`:
+
+```console
+$ curl localhost:8888
 curl: (7) Failed to connect to localhost port 8888 after 0 ms: Connection refused
 ```
 
-We notice that the webserver-1 is configured to listen on port 8888, but when we try to connect to it we cannot.
-On an unmodified docker daemon, containers are started in the `bridge` network` as seen in the following output:
+We notice that the `webserver-1` container is configured to listen on port 8888, but we cannot connect to it.
+On an unmodified docker daemon, containers are started attached to the `bridge` network` as seen in the following output:
 
 ```console
-student@cc:~/build/workshop-docker/python-container$ docker inspect webserver-1
+$ docker inspect webserver-1
 <snipped out>
             "Networks": {
                 "bridge": {
@@ -60,10 +67,11 @@ student@cc:~/build/workshop-docker/python-container$ docker inspect webserver-1
 <snipped out>
 ```
 
-The container has a connection to the internet as seen bellow:
+The container outbound connectivity (including to the Internet) as seen below.
+You will have run `apt update` and `apt install iputils-ping` inside the container first, to install `ping`.
 
 ```console
-student@cc:~/build/workshop-docker/python-container$ docker exec webserver-1 ping -c2 8.8.8.8
+$ docker exec webserver-1 ping -c2 8.8.8.8
 PING 8.8.8.8 (8.8.8.8) 56(84) bytes of data.
 64 bytes from 8.8.8.8: icmp_seq=1 ttl=115 time=27.0 ms
 64 bytes from 8.8.8.8: icmp_seq=2 ttl=115 time=25.6 ms
@@ -76,7 +84,7 @@ rtt min/avg/max/mdev = 25.598/26.291/26.985/0.693 ms
 But we can also see that the container does not run on the same network as the host system:
 
 ```console
-student@cc:~/build/workshop-docker/python-container$ ip a s
+student@cc:~/build/workshop-docker/python-container$ ip addr show
 1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1000
     link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
     inet 127.0.0.1/8 scope host lo
@@ -89,6 +97,11 @@ student@cc:~/build/workshop-docker/python-container$ ip a s
        valid_lft 684574sec preferred_lft 684574sec
     inet6 fe80::817e:8f5d:8ec:3ee7/64 scope link noprefixroute
        valid_lft forever preferred_lft forever
+```
+
+Here, you will have to install the `iproute2` package inside the container before running the command:
+
+```console
 student@cc:~/build/workshop-docker/python-container$ docker exec webserver-1 ip a s
 1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1000
     link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
@@ -103,11 +116,11 @@ student@cc:~/build/workshop-docker/python-container$ docker exec webserver-1 ip 
 ```
 
 The issue is that a separate virtual network is created for containers.
-This network is connected to the host system via a container created by the docker daemon.
-The name of the default docker bridge is called `docker0` and we can see it bellow:
+This network is connected to the host system via a virtual bridge created by the docker daemon.
+The name of the default docker bridge is called `docker0` and we can see it below:
 
 ```console
-student@cc:~/build/workshop-docker/python-container$ ip a s docker0
+student@cc:~/build/workshop-docker/python-container$ ip addr show docker0
 6: docker0: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc noqueue state UP group default
     link/ether fe:01:47:f0:80:ee brd ff:ff:ff:ff:ff:ff
     inet 172.17.0.1/16 brd 172.17.255.255 scope global docker0
@@ -116,9 +129,9 @@ student@cc:~/build/workshop-docker/python-container$ ip a s docker0
        valid_lft forever preferred_lft forever
 ```
 
-An explicit config has to be made to forward an IP from the host system to the container.
+An explicit config has to be made to forward a port from the host system to the container.
 
-The `-p` option is used to forward a connection from the host system:
+For that, the `-p` option is used.
 
 ```console
 student@cc:~/build/workshop-docker/python-container$ docker run --name webserver -d -p 8000:8888 -t python-container:latest
@@ -160,12 +173,14 @@ We have used the `docker network list` command to list all the docker networks o
 The `host` and `none` networks are described in a future section
 :::
 
-To start a container inside of a network you have to add the `--network` option for the `docker run command`.
+To start a container inside of a network you have to add the `--network` option to the `docker run command`.
 
 ```console
-student@cc:~/build/workshop-docker/python-container$ docker run --network isolated-servers --name webserver-2 -d -p 8000:8888 -t python-container:latest
-eef457fbc3ef3b1a542a3459d7a8cc0b56a48855ba30a4d86620e73fc322781c
-student@cc:~/build/workshop-docker/python-container$ docker exec webserver-2 ip a s
+docker run --network isolated-servers --name webserver-2 -d -p 8000:8888 -t python-container:latest
+```
+
+```console
+student@cc:~/build/workshop-docker/python-container$ docker exec webserver-2 ip addr show
 1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1000
     link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
     inet 127.0.0.1/8 scope host lo
