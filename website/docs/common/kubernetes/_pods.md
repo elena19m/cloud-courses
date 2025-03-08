@@ -48,8 +48,7 @@ For debugging purposes, we can enter a pod and run commands, using `kubectl exec
 We will test that the container is working, by sending a request to its own HTTP endpoint:
 
 ```shell-session
-student@lab-kubernetes:~$ kubectl exec -it hello-app /bin/sh
-kubectl exec [POD] [COMMAND] is DEPRECATED and will be removed in a future version. Use kubectl exec [POD] -- [COMMAND] instead.
+student@lab-kubernetes:~$ kubectl exec -it hello-app -- /bin/sh
 / # wget -q -O - localhost:8080
 Hello, world!
 Version: 1.0.0
