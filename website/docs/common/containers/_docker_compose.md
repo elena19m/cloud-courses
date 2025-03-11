@@ -8,7 +8,7 @@ This is simple when we only need to start two containers, but if we want to star
 The solution to this issue is the Docker Compose mechanism.
 It allows an administrator to write a specification for a work environment, including options for running containers, creating volumes, and networks where containers will communicate.
 
-The command is called `docker-compose`, and it uses `docker-compose.yaml` files which looßk like this:
+The command is called `docker-compose`, and it uses `docker-compose.yaml` files which look like this:
 
 ```
 version: "3.3"
