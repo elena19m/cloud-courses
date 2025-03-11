@@ -35,10 +35,10 @@ docker run --name better-nginx -v $PWD/nginx-website:/usr/share/nginx/html:ro -d
 
 The `nginx-website` directory is mounted to the `/usr/share/nginx/html` directory.
 
+Verify the content served by the nginx container using `curl` on port `80` (you will have to find out which is the IP address of the container by using `docker inspect`).
+
 Now create a local directory named `better-website`, with an `index.html` file inside, that has a different content.
 Change the above command to mount the `better-website` directory instead.
 See what has changed (use `curl` again).
 
-Verify the content server by the nginx container using `curl` on port `80` (you will have to find out which is the IP address of the container by using `docker inspect`).
-
-Add an additional mount point to the above command to mount the `nginx-confs/nginx.conf` file as the Nginx configuration file fount at `/etc/nginx/nginx.conf`.
+Add an additional mount point to the above command to mount the `nginx-confs/nginx.conf` file as the Nginx configuration file found at `/etc/nginx/nginx.conf`.
