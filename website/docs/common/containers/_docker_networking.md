@@ -84,7 +84,7 @@ rtt min/avg/max/mdev = 25.598/26.291/26.985/0.693 ms
 But we can also see that the container does not run on the same network as the host system:
 
 ```console
-student@cc:~/build/workshop-docker/python-container$ ip addr show
+student@cc:~/lab-containers-part-2/python-container$ ip addr show
 1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1000
     link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
     inet 127.0.0.1/8 scope host lo
@@ -102,7 +102,7 @@ student@cc:~/build/workshop-docker/python-container$ ip addr show
 Here, you will have to install the `iproute2` package inside the container before running the command:
 
 ```console
-student@cc:~/build/workshop-docker/python-container$ docker exec webserver-1 ip a s
+student@cc:~/lab-containers-part-2/python-container$ docker exec webserver-1 ip a s
 1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1000
     link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
     inet 127.0.0.1/8 scope host lo
@@ -120,7 +120,7 @@ This network is connected to the host system via a virtual bridge created by the
 The name of the default docker bridge is called `docker0` and we can see it below:
 
 ```console
-student@cc:~/build/workshop-docker/python-container$ ip addr show docker0
+student@cc:~/lab-containers-part-2/python-container$ ip addr show docker0
 6: docker0: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc noqueue state UP group default
     link/ether fe:01:47:f0:80:ee brd ff:ff:ff:ff:ff:ff
     inet 172.17.0.1/16 brd 172.17.255.255 scope global docker0
@@ -134,9 +134,9 @@ An explicit config has to be made to forward a port from the host system to the 
 For that, the `-p` option is used.
 
 ```console
-student@cc:~/build/workshop-docker/python-container$ docker run --name webserver -d -p 8000:8888 -t python-container:latest
+student@cc:~/lab-containers-part-2/python-container$ docker run --name webserver -d -p 8000:8888 -t python-container:latest
 9df13f47a64f98b4d816cc43f7989f812e3a7575538f6b7a2c07740540a843a3
-student@cc:~/build/workshop-docker/python-container$ curl localhost:8000
+student@cc:~/lab-containers-part-2/python-container$ curl localhost:8000
 Simple Python server
 ```
 
@@ -155,9 +155,9 @@ Create a new `webserver-8844` container based on the `python-container` image an
 The `docker create network` command creates a new network as follows:
 
 ```console
-student@cc:~/build/workshop-docker/python-container$ docker network create isolated-servers
+student@cc:~/lab-containers-part-2/python-container$ docker network create isolated-servers
 c8c6de8430e81a2e86d2c7e7705d826c0ce5e19cb06facbb7d6e730166103f5d
-student@cc:~/build/workshop-docker/python-container$ docker network list
+student@cc:~/lab-containers-part-2/python-container$ docker network list
 NETWORK ID     NAME                    DRIVER    SCOPE
 188b195a78b1   bridge                  bridge    local
 419795d5abb0   cloud-courses_default   bridge    local
@@ -180,7 +180,7 @@ docker run --network isolated-servers --name webserver-2 -d -p 8000:8888 -t pyth
 ```
 
 ```console
-student@cc:~/build/workshop-docker/python-container$ docker exec webserver-2 ip addr show
+student@cc:~/lab-containers-part-2/python-container$ docker exec webserver-2 ip addr show
 1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1000
     link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
     inet 127.0.0.1/8 scope host lo
