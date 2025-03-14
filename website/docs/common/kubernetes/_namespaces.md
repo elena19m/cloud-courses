@@ -142,8 +142,7 @@ nginx   1/1     Running   0          7s
 Connect to the pod and verify if the name of the `hello-app` service from the `default` namespace can be resolved:
 
 ```shell-session
-student@lab-kubernetes:~$ kubectl exec -it nginx -n test /bin/bash
-kubectl exec [POD] [COMMAND] is DEPRECATED and will be removed in a future version. Use kubectl exec [POD] -- [COMMAND] instead.
+student@lab-kubernetes:~$ kubectl exec -it nginx -n test -- /bin/bash
 root@nginx:/# curl http://hello-app:8080
 curl: (6) Could not resolve host: hello-app
 ```
