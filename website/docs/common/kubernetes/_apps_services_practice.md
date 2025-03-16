@@ -1,6 +1,6 @@
 ### Exercise: LET ME IN
 
-1. Create a service for your `OpenSSH` deployment in order to allow SSH connections on port `1111` from outside the cluster.
+1. Create a service for your `OpenSSH` deployment in order to allow SSH connections on port `32222` from outside the cluster.
 Connect to the pod using SSH.
 
 2. Update the deployment in order to give your user `sudo` access without a password.
