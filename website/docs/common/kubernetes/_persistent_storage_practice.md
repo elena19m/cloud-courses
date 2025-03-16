@@ -1,6 +1,6 @@
-### Exercise: custom sshd config
+### Exercise: LET ME... GO?
 
-1. Copy the sshd config file from the pod.
+1. Copy the sshd config file from the `OpenSSH` pod.
 Check the documentation of the `linxuserver.io/openssh-server` image for its location.
 
 2. Edit the configuration file in order to allow TCP port forwarding and X11 display forwarding.
