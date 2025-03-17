@@ -117,6 +117,7 @@ hello   Deployment/hello-app   cpu: 0%/5%   1         10        1          2m30s
 
 :::note
 The values set for resource limits and average utilization are unrealisticaly low, but we did this to be able to generate load.
+:::
 
 ### Generating load
 
