@@ -1,0 +1,73 @@
+---
+sidebar_position: 5
+---
+
+# Kubernetes (Part 2)
+
+## Setup
+
+We will be using a virtual machine in the [faculty's cloud](http://cloud.grid.pub.ro/).
+
+When creating a virtual machine in the Launch Instance window:
+  * Name your VM using the following convention: `cc_lab<no>_<username>`,
+where `<no>` is the lab number and `<username>` is your institutional account.
+  * Select **Boot from image** in **Instance Boot Source** section
+  * Select **CC 2024-2025** in **Image Name** section
+  * Select the **m1.xlarge** flavor.
+
+In the virtual machine:
+  * Download the laboratory archive from [here](https://repository.grid.pub.ro/cs/cc/laboratoare/lab-kubernetes-part-2.zip) in the `work` directory.
+Use: `wget https://repository.grid.pub.ro/cs/cc/laboratoare/lab-kubernetes-part-2.zip` to download the archive.
+  * Extract the archive.
+  * Run the setup script `bash lab-kubernetes-part-2.sh`.
+
+```shell-session
+$ # create the working dir
+$ mkdir ~/work
+$ # change the working dir
+$ cd ~/work
+$ # download the archive
+$ wget https://repository.grid.pub.ro/cs/cc/laboratoare/lab-kubernetes-part-2.zip
+$ unzip lab-kubernetes-part-2.zip
+$ # run setup script; it may take a while
+$ bash lab-kubernetes-part-2.sh
+```
+
+Create a local Kubernetes cluster using `kind create cluster`:
+
+```shell-session
+student@lab-kubernetes:~$ kind create cluster
+Creating cluster "kind" ...
+ ✓ Ensuring node image (kindest/node:v1.23.4) 🖼
+ ✓ Preparing nodes 📦
+ ✓ Writing configuration 📜
+ ✓ Starting control-plane 🕹️
+ ✓ Installing CNI 🔌
+ ✓ Installing StorageClass 💾
+Set kubectl context to "kind-kind"
+You can now use your cluster with:
+
+kubectl cluster-info --context kind-kind
+
+Thanks for using kind! 😊
+```
+
+import K8sLiveness from '../common/kubernetes/_liveness.md';
+
+<K8sLiveness/>
+
+import K8sReadiness from '../common/kubernetes/_readiness.md';
+
+<K8sReadiness/>
+
+import K8sScaling from '../common/kubernetes/_scaling.md';
+
+<K8sScaling/>
+
+import K8sAutoscaling from '../common/kubernetes/_autoscaling.md';
+
+<K8sAutoscaling/>
+
+import K8sIngress from '../common/kubernetes/_ingress.md';
+
+<K8sIngress/>
