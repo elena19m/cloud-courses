@@ -65,3 +65,9 @@ To get help on the Azure CLI commands, you can use the `--help` option. For exam
 student@cc-lab:~$ az --help
 student@cc-lab:~$ az account --help
 ```
+
+## Notes and recommendations
+
+- There are commands that might take a while to run like `az create aks` or `az aks nodepool add`. Be patient and wait for them to finish.
+- Some commands may yield errors. Read the error messages carefully because they contain links to troubleshooting documentation.
+- Some steps are optional, other steps require prerequisites - read the notes and instructions from the tutorial carefully.
