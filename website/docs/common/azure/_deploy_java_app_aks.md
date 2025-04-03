@@ -14,4 +14,6 @@ ssh -J fep -L 8080:127.0.0.1:8080 -i ~/.ssh/id_fep student@10.9.X.Y
 
 :::info
 You can either work in the [Azure Cloud Shell](https://portal.azure.com/#cloudshell/) where `az` is installed or use the `az` in the OpenStack VM.
+
+This tutorial is meant to be run in OpenStack VM because it requires `docker` installed.
 :::
