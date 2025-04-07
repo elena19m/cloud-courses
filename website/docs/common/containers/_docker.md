@@ -87,7 +87,7 @@ student@lab-docker:~$
 
 ### Exercise: Starting a container
 
-* Start a container in the background based on the `gitlab.cs.pub.ro:5050/scgc/cloud-courses/centos:7` image.
+* Start a container in the background based on the `quay.io/rockylinux/rockylinux:9` image.
 * Connect to the container just turned on and run the `yum install bind-utils` command.
 * Disconnect from container.
 
@@ -151,7 +151,7 @@ This list contains both internally downloaded and locally built containers.
 
 ### Exercise: Generate a container image
 
-* Write a `Dockerfile.centos` file containing a recipe for generating a container image based on the `gitlab.cs.pub.ro:5050/scgc/cloud-courses/centos:7` container in which to install the `bind-utils` tool.
+* Write a `Dockerfile.rocky` file containing a recipe for generating a container image based on the `quay.io/rockylinux/rockylinux:9` container in which to install the `bind-utils` tool.
 
 :::note
 To generate a container using a file other than the default `Dockerfile` we use the` -f` option.
