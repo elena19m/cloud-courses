@@ -1,0 +1,58 @@
+---
+sidebar_position: 8
+---
+
+# CI/CD
+
+## Setup
+
+We will be using a virtual machine in the [faculty's cloud](http://cloud.grid.pub.ro/).
+
+When creating a virtual machine in the Launch Instance window:
+  * Name your VM using the following convention: `cc_lab<no>_<username>`,
+where `<no>` is the lab number and `<username>` is your institutional account.
+  * Select **Boot from image** in **Instance Boot Source** section
+  * Select **CC 2024-2025** in **Image Name** section
+  * Select the **m1.xlarge** flavor.
+
+In the base virtual machine:
+  * Download the laboratory archive from [here](https://repository.grid.pub.ro/cs/cc/laboratoare/lab-ci-cd.zip).
+Use: `wget https://repository.grid.pub.ro/cs/cc/laboratoare/lab-ci-cd.zip` to download the archive.
+  * Extract the archive.
+  * Run the setup script `bash lab-ci-cd.sh`.
+
+```shell-session
+$ # download the archive
+$ wget https://repository.grid.pub.ro/cs/cc/laboratoare/lab-ci-cd.zip
+$ unzip lab-ci-cd.zip
+$ # run setup script; it may take a while
+$ bash lab-ci-cd.sh
+```
+
+## Before we start
+
+:::info
+If you do not have a [GitHub](https://github.com/) account, create one before starting this laboratory. It will be used to interact with a repository and create the CI/CD pipeline it.
+:::
+
+import CICDIntro from '../common/ci_cd/_intro.md'
+
+<CICDIntro/>
+
+import GithubActions from '../common/ci_cd/_github_actions.md'
+
+<GithubActions/>
+
+import ArgoCD from '../common/ci_cd/_argo_cd.md'
+
+<ArgoCD/>
+
+import ArgoRolloutsCanary from '../common/ci_cd/_argo_rollouts_canary.md'
+
+<ArgoRolloutsCanary/>
+
+## Bonus
+
+import ArgoRolloutsRollbacks from '../common/ci_cd/_argo_rollouts_rollbacks.md'
+
+<ArgoRolloutsRollbacks/>
