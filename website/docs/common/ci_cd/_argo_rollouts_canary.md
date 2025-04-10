@@ -57,7 +57,7 @@ spec:
     spec:
       containers:
         - name: webserver
-          image: ghcr.io/<todo-add-your-github-username>/go-simple-webserver:latest
+          image: ghcr.io/<todo-add-your-github-username>/ci_cd_lab:latest
           ports:
             - containerPort: 8080
           imagePullPolicy: Always
@@ -73,7 +73,7 @@ student@cc-lab:~/ci_cd_lab$ git push
 
 Watch the rollout process in the terminal:
 ```shell-session
-student@cc-lab:~ kubectl argo rollouts get rollout go-simple-webserver -n default --watch
+student@cc-lab:~$ argo-rollouts get rollout go-simple-webserver -n default --watch
 ```
 
 To see the canary rollout in action, force a new deployment by changing the image tag in the `rollout.yaml` file. You can use an old image from GHCR (e.g. `ghcr.io/<your-github-username>/go-simple-webserver@sha256<hash>`) and push the changes to your repository.
@@ -90,8 +90,8 @@ Strategy:        Canary
   Step:          1/3
   SetWeight:     50
   ActualWeight:  50
-Images:          ghcr.io/andreia-oca/go-simple-webserver:latest (canary)
-                 ghcr.io/andreia-oca/go-simple-webserver@sha256:db9b124351be3aebf40faaffb5fa7ad4843c06752e11db7cae07447bb708b976 (stable)
+Images:          ghcr.io/andreia-oca/ci_cd_lab:latest (canary)
+                 ghcr.io/andreia-oca/ci_cd_lab@sha256:db9b124351be3aebf40faaffb5fa7ad4843c06752e11db7cae07447bb708b976 (stable)
 Replicas:
   Desired:       10
   Current:       10

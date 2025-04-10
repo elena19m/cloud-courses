@@ -145,6 +145,12 @@ In this exercise, you will create a new job called `build` that packages your co
         run: docker push ghcr.io/${{ github.repository }}:latest
 ```
 
+:::info
+If your name contains uppers case letters you need to change the image name to lowercase. The easiest fix is to hardcode your username and repository instead of `${{ github.repository }}`.
+
+For example, if your name is `JohnDoe`, you can use `ghcr.io/johndoe/ci_cd_lab:latest`.
+:::
+
 Refer to the [documentation here](https://docs.github.com/en/packages/working-with-a-github-packages-registry/working-with-the-container-registry) to better understand how to interact with GHCR.
 
 To take effect, commit the changes to the `deploy.yaml` file to your forked repository.

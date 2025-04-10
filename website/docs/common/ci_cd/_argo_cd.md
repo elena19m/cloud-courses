@@ -127,7 +127,7 @@ The manifest below defines a Kubernetes Deployment for the `go-simple-webserver`
 It runs two replicas of a container using the image hosted on GitHub Container Registry, exposing port 8080 for incoming traffic.
 
 ```shell-session
-student@cc-lab:~/ci_cd_lab$ cat manifest/deployment.yaml
+student@cc-lab:~/ci_cd_lab$ cat manifests/deployment.yaml
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -146,7 +146,7 @@ spec:
     spec:
       containers:
         - name: webserver
-          image: ghcr.io/<todo-add-your-github-username>/go-simple-webserver:latest
+          image: ghcr.io/<todo-add-your-github-username>/ci_cd_lab:latest
           ports:
             - containerPort: 8080
 ```
@@ -171,7 +171,7 @@ student@cc-lab:~$ argocd app sync go-simple-webserver
 
 Check the new resources created in the `default` namespace:
 ```shell-session
-student@cc-lab:~ kubectl get all -n default
+student@cc-lab:~$ kubectl get all -n default
 ```
 
 You can also check the Argo CD dashboard to see the new deployment created:
