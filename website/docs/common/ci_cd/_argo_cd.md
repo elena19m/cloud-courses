@@ -33,7 +33,7 @@ It is recommended that you use port-forwarding instead of X11 forwarding to inte
 
 ### Creating resources for Argo CD in k8s
 
-To enable and create the resource required by Argo CD in your Kubernetes cluster, run the following commands:
+To enable and create the resources required by Argo CD in your Kubernetes cluster, run the following commands:
 
 ```shell-session
 student@cc-lab:~$ kubectl create namespace argocd
@@ -41,7 +41,9 @@ student@cc-lab:~$ kubectl apply -n argocd -f https://raw.githubusercontent.com/a
 student@cc-lab:~$ kubectl get all -n argocd
 NAME                                                   READY   STATUS    RESTARTS   AGE
 pod/argocd-application-controller-0                    1/1     Running   0          25h
-...
+
+[...]
+
 NAME                                             READY   AGE
 statefulset.apps/argocd-application-controller   1/1     25h
 ```
@@ -61,7 +63,7 @@ metadata:
 spec:
   project: default
   source:
-    repoURL: <todo-add-your-repository-URL-here>
+    repoURL: https://github.com/<todo-add-your-github-username>/ci_cd_lab.git
     targetRevision: HEAD
     path: manifests
   destination:
@@ -80,7 +82,7 @@ Check the resources created in the `argocd` namespace:
 ```shell-session
 student@cc-lab:~$ kubectl get application go-simple-webserver -n argocd
 NAME                  SYNC STATUS   HEALTH STATUS
-go-simple-webserver   Synced        Healthy
+go-simple-webserver   Unknown        Healthy
 ```
 
 Note: There are no deployments of your webserver yet, because the Argo project is not synced with the cluster.
@@ -179,18 +181,20 @@ You can also check the Argo CD dashboard to see the new deployment created:
 
 ### Exercise - Enable Argo CD auto-sync
 
-Modify the `application.yaml` to enable Argo CD's auto-sync feature, so that after changes are made to the `manifests` directory, it automatically trigger a deployment.
+Modify the `application.yaml` manifest to enable Argo CD's auto-sync feature, so that after changes are made to the `manifests` directory, it will automatically trigger a deployment.
+
+Don't forget to re-apply the modified manifest using `kubectl`.
 
 Check the [official Argo CD documentation](https://argo-cd.readthedocs.io/en/stable/user-guide/auto_sync/) for the correct syntax.
 
 ### Exercise - Change the number of replicas and re-sync the project
 
-Update the number of replicas in `manifests/deployment.yaml` from `2` to `10` and monitor the changes to check if the auto-sync feature works as expected.
+Update the number of replicas in `manifests/deployment.yaml` from `2` to `10`, push the changes to your repo and monitor the changes to check if the auto-sync feature works as expected.
 
 :::tip
 Argo CD polls the repository [every 3 minutes by default](https://argo-cd.readthedocs.io/en/stable/user-guide/auto_sync/#automated-sync-semantics) to check if there are any changes to `manifests`.
 
-You can force a hard refresh by clicking the button in the Argo CD dashboard or by running the following command:
+You can force a hard refresh by clicking the Refresh button in the Argo CD dashboard or by running the following command:
 ```shell-session
 student@cc-lab:~$ argocd app get go-simple-webserver --refresh
 ```

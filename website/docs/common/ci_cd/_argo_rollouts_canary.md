@@ -8,7 +8,7 @@ Argo Rollouts is a Kubernetes controller and set of CRDs (Custom Resource Defini
 
 ### Creating resources for Argo Rollouts in K8s
 
-To enable and create the resource required by Argo Rollouts in your Kubernetes cluster, run the following commands:
+To enable and create the resources required by Argo Rollouts in your Kubernetes cluster, run the following commands:
 
 ```shell-session
 student@cc-lab:~$ kubectl create namespace argo-rollouts
@@ -76,7 +76,11 @@ Watch the rollout process in the terminal:
 student@cc-lab:~$ argo-rollouts get rollout go-simple-webserver -n default --watch
 ```
 
-To see the canary rollout in action, force a new deployment by changing the image tag in the `rollout.yaml` file. You can use an old image from GHCR (e.g. `ghcr.io/<your-github-username>/go-simple-webserver@sha256<hash>`) and push the changes to your repository.
+To see the canary rollout in action, force a new deployment by changing the image tag in the `rollout.yaml` file.
+
+You can use an old image from GHCR (e.g. `ghcr.io/<your-github-username>/go-simple-webserver@sha256:<hash>`) and push the changes to your repository.
+
+To see the sha256 hash, go back to the `Packages` page in GitHub, go to the `ci_cd_lab` package, and you should see the hash by clicking the "three dots button" near the `Digest` label.
 
 You should be able to see the rollout process (the old image is marked as `stable` and the new one as `canary`) in Argo.
 
@@ -122,5 +126,7 @@ NAME                                             KIND        STATUS     AGE    I
 Modify the rollout strategy to include 3 canary steps: shift traffic to 25%, then 75%, and finally 100%, with a 120-seconds pause between each step.
 
 :::info
-Don't forget to also change the Docker image to force a new rollout.
+Don't forget to also change the Docker image tag to force a new rollout.
+
+For example, you can change it back to `latest`.
 :::

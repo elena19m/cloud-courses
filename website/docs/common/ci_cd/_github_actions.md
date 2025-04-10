@@ -10,12 +10,34 @@ You will be working starting from this repository: https://github.com/andreia-oc
 Fork it into your GitHub account and clone it in the Openstack VM.
 :::
 
+:::info
+There are two methods of cloning the repo from GitHub, choose **one** of them:
+
+**(a) Git over HTTPS**:
+
+In this case, you will need to create a Personal Access Token for being able to push changes.
+Follow the instructions from [here](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens#creating-a-personal-access-token-classic).
+
 Run the commands below to clone the repository in your Openstack VM:
 
 ```shell-session
 student@cc-lab:~$ git clone https://github.com/<your-gitub-username>/ci_cd_lab.git
 student@cc-lab:~$ cd ci_cd_lab/
 ```
+
+**(b) Git over SSH**:
+
+You will need to create a SSH keypair in your lab VM and configure it into your GitHub account.
+
+Follow the instructions from [here](https://docs.github.com/en/authentication/connecting-to-github-with-ssh/adding-a-new-ssh-key-to-your-github-account?platform=linux&tool=webui).
+
+Run the commands below to clone the repository in your Openstack VM:
+
+```shell-session
+student@cc-lab:~$ git clone git@github.com:<your-github-username>/ci_cd_lab.git
+student@cc-lab:~$ cd ci_cd_lab/
+```
+:::
 
 Inspect the `.github/workflows/deploy.yaml`:
 
@@ -29,8 +51,6 @@ on:
   push:
     branches:
       - main
-  # Allow manual trigger of the workflow
-  workflow_dispatch:
 
 jobs:
   # Job to compile the application
@@ -73,6 +93,10 @@ Refer to the [official documentation](https://docs.github.com/en/actions/writing
 Complete and add the following snippet to `.github/workflows/deploy.yaml`:
 
 ```yaml
+jobs:
+
+[...]
+
   test:
     runs-on: ubuntu-latest
     steps:
@@ -87,12 +111,23 @@ Complete and add the following snippet to `.github/workflows/deploy.yaml`:
       - name: Install dependencies
         run: go mod download
 
-    # TODO 01 - Add a step to run tests
+      # TODO 01 - Add a step to run tests
+      - name: Run tests
+        run: #TODO
 
-    # TODO 02 - Make sure that this job is run before `compile`
+  compile:
+    [...]
+    # TODO 02 - Make sure that the `test` job is run before `compile`
 ```
 
-To take effect, commit the changes from the `deploy.yaml` file to your forked repository.
+To take effect, commit the changes from the `deploy.yaml` file and push them to your forked repository:
+
+```shell-session
+student@cc-lab:~$ git status
+student@cc-lab:~$ git add .github/workflows/deploy.yaml
+student@cc-lab:~$ git commit -m "Add test step to workflow"
+student@cc-lab:~$ git push
+```
 
 Check the `Actions` tab from your GitHub repository page to monitor the workflow's output. It should look similar to this:
 
@@ -153,7 +188,14 @@ For example, if your name is `JohnDoe`, you can use `ghcr.io/johndoe/ci_cd_lab:l
 
 Refer to the [documentation here](https://docs.github.com/en/packages/working-with-a-github-packages-registry/working-with-the-container-registry) to better understand how to interact with GHCR.
 
-To take effect, commit the changes to the `deploy.yaml` file to your forked repository.
+To take effect, commit the changes from the `deploy.yaml` file and push them to your forked repository:
+
+```shell-session
+student@cc-lab:~$ git status
+student@cc-lab:~$ git add .github/workflows/deploy.yaml
+student@cc-lab:~$ git commit -m "Add build step to workflow"
+student@cc-lab:~$ git push
+```
 
 Check the `Actions` tab from your GitHub repository page to monitor the workflow's output.
 

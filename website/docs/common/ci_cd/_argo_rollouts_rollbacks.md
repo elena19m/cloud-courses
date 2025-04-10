@@ -55,17 +55,18 @@ student@cc-lab:~$ argo-rollouts undo go-simple-webserver --to-revision=X
 
 Push a faulty commit to your repository (e.g. change the docker image to something nonexistent or set `container.resources.limits` to be less the `container.resources.requests`).
 
-Check if the deployment is healthy or not:
+Check if the rollout is healthy or not:
 
 ```shell-session
 student@cc-lab:~$ kubectl get rollout go-simple-webserver -n default
-student@cc-lab:~$ kubectl get deployment go-simple-webserver -n default
+student@cc-lab:~$ argo-rollouts get rollout go-simple-webserver -n default
 ```
 
-If it's not healthy, rollback to the previous stable version with `argocd undo`.
+If it's not healthy, rollback to the previous stable version with `argo-rollouts undo`.
 
 Monitor the deployment's status again:
 
 ```shell-session
 student@cc-lab:~$ kubectl get rollout go-simple-webserver -n default
+student@cc-lab:~$ argo-rollouts get rollout go-simple-webserver -n default
 ```
