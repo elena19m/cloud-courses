@@ -1,0 +1,107 @@
+---
+sidebar_position: 8
+---
+
+# Homework Project: Implementing GitOps with Gitea and ArgoCD in Kubernetes
+
+## Objective
+
+The goal of this project is to introduce students to GitOps principles by setting up a continuous deployment pipeline using Gitea and ArgoCD within a Kubernetes cluster. Students will:
+
+- Install and configure Gitea as a self-hosted Git service.
+- Install and configure ArgoCD to manage application deployments from Gitea repositories.
+- Deploy a web application using ArgoCD.
+- Implement a liveness probe for the Nginx application to ensure its health and availability.
+
+---
+
+## Task 0: Setup (5 points)
+
+### Environment Preparation
+
+We will utilize a virtual machine provided by the [faculty's cloud](http://cloud.grid.pub.ro/) infrastructure. All virtual machines must be created under the `cc_hw_prj` OpenStack project.
+
+**Virtual Machine Configuration:**
+
+- **Instance Name:** `HW-<Your LDAP username>` (e.g., `HW-john.doe`)
+- **Instance Boot Source:** Boot from image
+- **Image Name:** CC 2024-2025
+- **Flavor:** `m1.xlarge`
+
+**Initial Setup:**
+
+1. Access the virtual machine via SSH.
+2. Update system packages.
+3. Install essential tools (Git, curl, wget, vim).
+4. Install Docker.
+5. Install `kubectl`.
+6. Install [Kind (Kubernetes in Docker)](https://kind.sigs.k8s.io/).
+
+---
+
+## Task 1: Create a Kubernetes Cluster (20 points)
+
+1. Initialize a Kubernetes cluster using Kind.
+2. Configure `kubectl` to use the new cluster.
+3. Verify the cluster status and ensure nodes are ready.
+
+---
+
+## Task 2: Install [Gitea](https://docs.gitea.com/) (20 points)
+
+1. Create a namespace for Gitea.
+2. Add the Gitea Helm repository.
+3. Install Gitea using Helm.
+4. Expose Gitea service to access the web interface. Hint: proxy to your browser.
+5. Complete the initial Gitea setup:
+   - Register a new user.
+   - Create a repository named `nginx-deployment`.
+
+---
+
+## Task 3: Install [ArgoCD](https://argo-cd.readthedocs.io/en/stable/) (20 points)
+
+1. Create a namespace for ArgoCD.
+2. Install ArgoCD.
+3. Expose the ArgoCD server. Hint: proxy to your browser.
+4. Log in to ArgoCD.
+5. Connect the Gitea repository to ArgoCD.
+
+---
+
+## Task 4: Deploy Nginx with ArgoCD (25 points)
+For this task, you are going to deploy your own [cloud-courses](https://gitlab.cs.pub.ro/SCGC/cloud-courses) page.
+
+1. Create a Kubernetes manifest for an Nginx deployment and service in your Gitea repository.
+2. Push the manifest to the Gitea repository.
+3. Create an ArgoCD application that points to the repository and deploys the manifest.
+4. Apply the ArgoCD application manifest.
+5. Verify that the Nginx deployment and service are running.
+
+---
+
+## Task 5: Add Liveness Probe to Nginx (10 points)
+
+1. Modify the deployment manifest to include a liveness probe.
+2. Push the updated manifest to Gitea.
+3. Confirm that ArgoCD syncs the changes and redeploys the application.
+4. Verify that the liveness probe is configured correctly.
+
+## Homework submission
+
+To submit your homework, you have to upload on Moodle a zip archive named `CC - <Your LDAP username here>.zip` (e.g. `CC - ana.popescu3342.zip` that contains the following
+files:
+  - The Manifests you used to deploy your Kubernetes containers.
+  - A screenshot with each solved task.
+  - A write-up on how your infrastructure should be reproduced (any ramp-up scripts work as well) and tested.
+  - A pdf file containing a write-up, screenshots for all solved tasks. This pdf file must be named `Proposed Solution - <Your LDAP
+username here>.pdf` (e.g., `Proposed Solution - ana.popescu3342.pdf`).
+  - A README file.
+
+The deadline for submitting your zip archive is the 5th of May 2025, 23:55.
+
+## Homework presentation
+
+The homework must be presented during the remaining laboratories (14-27 May 2025). You will have to briefly present what and how you have set up for your infrastructure and demonstrate that it works. The homework will be presented during your lab slot as you were assigned at the beginning of the semester.
+The homework presentation is mandatory. You will not receive a grade on your homework if you do not present it.
+
