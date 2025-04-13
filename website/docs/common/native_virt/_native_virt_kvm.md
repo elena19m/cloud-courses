@@ -7,7 +7,7 @@ When creating a virtual machine in the Launch Instance window:
 where `<no>` is the lab number and `<username>` is your institutional account.
   * Select **Boot from image** in **Instance Boot Source** section
   * Select **SCGC Template** in **Image Name** section
-  * Select the **m1.medium** flavor.
+  * Select the **m1.xlarge** flavor.
 
 :::info
 There will not be a zip archive for this lab. We will work using the existing
@@ -32,6 +32,12 @@ must fetch the `xauth` token created for the `student` user.
 student@lab-virt-host:~$ sudo -i
 root@lab-virt-host:~$ xauth merge /home/student/.Xauthority
 ```
+
+:::info
+An alternative to SSH tunneling or X11 forwarding is Chrome Remote Desktop, which allows you to connect to the graphical inteface of your VM.
+
+If you want to use this method, follow the steps from [here](https://cloud-courses.upb.ro/docs/basic/crd).
+:::
 
 
 ## Managing virtual machines with KVM
