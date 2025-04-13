@@ -90,6 +90,8 @@ Note: There are no deployments of your webserver yet, because the Argo project i
 :::info
 Argo CD provides a dashboard to interact with the CI/CD pipeline on `localhost:8080`.
 
+There are two options for connecting to the Argo CD user interface: SSH tunneling or Chrome Remote Desktop.
+
 [Follow this tutorial](https://cloud-courses.upb.ro/docs/basic/working_with_openstack/#permanent-ssh-configurations) to configure the SSH service to bind and forward the `8080` port to your machine:
 
 ```shell-session
@@ -104,6 +106,12 @@ Run the following command to get the password from the admin account and login i
 ```shell-session
 kubectl get secret argocd-initial-admin-secret -n argocd   -o jsonpath="{.data.password}" | base64 -d && echo
 ```
+:::
+
+:::info
+An alternative to SSH tunneling or X11 forwarding is Chrome Remote Desktop, which allows you to connect to the graphical inteface of your VM.
+
+If you want to use this method, follow the steps from [here](https://cloud-courses.upb.ro/docs/basic/crd).
 :::
 
 ### Login to Argo CD
