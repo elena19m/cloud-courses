@@ -13,7 +13,7 @@ We will use `tcpdump`, a utility with which we can capture packets passing throu
 To start the capture process, log in as `root` on the `host` station and run the command
 
 ```shell-session
-root@host:~# tcpdump -vvv -A -i veth-green
+root@host:~# tcpdump -vvv -A -i usernet
 ```
 
 For telnet communication, run the command
