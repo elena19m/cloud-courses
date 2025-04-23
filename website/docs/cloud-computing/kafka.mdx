@@ -1,0 +1,52 @@
+---
+sidebar_position: 9
+---
+
+# Kafka
+
+## Setup
+
+We will be using a virtual machine in the [faculty's cloud](http://cloud.grid.pub.ro/).
+
+When creating a virtual machine in the Launch Instance window:
+  * Name your VM using the following convention: `cc_lab<no>_<username>`,
+where `<no>` is the lab number and `<username>` is your institutional account.
+  * Select **Boot from image** in **Instance Boot Source** section
+  * Select **CC 2024-2025** in **Image Name** section
+  * Select the **m1.xlarge** flavor.
+
+In the base virtual machine:
+  * Download the laboratory archive from [here](https://repository.grid.pub.ro/cs/cc/laboratoare/lab-kafka.zip).
+Use: `wget https://repository.grid.pub.ro/cs/cc/laboratoare/lab-kafka.zip` to download the archive.
+  * Extract the archive.
+  * Run the setup script `bash lab-kafka.sh`.
+
+```shell-session
+$ # download the archive
+$ wget https://repository.grid.pub.ro/cs/cc/laboratoare/lab-kafka.zip
+$ unzip lab-kafka.zip
+$ # run setup script; it may take a while
+$ bash lab-kafka.sh
+```
+
+## Before we start
+
+import Intro from '../common/kafka/_intro.md'
+
+<Intro/>
+
+import Alternatives from '../common/kafka/_alternatives.md'
+
+<Alternatives/>
+
+import Tools from '../common/kafka/_tools.md'
+
+<Tools/>
+
+import UsefulScripts from '../common/kafka/_useful_scripts.md'
+
+<UsefulScripts/>
+
+import Python from '../common/kafka/_python.md'
+
+<Python/>
