@@ -3,7 +3,7 @@
 From this point, we will use the python script provided in the ZIP archive.
 
 :::note
-To continue the lab, we need to create a virtual environment and install the `confluent-kafka` package. Run the following commands:
+To continue the lab, we need to create a virtual environment and install the `confluent-kafka` package. Run the following commands (directly on the VM, **not** in the kafka container):
 
 ```shell-session
 $ python3.10 -m venv venv
@@ -44,18 +44,18 @@ What about a high traffic day that require two invoice services to generate the 
 
 ### Task 2
 
-Follow `TODO2` comments and let some events to be produces. What is the result in each consumer?
+Follow `TODO2` comments and let some events to be produced. What is the result in each consumer?
 
 <details>
 <summary><b>Read me after</b></summary>
 As we can see, grouping multiple consumers under the same ID means that we will not consume the same event twice.
 
-**Kafka** has an internal routing system based on partitions and the number of consumers in a consumer group. In this case, we can have maximum 3 active consumers because we have 3 partitions. The rest of the consumers will be on hold and will run only if active consumers stop for any reason. 
+**Kafka** has an internal routing system based on partitions and the number of consumers in a consumer group. In this case, we can have maximum 5 active consumers because we have 5 partitions. The rest of the consumers will be on hold and will run only if active consumers stop for any reason. 
 </details>
 
 ### Task 3
 
-Follow `TODO3` comments and let some events to be produces. What is the result in each consumer?
+Follow `TODO3` comments and let some events to be produced. What is the result in each consumer?
 
 <details>
 <summary><b>Read me after</b></summary>

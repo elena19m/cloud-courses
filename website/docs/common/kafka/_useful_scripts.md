@@ -62,7 +62,7 @@ As we can see, the script will lock our terminal waiting for events, but the fir
 :::
 
 :::note
-If we go on the **Messages** tab, we will see with a high chance that the second message is produces on other partition than the first one. That is a result of Kafka's internal routing system. Kafka will try to send messages on different partitions to increase the parallelism when we have multiple consumers.
+If we go on the **Messages** tab, we will see with a high chance that the second message is produced on other partition than the first one. That is a result of Kafka's internal routing system. Kafka will try to send messages on different partitions to increase the parallelism when we have multiple consumers.
 :::
 
 ### Updating the number of partitions
@@ -74,3 +74,9 @@ $ ./kafka-topics.sh --alter --topic post.office --partitions 5 --bootstrap-serve
 ```
 
 A real-world example would be an online shop. We use kafka to produce some events to another service that sends emails to customers. The entire year, three partitions work just fine, but the Black Friday comes. All the customers will start searching for products and purchasing all kinds of stuff. Three event consumers might not be enough and we don't want to miss or delay sending any purchasing email.
+
+:::tip
+After increasing the number of partitions for a topic, a decrease is not allowed.
+
+Try to decrease the number of partitions back to 3 and see what happens.
+:::
