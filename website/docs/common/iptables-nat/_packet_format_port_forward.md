@@ -1,4 +1,4 @@
-## TODO title
+## Observing NATed packets (Port Forwarding)
 
 We will capture SSH traffic initiated from the outside to the `red` host through port 10022 of the `host` station. This is traffic before port forwarding. For this, on the host station we use the command
 
