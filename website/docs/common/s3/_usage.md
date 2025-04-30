@@ -159,7 +159,27 @@ student@lab-s3:~$ mc mb local/privatebucket
 student@lab-s3:~$ mc policy set none local/privatebucket
 ```
 
+To list the policies, use:
+
+```shell-session
+student@lab-s3:~$ mc anonymous get local/privatebucket
+
+```
 Try to access the bucket without credentials. What happens?
+
+Hint: To test you can share a public link to the bucket using `mc share` command.
+
+```shell-session
+student@lab-s3:~$ mc share download local/privatebucket/testfile.txt
+student@lab-s3:~$ curl http://localhost:9000/privatebucket/testfile.txt
+
+For the public link:
+```
+student@lab-s3:~$ mc share upload local/publicbucket/testfile.txt
+student@lab-s3:~$ curl http://localhost:9000/publicbucket/testfile.txt
+```
+
+Note: To make a bucket public, use `mc anonymous set download local/publicbucket`.
 
 ### Task 5: Deploy a second MinIO instance
 

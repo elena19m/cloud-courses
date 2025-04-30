@@ -3,7 +3,7 @@
 In this lab, we'll use Kubernetes resources (Deployments, Services) and MinIO's client tools to interact with the object storage.
 
 :::info
-We'll access MinIO via its web UI (`localhost:9000`) or via the MinIO client (`mc`) installed in your VM.
+We'll access MinIO via its web UI (`localhost:9001`) or via the MinIO client (`mc`) installed in your VM.
 :::
 
 :::info
@@ -12,10 +12,10 @@ We'll access MinIO via its web UI (`localhost:9000`) or via the MinIO client (`m
 After deploying MinIO, you'll forward the service port to your machine:
 
 ```shell-session
-student@lab-s3:~$ kubectl port-forward svc/minio-service 9000:9000 -n minio
+student@lab-s3:~$ kubectl port-forward -n minio deployment/minio 9000:9000 9001:9001
 ```
 
-Then, navigate to [http://localhost:9000](http://localhost:9000) in your browser.
+Then, navigate to [http://localhost:9001](http://localhost:9001) in your browser.
 :::
 
 :::info

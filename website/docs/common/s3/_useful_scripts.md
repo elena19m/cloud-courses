@@ -56,6 +56,8 @@ spec:
         args:
         - server
         - /data
+        - --console-address
+        - ":9001"
         env:
         - name: MINIO_ROOT_USER
           value: "minioadmin"
@@ -63,6 +65,7 @@ spec:
           value: "minioadmin"
         ports:
         - containerPort: 9000
+        - containerPort: 9001
         volumeMounts:
         - name: storage
           mountPath: /data
@@ -113,6 +116,6 @@ student@lab-s3:~$ sudo mv mc /usr/local/bin/
 Configure `mc`:
 
 ```shell-session
-student@lab-s3:~$ kubectl port-forward -n minio deployment/minio 9000:9000
+student@lab-s3:~$ kubectl port-forward -n minio deployment/minio 9000:9000 9001:9001
 student@lab-s3:~$ mc alias set local http://localhost:9000 minioadmin minioadmin
 ```
