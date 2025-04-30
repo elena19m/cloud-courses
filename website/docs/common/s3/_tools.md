@@ -12,7 +12,7 @@ We'll access MinIO via its web UI (`localhost:9000`) or via the MinIO client (`m
 After deploying MinIO, you'll forward the service port to your machine:
 
 ```shell-session
-kubectl port-forward svc/minio-service 9000:9000 -n minio
+student@lab-s3:~$ kubectl port-forward svc/minio-service 9000:9000 -n minio
 ```
 
 Then, navigate to [http://localhost:9000](http://localhost:9000) in your browser.

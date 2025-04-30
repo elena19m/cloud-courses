@@ -1,15 +1,49 @@
 ### Step 3: Create a Bucket and Upload Files
 
+We will use the `mc` command-line tool to interact with MinIO, create buckets, and upload files:
+
 ```shell-session
-$ mc mb local/mybucket
-$ echo "hello cloud computing" > testfile.txt
-$ mc cp testfile.txt local/mybucket
-$ # check the result
-$ mc ls local/mybucket
-$ mc cat local/mybucket/testfile.txt
+student@lab-s3:~$ mc mb local/mybucket
+student@lab-s3:~$ echo "hello cloud computing" > testfile.txt
+student@lab-s3:~$ mc cp testfile.txt local/mybucket
+student@lab-s3:~$ # check the result
+student@lab-s3:~$ mc ls local/mybucket
+student@lab-s3:~$ mc cat local/mybucket/testfile.txt
 ```
 
 ### Step 4: Access S3 from a Kubernetes App
+
+We will use a python script to upload files to the MinIO bucket from a Kubernetes pod.
+
+We need a `ConfigMap` to store the script and a `Deployment` to run it.
+
+Create the following file `uploader-configmap.yaml`:
+
+```yaml
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: uploader-script
+  namespace: default
+data:
+  uploader.py: |
+    import boto3, time
+
+    s3 = boto3.client(
+        's3',
+        endpoint_url='http://minio-service.minio.svc.cluster.local:9000',
+        aws_access_key_id='minioadmin',
+        aws_secret_access_key='minioadmin',
+        region_name='us-east-1'
+    )
+
+    while True:
+        with open('/tmp/hello.txt', 'w') as f:
+            f.write('hello from kubernetes')
+        s3.upload_file('/tmp/hello.txt', 'mybucket', 'hello.txt')
+        print('Uploaded hello.txt')
+        time.sleep(30)
+```
 
 Create the following file `uploader-deployment.yaml`:
 
@@ -34,41 +68,41 @@ spec:
         command: ["bash", "-c"]
         args:
           - |
-            pip install boto3 && \
-            python -c "
-import boto3, os, time
-s3 = boto3.client('s3',
-  endpoint_url='http://minio-service.minio.svc.cluster.local:9000',
-  aws_access_key_id=os.getenv('AWS_ACCESS_KEY_ID'),
-  aws_secret_access_key=os.getenv('AWS_SECRET_ACCESS_KEY'),
-  region_name='us-east-1')
-while True:
-  with open('/tmp/hello.txt', 'w') as f:
-      f.write('hello from kubernetes')
-  s3.upload_file('/tmp/hello.txt', 'mybucket', 'hello.txt')
-  print('Uploaded hello.txt')
-  time.sleep(30)
-"
+            pip install boto3 && python /app/uploader.py
+        volumeMounts:
+        - name: script-volume
+          mountPath: /app
         env:
         - name: AWS_ACCESS_KEY_ID
           value: "minioadmin"
         - name: AWS_SECRET_ACCESS_KEY
           value: "minioadmin"
+      volumes:
+      - name: script-volume
+        configMap:
+          name: uploader-script
 ```
 
 Deploy the example uploader app:
 
 ```shell-session
-$ kubectl apply -f uploader-deployment.yaml
+student@lab-s3:~$ kubectl apply -f uploader-configmap.yaml
+student@lab-s3:~$ kubectl apply -f uploader-deployment.yaml
 ```
 
 Check app logs:
 
 ```shell-session
-$ kubectl logs -l app=uploader
+student@lab-s3:~$ kubectl logs -l app=uploader
 ```
 
 This app will attempt to upload a file into your MinIO bucket.
+
+Note: To reload the script, you can restart the deployment:
+
+```shell-session
+student@lab-s3:~$ kubectl rollout restart deployment uploader
+```
 
 ## Exercises
 
@@ -80,11 +114,11 @@ Use a `for` loop to create and upload 10 text files to your bucket.
 for i in {1..10}; do echo "File $i" > file$i.txt; mc cp file$i.txt local/mybucket; done
 ```
 
-Check in Web UI if all files are there!
+Check if all files are present in the Web UI!
 
 ### Task 2: Deploy a second app to read files
 
-Create a simple Kubernetes Deployment (yaml provided) that lists files in the bucket.
+Create a simple Kubernetes Deployment (yaml provided as example for `upload`) that lists files in the bucket.
 
 What differences do you notice compared to uploading?
 
@@ -121,8 +155,8 @@ This change will prevent overwriting and simulate realistic object uploads.
 Use `mc` to create a new bucket called `privatebucket` and set it to be private (no anonymous access):
 
 ```shell-session
-mc mb local/privatebucket
-mc policy set none local/privatebucket
+student@lab-s3:~$ mc mb local/privatebucket
+student@lab-s3:~$ mc policy set none local/privatebucket
 ```
 
 Try to access the bucket without credentials. What happens?
@@ -142,8 +176,8 @@ Use it to create a separate bucket and upload a file there.
 Using `mc`, copy all files from `mybucket` to a backup bucket called `backupbucket`:
 
 ```shell-session
-mc mb local/backupbucket
-mc mirror local/mybucket local/backupbucket
+student@lab-s3:~$ mc mb local/backupbucket
+student@lab-s3:~$ mc mirror local/mybucket local/backupbucket
 ```
 
 Now delete a file from `mybucket`, and restore it from `backupbucket`!

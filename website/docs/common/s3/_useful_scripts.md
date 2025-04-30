@@ -11,8 +11,23 @@ We'll also provide small snippets to quickly test upload and download functional
 
 ### Step 0: Deploy a Kubernetes Cluster
 
+Create a local Kubernetes cluster using `kind create cluster`:
+
 ```shell-session
-kind create cluster
+student@lab-kubernetes:~$ kind create cluster
+Creating cluster "kind" ...
+ ✓ Ensuring node image (kindest/node:v1.23.4) 🖼
+ ✓ Preparing nodes 📦
+ ✓ Writing configuration 📜
+ ✓ Starting control-plane 🕹️
+ ✓ Installing CNI 🔌
+ ✓ Installing StorageClass 💾
+Set kubectl context to "kind-kind"
+You can now use your cluster with:
+
+kubectl cluster-info --context kind-kind
+
+Thanks for using kind! 😊
 ```
 
 ### Step 1: Deploy MinIO Server
@@ -76,29 +91,28 @@ spec:
 Apply the resources:
 
 ```shell-session
-$ kubectl create namespace minio
-$ kubectl apply -f minio-deployment.yaml
-$ kubectl apply -f minio-service.yaml
+student@lab-s3:~$ kubectl create namespace minio
+student@lab-s3:~$ kubectl apply -f minio-deployment.yaml
+student@lab-s3:~$ kubectl apply -f minio-service.yaml
 ```
 
 Check that MinIO is running:
 
 ```shell-session
-$ kubectl get pods -n minio
+student@lab-s3:~$ kubectl get pods -n minio
 ```
 
 ### Step 2: Setup MinIO Client (mc)
 
 ```shell-session
-$ wget https://dl.min.io/client/mc/release/linux-amd64/mc
-$ chmod +x mc
-$ sudo mv mc /usr/local/bin/
+student@lab-s3:~$ wget https://dl.min.io/client/mc/release/linux-amd64/mc
+student@lab-s3:~$ chmod +x mc
+student@lab-s3:~$ sudo mv mc /usr/local/bin/
 ```
 
 Configure `mc`:
 
 ```shell-session
-kubectl port-forward -n minio deployment/minio 9000:9000
-mc alias set local http://localhost:9000 minioadmin minioadmin
+student@lab-s3:~$ kubectl port-forward -n minio deployment/minio 9000:9000
+student@lab-s3:~$ mc alias set local http://localhost:9000 minioadmin minioadmin
 ```
-
