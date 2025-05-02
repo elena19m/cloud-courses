@@ -156,7 +156,7 @@ Use `mc` to create a new bucket called `privatebucket` and set it to be private 
 
 ```shell-session
 student@lab-s3:~$ mc mb local/privatebucket
-student@lab-s3:~$ mc policy set none local/privatebucket
+student@lab-s3:~$ mc anonymous set none local/privatebucket
 ```
 
 To list the policies, use:
@@ -165,34 +165,28 @@ To list the policies, use:
 student@lab-s3:~$ mc anonymous get local/privatebucket
 ```
 
-Try to access the bucket without credentials. What happens?
+Create a file inside the bucket and try to access the bucket via HTTP without credentials. What happens?
+
+```shell-session
+student@lab-s3:~$ mc mb local/privatebucket
+student@lab-s3:~$ echo "hello cloud computing" > testfile.txt
+student@lab-s3:~$ mc cp testfile.txt local/privatebucket
+
+student@lab-s3:~$ curl http://localhost:9000/privatebucket/testfile.txt
+<?xml version="1.0" encoding="UTF-8"?>
+<Error><Code>AccessDenied</Code>[...]
+```
 
 Hint: To test you can share a public link to the bucket using `mc share` command.
 
 ```shell-session
 student@lab-s3:~$ mc share download local/privatebucket/testfile.txt
-student@lab-s3:~$ curl http://localhost:9000/privatebucket/testfile.txt
+student@lab-s3:~$ curl <PASTE PUBLIC LINK HERE>
 ```
 
-For the public link:
-```shell-session
-student@lab-s3:~$ mc share upload local/publicbucket/testfile.txt
-student@lab-s3:~$ curl http://localhost:9000/publicbucket/testfile.txt
-```
+Note: To make a bucket public, use `mc anonymous set download local/privatebucket`.
 
-Note: To make a bucket public, use `mc anonymous set download local/publicbucket`.
-
-### Task 5: Deploy a second MinIO instance
-
-Deploy a second MinIO server in a different namespace (`minio2`).
-
-Make sure:
-- It uses different service names.
-- It listens on a different NodePort if needed.
-
-Use it to create a separate bucket and upload a file there.
-
-### Task 6: Backup and restore a bucket
+### Task 5: Backup and restore a bucket
 
 Using `mc`, copy all files from `mybucket` to a backup bucket called `backupbucket`:
 
@@ -202,3 +196,13 @@ student@lab-s3:~$ mc mirror local/mybucket local/backupbucket
 ```
 
 Now delete a file from `mybucket`, and restore it from `backupbucket`!
+
+### Task 6: Deploy a second MinIO instance
+
+Deploy a second MinIO server in a different namespace (`minio2`).
+
+Make sure:
+- It uses different service names.
+- It listens on a different NodePort if needed.
+
+Use it to create a separate bucket and upload a file there.
