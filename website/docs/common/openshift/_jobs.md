@@ -191,6 +191,17 @@ spec:
       - name: wordlist-volume
         configMap:
           name: zip-decrypt-config
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: zip-decrypt-pvc
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 100Mi
 ```
 
 We know that the file has a password omade up of 5 letters, which led us to use the `-l 5-5` option, together with `-b` to do brute-forcing.
