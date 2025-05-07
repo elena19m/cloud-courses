@@ -50,6 +50,8 @@ For an easy way to define the cron schedule, you can use https://crontab.guru/.
 
 ### Case study: Database backup
 
+For this exercises you have to download the arvhice from the following link: swarm.cs.pub.ro/~sweisz/pgsql.zip
+
 The pgsql.yaml file deploys a database server.
 For this database server we need to create backups which will be storen in another volume which will them be deployed off-site.
 
