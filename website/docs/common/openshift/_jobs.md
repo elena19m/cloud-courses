@@ -57,7 +57,7 @@ spec:
     spec:
       containers:
       - name: matrix-multiply
-        image: ghcr.io/jumpserver/python:3.9-slim
+        image: gitlab.cs.pub.ro:5050/scgc/cloud-courses/python:3.9-slim
         command: ["bash", "-c"]
         args:
         - |
@@ -65,6 +65,10 @@ spec:
         volumeMounts:
         - name: script-volume
           mountPath: /scripts
+        - name: pip-local
+          mountPath: /.local
+        - name: pip-local
+          mountPath: /.cache
         resources:
           requests:
             cpu: "2"
@@ -76,6 +80,8 @@ spec:
       - name: script-volume
         configMap:
           name: matrix-multiplication-script
+      - name: pip-local
+        emptyDir: {}
       restartPolicy: OnFailure
   backoffLimit: 2
 ---
@@ -129,12 +135,12 @@ Result matrix shape: (5000, 5000)
 
 ### Case study: zip cracking
 
-Let's look at a real world example of cracking a password using hascat and jobs in Kubernetes.
+Let's look at a real world example of cracking a password using fcrackzip and jobs in Kubernetes.
 The `decrypt-zip.yaml` is the basis for our job.
 It contains the commands used for cracking the password for a zip file.
 The `fcrackzip` tool can brute-force a ZIP archive's password.
 
-Our task is to download the archive in a Persistend Volume, and crack its password.
+Our task is to download the archive, and crack its password.
 
 The following manifest will define our job and Persistent Volume:
 ```
@@ -155,7 +161,7 @@ spec:
       restartPolicy: OnFailure
       initContainers:
       - name: download-zip
-        image: curlimages/curl:latest  # Lightweight curl image
+        image: ghcr.io/curl/curl-container/curl:master   # Lightweight curl image
         command: ["/bin/sh", "-c"]
         volumeMounts:
         - name: data-volume
@@ -165,9 +171,9 @@ spec:
           echo "Downloading ZIP file from remote source..." &&
           curl http://swarm.cs.pub.ro/~sweisz/encrypted.zip -o /data/encrypted.zip
       containers:
-      - name: fcrackzip-container
-        image: zhindonm/fcrackzip  # Replace with appropriate fcrackzip image
-        command: ["/bin/bash"]
+      - name: hashcat-container
+        image: gitlab.cs.pub.ro:5050/scgc/cloud-courses/fcrackzip  # Replace with appropriate hashcat image
+        command: ["/bin/sh"]
         args:
         - "-c"
         - >
@@ -186,29 +192,17 @@ spec:
             cpu: "4"
       volumes:
       - name: data-volume
-        persistentVolumeClaim:
-          claimName: zip-decrypt-pvc  # Reference to the PVC below
+        emptyDir: {}
       - name: wordlist-volume
         configMap:
           name: zip-decrypt-config
----
-apiVersion: v1
-kind: PersistentVolumeClaim
-metadata:
-  name: zip-decrypt-pvc
-spec:
-  accessModes:
-    - ReadWriteOnce
-  resources:
-    requests:
-      storage: 100Mi
 ```
 
-We know that the file has a password omade up of 5 letters, which led us to use the `-l 5-5` option, together with `-b` to do brute-forcing.
+We know that the file has a password made up of 5 letters, which led us to use the `-l 5-5` option, together with `-b` to do brute-forcing.
 We use the `initContainer` to download the archive and the main container to run `fcrackzip`.
 
 ### Exercise: Crack using wordlist
 
-Change the above job in order to run `fcrackzip` using the wordlist from the following link: http://swarm.cs.pub.ro/~sweisz/cc/wordlist.txt.
+Change the above job in order to run `fcrackzip` using the wordlist from the following link: http://swarm.cs.pub.ro/~sweisz/wordlist.txt.
 You can attach the wordlist as a ConfigMap as you've seen in the matrix multiplication example.
 You can see how to configure fcrackzip to use wordlists in the following link: https://sohvaxus.github.io/content/fcrackzip-bruteforce-tutorial.html.

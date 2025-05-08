@@ -50,7 +50,61 @@ For an easy way to define the cron schedule, you can use https://crontab.guru/.
 
 ### Case study: Database backup
 
-For this exercises you have to download the arvhice from the following link: swarm.cs.pub.ro/~sweisz/pgsql.zip
+
+For this case study we will pe running a PostgreSQL defined by the following
+manifest:
+```
+# PostgreSQL Pod
+apiVersion: v1
+kind: Pod
+metadata:
+  name: postgres-db
+  labels:
+    app: postgres
+spec:
+  containers:
+  - name: postgres
+    image: gitlab.cs.pub.ro:5050/scgc/cloud-courses/postgres:14-alpine
+    ports:
+    - containerPort: 5432
+      name: postgres
+    env:
+    - name: PGDATA
+      value: /var/lib/postgresql/data/pg/
+    - name: POSTGRES_USER
+      valueFrom:
+        secretKeyRef:
+          name: postgres-credentials
+          key: username
+    - name: POSTGRES_PASSWORD
+      valueFrom:
+        secretKeyRef:
+          name: postgres-credentials
+          key: password
+    - name: POSTGRES_DB
+      valueFrom:
+        secretKeyRef:
+          name: postgres-credentials
+          key: database
+    volumeMounts:
+    - name: postgres-data
+      mountPath: /var/lib/postgresql/data/
+  volumes:
+  - name: postgres-data
+    emptyDir: {}
+---
+# Service for PostgreSQL
+apiVersion: v1
+kind: Service
+metadata:
+  name: postgres-service
+spec:
+  ports:
+  - port: 5432
+    targetPort: 5432
+  selector:
+    app: postgres
+```
 
 The pgsql.yaml file deploys a database server.
 For this database server we need to create backups which will be storen in another volume which will them be deployed off-site.
@@ -59,7 +113,6 @@ In order to prepare the setup we first need to create the database that we will 
 Run the following command to setup the database deployment and service in the lab directory:
 
 ```
-oc apply -f pgsql-pvc.yaml
 oc apply -f pgsql.yaml
 ```
 
