@@ -197,7 +197,7 @@ postgres-backup   */1 * * * *   False     0        35s             39m
 
 The issue with the above CronJob is that although it creates a backup file, it doesn't add it to any kind of persistent storage.
 
-Create a persistent volume, mount it to the `/backup` path and change the backup script so that it copies the backup files to the backup volume.
+Create an emptyDir volume mount, mount it to the `/backup` path and change the backup script so that it copies the backup files to the backup volume.
 
 Change the backup schedule so that it only does a backup every hour.
 
