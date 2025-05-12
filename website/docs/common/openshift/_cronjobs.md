@@ -130,7 +130,7 @@ spec:
         spec:
           containers:
           - name: backup-container
-            image: postgres:14-alpine
+            image: gitlab.cs.pub.ro:5050/scgc/cloud-courses/postgres:14-alpine
             command:
             - /bin/sh
             - -c
