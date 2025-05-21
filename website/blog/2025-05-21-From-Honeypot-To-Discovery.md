@@ -1,7 +1,7 @@
 ---
 title: From Honeypot to Discovery - Forensic Analysis with Dissect
 description: Analyzing infected qcow2 disk images with Dissect
-slug: web-based-honeypot
+slug: forensic-analysis-dissect
 tags: [SOCcare, security, threat intelligence sharing]
 
 hide_table_of_contents: false
