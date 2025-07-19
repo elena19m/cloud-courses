@@ -6,6 +6,7 @@ To add the default gateway on the red station, use the commands:
 ```shell-command
 root@host:~# go red
 [...]
+root@red:~# ip route add 10.10.10.1 dev red-eth0
 root@red:~# ip route add default via 10.10.10.1
 ```
 

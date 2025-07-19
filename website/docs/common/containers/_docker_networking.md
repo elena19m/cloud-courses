@@ -152,7 +152,7 @@ Create a new `webserver-8844` container based on the `python-container` image an
 
 ### Creating new networks
 
-The `docker create network` command creates a new network as follows:
+The `docker network create` command creates a new network as follows:
 
 ```console
 student@cc:~/lab-containers-part-2/python-container$ docker network create isolated-servers

@@ -44,7 +44,7 @@ installed, the output is discarded automatically.
 Install the `postfix` package and configure it to only store the messages
 **locally**.
 
-After the scheduled tasks execute, check the `/var/log/student` file to see the
+After the scheduled tasks execute, check the `/var/mail/student` file to see the
 logged information.
 :::
 

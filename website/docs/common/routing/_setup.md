@@ -13,7 +13,7 @@ where `<no>` is the lab number and `<username>` is your institutional account.
 ```shell-session
 $ cd work/
 $ wget https://repository.grid.pub.ro/cs/scgc/laboratoare/lab-routing.zip
-$ unzip lab-cert.zip
+$ unzip lab-routing.zip
 $ bash runvm.sh
 ```
 
