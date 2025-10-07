@@ -294,7 +294,7 @@ We can modify the previously created manifest and add an `exec` resource:
 
 ```puppet
 exec {'echoer':
-  command     => ['/bin/echo', 'Test hello!'],
+  command     => '/bin/echo Test hello! >> /tmp/my_file',
   logoutput   => true,
   require     => File['my_file'],
 }
@@ -323,7 +323,7 @@ The `before` attribute can be used to create an equivalent syntax:
 
 ```puppet
 exec {'echoer':
-  command     => ['/bin/echo', 'Test hello!'],
+  command     => '/bin/echo Test hello! >> /tmp/my_file',
   logoutput   => true,
 }
 
@@ -376,7 +376,7 @@ file {'my_file':
 }
 ->
 exec {'echoer':
-  command     => ['/bin/echo', 'Test hello!'],
+  command     => '/bin/echo Test hello! >> /tmp/my_file',
   logoutput   => true,
 }
 
