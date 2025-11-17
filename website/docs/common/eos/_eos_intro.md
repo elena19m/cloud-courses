@@ -21,8 +21,6 @@ The `.qcow2` files will be used to start virtual machines using the `runvm.sh` s
 ```shell-session
 $ # change the working dir
 $ cd ~/work
-$ # download the AlmaLinux 9 image
-$ wget https://repository.grid.pub.ro/cs/scgc/laboratoare/base-images/almalinux-9.qcow2
 $ # download the archive
 $ wget https://repository.grid.pub.ro/cs/scgc/laboratoare/lab-eos.zip
 $ unzip lab-eos.zip
@@ -288,7 +286,7 @@ Once the QDB service is running successfully, open another terminal and check it
 The output confirms that the QDB node is healthy, acting as the Raft leader, and that the cluster is functioning.
 
 ### MGM Setup
-Next we will move on to launch the MGM service, the manager node of the EOS instance. We will further use this node to interact with the EOS intance.
+Next we will move on to launch the MGM service, the manager node of the EOS instance. We will further use this node to interact with the EOS instance.
 
 :::warning
 To enable communication between QDB and MGM, copy the `/etc/eos.keytab` file created on the QDB file on the MGM file.
@@ -511,7 +509,7 @@ Plugin loaded secprot 5.8.4 from seclib libXrdSec-5.so
 
 #### Interacting with EOS
 
-Now that our MGM node is up and running, we can interact with our EOS instance through a console-like interface that provides access to the full EOS command set. 
+Now that our MGM node is up and running, we can interact with our EOS instance through a console-like interface that provides access to the full EOS command set.
 
 To open the EOS console, simply run the command `eos` and when the console starts, you’ll see a banner similar to this:
 

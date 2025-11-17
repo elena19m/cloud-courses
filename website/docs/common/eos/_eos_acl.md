@@ -103,8 +103,8 @@ Check current virtual identity of the user `student` :
 Virtual Identity: uid=99 (99,65534) gid=99 (99) [authz:unix]
 ```
 
-By default, EOS maps Unix-authenticated users to a non-priviliged virtual identity with UID 99. Let's configure EOS VID to map the user `student` to virtual UID 1000 and GID 1000:
- 
+By default, EOS maps Unix-authenticated users to a non-privileged virtual identity with UID 99. Let's configure EOS VID to map the user `student` to virtual UID 1000 and GID 1000:
+
 ```shell-session
 [root@mgm ~]# eos vid set map -unix "student" vuid:1000 vgid:1000
 success: set vid [  eos.rgid=0 eos.ruid=0 mgm.cmd=vid mgm.subcmd=set mgm.vid.auth=unix mgm.vid.cmd=map mgm.vid.gid=1000 mgm.vid.key=<key> mgm.vid.pattern=student mgm.vid.uid=1000 ]
@@ -149,7 +149,7 @@ Check for the ACL indicator (`+` sign) in `/eos/dev/shared` directory permission
 ```shell-session
 [root@mgm ~]# eos ls -l /eos/dev/ | grep shared
 drwxrwxr-+   1 root     root               22 Nov 11 00:24 shared
-``` 
+```
 
 Now the user `student` should be able to write in the `/eos/dev/shared/` directory:
 
