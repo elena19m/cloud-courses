@@ -14,13 +14,13 @@ scaninterval                     := 300
 
 Next we need to activate collection and repair threads:
 ```shell-session
-[root@mgm ~]# fsck config toggle-collect
+[root@mgm ~]# eos fsck config toggle-collect
 ```
 
-Now the `fsck stat` command should show the two collections of threads as running:
+Now the `eos fsck stat` command should show the two collections of threads as running:
 
 ```shell-session
-[root@mgm ~]# sudo eos fsck stat
+[root@mgm ~]# eos fsck stat
 Info: collection thread status -> enabled
 Info: repair thread status     -> disabled
 Info: repair category          -> all
@@ -44,8 +44,8 @@ Now running the `eos fsck report` command should show nothing since all files ar
 Once the file appears in the FSCK report, let's enable the repairing mechanism and let FSCK handle the issue:
 
 ```shell-session
-[root@mgm ~]# fsck config toggle-repair
-[root@mgm ~]# sudo eos fsck stat
+[root@mgm ~]# eos fsck config toggle-repair
+[root@mgm ~]# eos fsck stat
 Info: collection thread status -> enabled
 Info: repair thread status     -> enabled
 Info: repair category          -> all
@@ -56,4 +56,4 @@ Info: best effort              -> false
 251031 17:21:37 1761931297.086207 Next run in 30 minutes
 ```
 
-Since FSCK repair is now activated, the file will be saved by duplicating the existing replica on the other filesystem.
+Since EOS FSCK repair is now activated, the file will be saved by duplicating the existing replica on the other filesystem.
