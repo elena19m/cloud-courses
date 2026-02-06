@@ -5,14 +5,14 @@ import { themes as prismThemes } from 'prism-react-renderer';
 
 /** @type {import('@docusaurus/types').Config} */
 const config = {
-  title: 'Cluster, Grid and Cloud Courses (SysDevOps Crunch)',
-  tagline: 'Be your own SysAdmin!',
+  title: 'CyberCloud',
+  tagline: 'Building resilient and secure infrastructures',
   url: process.env.URL,
   baseUrl: process.env.BASE_URL,
   onBrokenLinks: 'throw',
   onBrokenMarkdownLinks: 'warn',
   favicon: 'img/scgc_light.png',
-  organizationName: 'SCGC Team', // Usually your GitHub org/user name.
+  organizationName: 'CyberCloud', // Usually your GitHub org/user name.
   projectName: 'cloud-courses', // Usually your repo name.
 
   presets: [
@@ -35,7 +35,7 @@ const config = {
     /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
     ({
       navbar: {
-        title: 'SysDevOps Crash Courses',
+        title: 'SysDevOps Crash',
         logo: {
           alt: 'Logo',
           src: 'img/scgc_light.png',
@@ -46,7 +46,7 @@ const config = {
             type: 'doc',
             docId: 'intro',
             position: 'left',
-            label: 'All Courses',
+            label: 'CyberCloud Team',
           },
           {
             to: '/docs/basic',
@@ -96,7 +96,7 @@ const config = {
             title: 'Courses',
             items: [
               {
-                label: 'Intro',
+                label: 'Basics',
                 to: '/docs/basic',
               },
               {
@@ -134,8 +134,33 @@ const config = {
               },
             ],
           },
+          {
+            title: 'Projects & Collaborations',
+            items: [
+              {
+                label: 'JAliEn',
+                href: 'https://jalien.docs.cern.ch/',
+              },
+              {
+                label: 'CondeGRID',
+                href: 'TODO',
+              },
+              {
+                label: 'RoNaQCI',
+                href: 'https://ronaqci.eu/',
+              },
+              {
+                label: 'SOCcare',
+                href: 'https://cybercloud.upb.ro',
+              },
+              {
+                label: 'ORCHIDE',
+                href: 'https://orchide-project.eu/',
+              },
+            ],
+          },
         ],
-        copyright: `Copyright © ${new Date().getFullYear()} Cluster & Grid Team, Facultatea de Automatică și Calculatoare, Universitatea Politehnica București. Built with Docusaurus.`,
+        copyright: `Copyright © ${new Date().getFullYear()} CyberCloud Team, Facultatea de Automatică și Calculatoare, Universitatea Politehnica București. Built with Docusaurus.`,
       },
       prism: {
         theme: prismThemes.vsLight,
