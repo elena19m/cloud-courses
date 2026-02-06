@@ -11,7 +11,7 @@ const config = {
   baseUrl: process.env.BASE_URL,
   onBrokenLinks: 'throw',
   onBrokenMarkdownLinks: 'warn',
-  favicon: 'img/scgc_light.png',
+  favicon: '/img/cybercloud_favicon.png',
   organizationName: 'CyberCloud', // Usually your GitHub org/user name.
   projectName: 'cloud-courses', // Usually your repo name.
 
@@ -38,8 +38,8 @@ const config = {
         title: 'SysDevOps Crash',
         logo: {
           alt: 'Logo',
-          src: 'img/scgc_light.png',
-          srcDark: 'img/scgc_dark.png',
+          src: 'img/cybercloud_logo_nobg.png',
+          srcDark: 'img/cybercloud_logo_nobg.png',
         },
         items: [
           {
