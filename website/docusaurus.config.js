@@ -142,10 +142,6 @@ const config = {
                 href: 'https://jalien.docs.cern.ch/',
               },
               {
-                label: 'CondeGRID',
-                href: 'TODO',
-              },
-              {
                 label: 'RoNaQCI',
                 href: 'https://ronaqci.eu/',
               },
