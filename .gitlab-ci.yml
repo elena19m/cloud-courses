@@ -10,7 +10,7 @@ cache:
     - website/node_modules/
 
 variables:
-  URL: 'https://cloud-courses.upb.ro'
+  URL: 'https://cybercloud.upb.ro'
   BASE_URL: '/'
 
 test:
