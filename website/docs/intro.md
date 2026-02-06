@@ -16,6 +16,6 @@ Here you can find tutorials and labs for the classes that were developed under t
 
 # SysDevOps & Security Corner
 
-In the [SysDevOps & Security Corner](blog) you can find our latest news regarding our projects, things we are working on or the side quest we are taking while working on our taks.
+In the [SysDevOps & Security Corner](../blog) you can find our latest news regarding our projects, things we are working on or the side quest we are taking while working on our taks.
 
 
