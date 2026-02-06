@@ -8,7 +8,7 @@ This is the website of the CyberCloud team from the Faculty of Automatic Control
 
 # Classes
 
-Here you can find tutorials and labs for the classes that were developed under the CyberCloud team:
+Here you can find tutorials and labs for the classes that were developed by our team:
 1. [Cloud Computing](cloud-computing)
 2. [Communication Networks](network)
 3. [Security of Cloud and Grid Computing](security)
@@ -16,6 +16,6 @@ Here you can find tutorials and labs for the classes that were developed under t
 
 # SysDevOps & Security Corner
 
-In the [SysDevOps & Security Corner](../blog) you can find our latest news regarding our projects, things we are working on or the side quest we are taking while working on our taks.
+In the [SysDevOps & Security Corner](../blog) you can find the latest news regarding our projects, things we are working on or some side quests we complete along the way.
 
 
