@@ -25,3 +25,15 @@
 .logo {
   max-width: 300px;
 }
+
+@media (max-width: 500px) {
+  .logo {
+    width: 200px;
+  }
+}
+
+@media (max-width: 300px) {
+  .logo {
+    width: 100px;
+  }
+}
