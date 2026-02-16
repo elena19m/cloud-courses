@@ -12,22 +12,8 @@ When creating a virtual machine in the Launch Instance window:
   * Name your VM using the following convention: `cc_lab<no>_<username>`,
 where `<no>` is the lab number and `<username>` is your institutional account.
   * Select **Boot from image** in **Instance Boot Source** section
-  * Select **CC 2024-2025** in **Image Name** section
+  * Select **CC Template** in **Image Name** section
   * Select the **m1.xlarge** flavor.
-
-In the base virtual machine:
-  * Download the laboratory archive from [here](https://repository.grid.pub.ro/cs/cc/laboratoare/lab-ci-cd.zip).
-Use: `wget https://repository.grid.pub.ro/cs/cc/laboratoare/lab-ci-cd.zip` to download the archive.
-  * Extract the archive.
-  * Run the setup script `bash lab-ci-cd.sh`.
-
-```shell-session
-$ # download the archive
-$ wget https://repository.grid.pub.ro/cs/cc/laboratoare/lab-ci-cd.zip
-$ unzip lab-ci-cd.zip
-$ # run setup script; it may take a while
-$ bash lab-ci-cd.sh
-```
 
 ## Before we start
 

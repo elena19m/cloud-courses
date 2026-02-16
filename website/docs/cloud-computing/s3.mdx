@@ -12,21 +12,8 @@ When creating a virtual machine in the Launch Instance window:
   * Name your VM using the following convention: `cc_lab<no>_<username>`,
 where `<no>` is the lab number and `<username>` is your institutional account.
   * Select **Boot from image** in **Instance Boot Source** section
-  * Select **CC 2024-2025** in **Image Name** section
+  * Select **CC Template** in **Image Name** section
   * Select the **m1.xlarge** flavor.
-
-In the base virtual machine:
-  * Download the laboratory archive from [here](https://repository.grid.pub.ro/cs/cc/laboratoare/install-kind.zip).
-Use: `wget https://repository.grid.pub.ro/cs/cc/laboratoare/install-kind.zip` to download the archive.
-  * Extract the archive.
-  * Run the setup script `bash install-kind.sh`.
-
-```shell-session
-$ # download the archive
-$ wget https://repository.grid.pub.ro/cs/cc/laboratoare/install-kind.zip
-$ unzip install-kind.zip
-$ bash install-kind.sh
-```
 
 ## Before we start
 
@@ -49,4 +36,3 @@ import UsefulScripts from '../common/s3/_useful_scripts.md'
 import Usage from '../common/s3/_usage.md'
 
 <Usage/>
-

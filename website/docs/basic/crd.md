@@ -4,7 +4,7 @@ sidebar_position: 5
 
 # Chrome Remote Desktop
 
-**Chrome Remote Desktop** is a Google service that allows you to view the screen of your virtual machine in a browser, 
+**Chrome Remote Desktop** is a Google service that allows you to view the screen of your virtual machine in a browser,
 regardless of where you are running the virtual machine.
 
 The only prerequisites are:
@@ -18,7 +18,7 @@ We will be using a virtual machine in the [faculty's cloud](http://cloud.grid.pu
 
 When creating a virtual machine in the Launch Instance window:
   * Select **Boot from image** in **Instance Boot Source** section
-  * Select a Debian-based image in the **Image Name** section (e.g. **CC 2024-2025**)
+  * Select a Debian-based image in the **Image Name** section (e.g. **CC Template**)
   * Select the **m1.xlarge** flavor.
 
 Connect to the VM using SSH.
