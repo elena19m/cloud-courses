@@ -266,17 +266,16 @@ docker image ls
 You will get an output such as:
 
 ```text
-REPOSITORY         TAG        IMAGE ID       CREATED        SIZE
-ctf-piece_of_pie   latest     1f844c4f935b   9 hours ago    209MB
-<none>             <none>     99ba2c76892a   9 hours ago    216MB
-<none>             <none>     e81d4254c928   13 hours ago   209MB
-<none>             <none>     2d74afaf7b34   13 hours ago   209MB
-debian             bookworm   617f2e89852e   2 weeks ago    117MB
-nginx              latest     3b25b682ea82   4 weeks ago    192MB
-gcc                14.2       d0b5d902201b   3 months ago   1.42GB
+IMAGE                     ID             DISK USAGE   CONTENT SIZE   EXTRA
+caddy:latest              c3d7ee5d2b11       83.2MB         22.9MB    U
+ctf-piece_of_pie:latest   f7cd6751e58c        328MB         88.9MB
+debian:bookworm           34e7f0ae7c10        185MB         52.2MB    U
+nginx:latest              341bf0f3ce6c        240MB         65.8MB    U
 ```
 
-The `<none>` entries store intermediary versions of an image file.
+`<none>` or `<untagged>` entries may appear in the `IMAGE` column.
+This happens when an image is not tagged or it is an intermediary version of an image file.
+These images can be safely removed by using `docker image prune` or `docker rmi <ID>`.
 
 You can also inspect an image, such as `debian:bookworm`.
 
@@ -502,5 +501,3 @@ To check the system-wide events, you can use `docker system events`. The command
 
 
 Another method of inspecting the logs associated with the docker service is by using `journalctl`. Run it yourself and compare the results with the ones displayed using `docker system events`.
-
-
