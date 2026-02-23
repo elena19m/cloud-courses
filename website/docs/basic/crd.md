@@ -19,7 +19,7 @@ We will be using a virtual machine in the [faculty's cloud](http://cloud.grid.pu
 When creating a virtual machine in the Launch Instance window:
   * Select **Boot from image** in **Instance Boot Source** section
   * Select a Debian-based image in the **Image Name** section (e.g. **CC Template**)
-  * Select the **m1.xlarge** flavor.
+  * Select the **g.medium** flavor.
 
 Connect to the VM using SSH.
 
