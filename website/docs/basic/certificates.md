@@ -2,7 +2,7 @@
 sidebar_position: 3
 ---
 
-# Security: PKI, X.509, SSL, TLS
+# Security: PKI, X.509, TLS, GPG
 
 import CertSetup from '../common/certificates/_setup.md';
 
@@ -15,3 +15,7 @@ import CertBasics from '../common/certificates/_basics.md';
 import CertComm from '../common/certificates/_communication.md';
 
 <CertComm/>
+
+import GPG from '../common/certificates/_gpg.md';
+
+<GPG/>
