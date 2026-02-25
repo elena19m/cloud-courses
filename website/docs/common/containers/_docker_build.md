@@ -43,7 +43,7 @@ student@lab-docker:~$ docker image list
 
 This list contains both internally downloaded and locally built containers.
 
-### Exercise: Generate a container image
+### Exercise 05: Generate a container image
 
 * Write a `Dockerfile.alma` file containing a recipe for generating a container image based on the `almalinux:9` container in which to install the `bind-utils` tool.
 
@@ -149,7 +149,7 @@ Let's build the following Docker images:
    This is because the [`run.sh` script](https://github.com/Sergiu121/uso-lab/blob/master/labs/09-task-admin/lab-container/dropbox/run.sh) is not available in the local filesystem.
    You will fix that as a task below.
 
-### Exercise: Fix Build Issue
+### Exercise 06: Fix Build Issue
 
 First, fix the issue with the creation of the `uso-lab` image.
 That is:
@@ -162,7 +162,7 @@ That is:
 
 Follow similar steps to fix the issue with the creation of the `dropbox` image.
 
-### Exercise: Images from Other Dockerfiles
+### Exercise 07: Images from Other Dockerfiles
 
 Search the Internet (GitHub or otherwise) for two Dockerfiles.
 Build images from those two Dockerfiles.

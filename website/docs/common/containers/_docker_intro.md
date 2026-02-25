@@ -102,7 +102,7 @@ Follow the steps below:
    ```
 
 
-### Exercise: Inspect Docker Instances
+### Exercise 01: Inspect Docker Instances
 
 Repeat the steps above, at least 2-3 times.
 
@@ -230,7 +230,7 @@ docker inspect cdl-nginx
 docker stats cdl-nginx
 ```
 
-### Exercise: Interact with Docker instances
+### Exercise 02: Interact with Docker instances
 
 Make sure the following three containers are started: `ctf-piece_of_pie`, `cdl-caddy`, `cdl-debian-bash`.
 Start them if they are not stared.
@@ -357,7 +357,7 @@ Now the containers are gone forever (because of the `--rm` option):
 docker ps -a
 ```
 
-### Exercise: Create more Nginx instances
+### Exercise 03: Create more Nginx instances
 
 Create more Nginx instances from available images:
 
@@ -393,7 +393,7 @@ docker pull nginx:latest
 docker pull gcc:14.2
 ```
 
-### Exercise: Download Docker images
+### Exercise 04: Download Docker images
 
 Download and instantiate other images.
 
