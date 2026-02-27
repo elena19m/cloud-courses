@@ -233,7 +233,7 @@ docker stats cdl-nginx
 ### Exercise 02: Interact with Docker instances
 
 Make sure the following three containers are started: `ctf-piece_of_pie`, `cdl-caddy`, `cdl-debian-bash`.
-Start them if they are not stared.
+Start them if they are not started.
 
 Copy files to and from containers.
 
