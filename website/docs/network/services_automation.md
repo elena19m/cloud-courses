@@ -11,7 +11,7 @@ sidebar_position: 20
       where `<no>` is the lab number and `<username>` is your institutional account.
     * Select **Boot from image** in **Instance Boot Source** section
     * Select **SCGC Template** in **Image Name** section
-    * Select the **m1.medium** flavor.
+    * Select the **g.medium** flavor.
   * The username for connecting to the VM is `student`.
 
 

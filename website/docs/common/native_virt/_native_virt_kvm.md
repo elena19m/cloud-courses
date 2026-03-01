@@ -7,7 +7,7 @@ When creating a virtual machine in the Launch Instance window:
 where `<no>` is the lab number and `<username>` is your institutional account.
   * Select **Boot from image** in **Instance Boot Source** section
   * Select **SCGC Template** in **Image Name** section
-  * Select the **m1.xlarge** flavor.
+  * Select the **g.medium** flavor.
 
 :::info
 There will not be a zip archive for this lab. We will work using the existing

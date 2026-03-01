@@ -91,15 +91,15 @@ the available flavors using `openstack flavor list`:
 +--------------------------------------+----------------+------+------+-----------+-------+-----------+
 | ID                                   | Name           |  RAM | Disk | Ephemeral | VCPUs | Is Public |
 +--------------------------------------+----------------+------+------+-----------+-------+-----------+
-| xxxxxxxx-yyyy-zzzz-tttt-xxxxxxxxxx21 | m1.tiny        |  512 |    8 |         0 |     1 | True      |
-| xxxxxxxx-yyyy-zzzz-tttt-xxxxxxxxxx22 | m1.xlarge      | 4096 |   24 |         0 |     4 | True      |
-| xxxxxxxx-yyyy-zzzz-tttt-xxxxxxxxxx23 | m1.medium      | 1536 |   16 |         0 |     1 | True      |
-| xxxxxxxx-yyyy-zzzz-tttt-xxxxxxxxxx24 | m1.large       | 4096 |   16 |         0 |     2 | True      |
+| xxxxxxxx-yyyy-zzzz-tttt-xxxxxxxxxx21 | g.tiny         |   1024 |   25 |         0 |     1 | True      |
+| xxxxxxxx-yyyy-zzzz-tttt-xxxxxxxxxx22 | g.small        |   2048 |   25 |         0 |     1 | True      |
+| xxxxxxxx-yyyy-zzzz-tttt-xxxxxxxxxx23 | g.medium       |   4096 |   25 |         0 |     2 | True      |
+| xxxxxxxx-yyyy-zzzz-tttt-xxxxxxxxxx24 | g.large        |   8192 |   50 |         0 |     4 | True      |
 [...]
 +--------------------------------------+----------------+------+------+-----------+-------+-----------+
 ```
 
-Let's find more information about the `m1.tiny` flavor, which has the ID of
+Let's find more information about the `g.tiny` flavor, which has the ID of
 `xxxxxxxx-yyyy-zzzz-tttt-xxxxxxxxxx21`, using `openstack flavor show`:
 
 ```shell-session
@@ -110,15 +110,15 @@ Let's find more information about the `m1.tiny` flavor, which has the ID of
 | OS-FLV-DISABLED:disabled   | False                                |
 | OS-FLV-EXT-DATA:ephemeral  | 0                                    |
 | access_project_ids         | None                                 |
-| description                | None                                 |
-| disk                       | 8                                    |
+| description                | General Purpose                      |
+| disk                       | 25                                   |
 | id                         | xxxxxxxx-yyyy-zzzz-tttt-xxxxxxxxxx21 |
-| name                       | m1.tiny                              |
+| name                       | g.tiny                               |
 | os-flavor-access:is_public | True                                 |
 | properties                 | type='gp'                            |
-| ram                        | 512                                  |
+| ram                        | 1024                                 |
 | rxtx_factor                | 1.0                                  |
-| swap                       |                                      |
+| swap                       | 0                                    |
 | vcpus                      | 1                                    |
 +----------------------------+--------------------------------------+
 ```
@@ -294,7 +294,7 @@ group show` followed by the ID of the group we want to inspect:
 Finally, now that we have all the required information, we can start a new
 instance. We will use:
   * image: `Ubuntu 16.04 Xenial`;
-  * flavor: `m1.tiny`;
+  * flavor: `g.micro`;
   * key pair: your own key pair;
   * network: `vlan9`;
   * security group: `default`;
@@ -303,7 +303,7 @@ instance. We will use:
 We will run the following command to create the instance:
 
 ```shell-session
-[user.name@fep8 ~]$ openstack server create --flavor m1.tiny --image xxxxxxxx-yyyy-zzzz-tttt-xxxxxxxxxx12 --nic net-id=xxxxxxxx-yyyy-zzzz-tttt-xxxxxxxxxx31 --security-group default --key-name fep user.name-vm
+[user.name@fep8 ~]$ openstack server create --flavor g.micro --image xxxxxxxx-yyyy-zzzz-tttt-xxxxxxxxxx12 --nic net-id=xxxxxxxx-yyyy-zzzz-tttt-xxxxxxxxxx31 --security-group default --key-name fep user.name-vm
 +-----------------------------+------------------------------------------------------------+
 | Field                       | Value                                                      |
 +-----------------------------+------------------------------------------------------------+
@@ -320,7 +320,7 @@ We will run the following command to create the instance:
 | adminPass                   | AbcdEfghIJkl                                               |
 | config_drive                |                                                            |
 | created                     | 20XX-02-30T00:01:00Z                                       |
-| flavor                      | m1.tiny (xxxxxxxx-yyyy-zzzz-tttt-xxxxxxxxxx21)             |
+| flavor                      | g.micro (xxxxxxxx-yyyy-zzzz-tttt-xxxxxxxxxx21)             |
 | hostId                      |                                                            |
 | id                          | xxxxxxxx-yyyy-zzzz-tttt-xxxxxxxxxx71                       |
 | image                       | Ubuntu 16.04 Xenial (xxxxxxxx-yyyy-zzzz-tttt-xxxxxxxxxx12) |
@@ -360,7 +360,7 @@ We can use the `openstack server list` to list all virtual machine instances:
 +--------------------------------------+--------------+--------+------------------+---------------------+-----------+
 | ID                                   | Name         | Status | Networks         | Image               | Flavor    |
 +--------------------------------------+--------------+--------+------------------+---------------------+-----------+
-| xxxxxxxx-yyyy-zzzz-tttt-xxxxxxxxxx71 | user.name-vm | ACTIVE | vlan9=10.9.3.125 | Ubuntu 16.04 Xenial | m1.tiny   |
+| xxxxxxxx-yyyy-zzzz-tttt-xxxxxxxxxx71 | user.name-vm | ACTIVE | vlan9=10.9.3.125 | Ubuntu 16.04 Xenial | g.micro   |
 +--------------------------------------+--------------+--------+------------------+---------------------+-----------+
 ```
 
@@ -383,7 +383,7 @@ Use the `openstack server show` to get details about the running instance:
 | addresses                   | vlan9=10.9.3.125                                           |
 | config_drive                |                                                            |
 | created                     | 20XX-02-30T00:01:00Z                                       |
-| flavor                      | m1.tiny (xxxxxxxx-yyyy-zzzz-tttt-xxxxxxxxxx21)             |
+| flavor                      | g.micro (xxxxxxxx-yyyy-zzzz-tttt-xxxxxxxxxx21)             |
 | hostId                      | xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx   |
 | id                          | xxxxxxxx-yyyy-zzzz-tttt-xxxxxxxxxx71                       |
 | image                       | Ubuntu 16.04 Xenial (xxxxxxxx-yyyy-zzzz-tttt-xxxxxxxxxx12) |
@@ -417,7 +417,7 @@ command. This is equivalent to shutting the instance down.
 +--------------------------------------+--------------+---------+------------------+---------------------+-----------+
 | ID                                   | Name         | Status  | Networks         | Image               | Flavor    |
 +--------------------------------------+--------------+---------+------------------+---------------------+-----------+
-| xxxxxxxx-yyyy-zzzz-tttt-xxxxxxxxxx71 | user.name-vm | SHUTOFF | vlan9=10.9.3.125 | Ubuntu 16.04 Xenial | m1.tiny   |
+| xxxxxxxx-yyyy-zzzz-tttt-xxxxxxxxxx71 | user.name-vm | SHUTOFF | vlan9=10.9.3.125 | Ubuntu 16.04 Xenial | g.micro   |
 +--------------------------------------+--------------+---------+------------------+---------------------+-----------+
 ```
 
@@ -602,7 +602,7 @@ Verify that the network has been successfully created using:
 
 #### Boot the instances
 
-Boot two `m1.tiny` instances based on `Ubuntu 16.04 Xenial` that are connected
+Boot two `g.micro` instances based on `Ubuntu 16.04 Xenial` that are connected
 to both `vlan9` and the newly created network.
 
 :::tip
@@ -664,7 +664,7 @@ resources:
     properties:
       name: user.name-vm1
       image: xxxxxxxx-yyyy-zzzz-tttt-xxxxxxxxxx12
-      flavor: m1.tiny
+      flavor: g.micro
       key_name: fep
       networks:
       - network: vlan9
@@ -674,7 +674,7 @@ resources:
     properties:
       name: user.name-vm2
       image: xxxxxxxx-yyyy-zzzz-tttt-xxxxxxxxxx12
-      flavor: m1.tiny
+      flavor: g.micro
       key_name: fep
       networks:
       - network: vlan9
@@ -684,7 +684,7 @@ resources:
     properties:
       name: user.name-vm3
       image: xxxxxxxx-yyyy-zzzz-tttt-xxxxxxxxxx12
-      flavor: m1.tiny
+      flavor: g.micro
       key_name: fep
       networks:
       - network: vlan9

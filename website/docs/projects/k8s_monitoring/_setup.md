@@ -7,7 +7,7 @@ When creating a virtual machine in the Launch Instance window:
   * Set the following **Instance Name**: `HW-<Your LDAP username>` (e.g., `HW-anamaria.popescu`).
   * Select **Boot from image** in **Instance Boot Source** section
   * Select **SCGC Template** in **Image Name** section
-  * Select the **m1.scgc** flavor.
+  * Select the **g.large** flavor.
 
 :::warning
 

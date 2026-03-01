@@ -7,7 +7,7 @@ When creating a virtual machine in the Launch Instance window:
 where `<no>` is the lab number and `<username>` is your institutional account.
   * Select **Boot from image** in **Instance Boot Source** section
   * Select **SCGC Template** in **Image Name** section
-  * Select the **m1.eos** flavor.
+  * Select the **g.large** flavor.
 
 In the base virtual machine:
   * Download the laboratory archive from [here](https://repository.grid.pub.ro/cs/scgc/laboratoare/lab-eos.zip) in the `work` directory.
@@ -244,7 +244,7 @@ Copr.  2004-2012 Stanford University, xrd version 5.8.4
 ++++++ eos-qdb qdb@qdb.spd.ro initialization started.
 Config using configuration file /var/run/eos/xrd.cf.qdb
 =====> xrd.port 7777
-=====> xrd.protocol redis:7777 libXrdQuarkDB.so 
+=====> xrd.protocol redis:7777 libXrdQuarkDB.so
 Config maximum number of connections restricted to 524288
 Config maximum number of threads restricted to 5569
 Plugin protocol libXrdQuarkDB-5.so not found; falling back to using libXrdQuarkDB.so
@@ -279,7 +279,7 @@ Once the QDB service is running successfully, open another terminal and check it
 16) ----------
 17) MEMBERSHIP-EPOCH 0
 18) NODES qdb.spd.ro:7777
-19) OBSERVERS 
+19) OBSERVERS
 20) QUORUM-SIZE 1
 ```
 
@@ -518,13 +518,13 @@ To open the EOS console, simply run the command `eos` and when the console start
 # ---------------------------------------------------------------------------
 # EOS  Copyright (C) 2011-2025 CERN/Switzerland
 # This program comes with ABSOLUTELY NO WARRANTY; for details type `license'.
-# This is free software, and you are welcome to redistribute it 
+# This is free software, and you are welcome to redistribute it
 # under certain conditions; type `license' for details.
 # ---------------------------------------------------------------------------
 EOS_INSTANCE=eosdev
 EOS_SERVER_VERSION=5.3.21 EOS_SERVER_RELEASE=1
 EOS_CLIENT_VERSION=5.3.21 EOS_CLIENT_RELEASE=1
-EOS Console [root://localhost] |/> 
+EOS Console [root://localhost] |/>
 ```
 
 We are currently using the root user, so the console starts with administrative privileges, allowing us to access all EOS management commands. Otherwise, use the `sudo` prefix to start the console, since without it you will have access to a limited set of commands.
@@ -532,12 +532,12 @@ We are currently using the root user, so the console starts with administrative 
 You can explore available commands by pressing TAB, which will display the complete list of commands. Let's try a few basic commands:
 
 ```shell-session
-EOS Console [root://localhost] |/> 
-.q          archive     chmod       convert     df          fileinfo    fusex       info        ln          motd        oldfind     rclone      rm          sched       stat        touch       whoami      
-?           attr        chown       cp          du          find        geosched    inspector   ls          mv          pwd         reconnect   rmdir       scitoken    status      tracker     
-access      backup      clear       daemon      evict       fs          group       io          map         newfind     qos         recycle     role        silent      test        version     
-accounting  cat         config      debug       exit        fsck        health      json        member      node        quit        register    route       space       timing      vid         
-acl         cd          console     devices     file        fuse        help        license     mkdir       ns          quota       report      rtlog       squash      token       who         
+EOS Console [root://localhost] |/>
+.q          archive     chmod       convert     df          fileinfo    fusex       info        ln          motd        oldfind     rclone      rm          sched       stat        touch       whoami
+?           attr        chown       cp          du          find        geosched    inspector   ls          mv          pwd         reconnect   rmdir       scitoken    status      tracker
+access      backup      clear       daemon      evict       fs          group       io          map         newfind     qos         recycle     role        silent      test        version
+accounting  cat         config      debug       exit        fsck        health      json        member      node        quit        register    route       space       timing      vid
+acl         cd          console     devices     file        fuse        help        license     mkdir       ns          quota       report      rtlog       squash      token       who
 EOS Console [root://localhost] |/> whoami
 Virtual Identity: uid=0 (0,3,65534) gid=0 (0,4,65534) [authz:sss] sudo* host=localhost domain=localdomain
 ```
@@ -614,7 +614,7 @@ Check out the EOS space configuration:
 ┌──────────┬────────────────┬────────────┬────────────┬──────┬─────────┬───────────────┬──────────────┬─────────────┬─────────────┬──────────────┬──────┬──────┬──────────┬───────────┬───────────┬──────┬────────┬───────────┬──────┬────────┬───────────┐
 │type      │            name│   groupsize│    groupmod│ N(fs)│ N(fs-rw)│ sum(usedbytes)│ sum(capacity)│ capacity(rw)│ nom.capacity│sched.capacity│ usage│ quota│ balancing│  threshold│  converter│   ntx│  active│        wfe│   ntx│  active│ intergroup│
 └──────────┴────────────────┴────────────┴────────────┴──────┴─────────┴───────────────┴──────────────┴─────────────┴─────────────┴──────────────┴──────┴──────┴──────────┴───────────┴───────────┴──────┴────────┴───────────┴──────┴────────┴───────────┘
- spaceview           default            0            24      0         0             0 B            0 B           0 B           0 B            0 B   0.00    off        off          20         off      0        0         off      1        0         off 
+ spaceview           default            0            24      0         0             0 B            0 B           0 B           0 B            0 B   0.00    off        off          20         off      0        0         off      1        0         off
 ```
 
 The default space is listed with its group settings, usage, and capacity, both currently empty. To provide actual storage, FST nodes need to be added to the EOS deployment.
@@ -636,12 +636,12 @@ To check that the filesystems were created, run:
 ┌────────────────────────┬────┬──────┬────────────────────────────────┬────────────────┬────────────────┬────────────┬──────────────┬────────────┬──────┬────────┬────────────────┐
 │host                    │port│    id│                            path│      schedgroup│          geotag│        boot│  configstatus│       drain│ usage│  active│          health│
 └────────────────────────┴────┴──────┴────────────────────────────────┴────────────────┴────────────────┴────────────┴──────────────┴────────────┴──────┴────────┴────────────────┘
- fst-1.spd.ro             1095      1                          /data01        default.0                                          off      nodrain   0.00                           
- fst-1.spd.ro             1095      2                          /data02        default.1                                          off      nodrain   0.00                           
- fst-2.spd.ro             1095      3                          /data01        default.2                                          off      nodrain   0.00                           
- fst-2.spd.ro             1095      4                          /data02        default.3                                          off      nodrain   0.00                           
- fst-3.spd.ro             1095      5                          /data01        default.4                                          off      nodrain   0.00                           
- fst-3.spd.ro             1095      6                          /data02        default.5                                          off      nodrain   0.00                           
+ fst-1.spd.ro             1095      1                          /data01        default.0                                          off      nodrain   0.00
+ fst-1.spd.ro             1095      2                          /data02        default.1                                          off      nodrain   0.00
+ fst-2.spd.ro             1095      3                          /data01        default.2                                          off      nodrain   0.00
+ fst-2.spd.ro             1095      4                          /data02        default.3                                          off      nodrain   0.00
+ fst-3.spd.ro             1095      5                          /data01        default.4                                          off      nodrain   0.00
+ fst-3.spd.ro             1095      6                          /data02        default.5                                          off      nodrain   0.00
 ```
 
 By default, EOS automatically assigns each newly created filesystem to its own group. Therefore after registration, EOS will create six scheduling groups:
@@ -688,12 +688,12 @@ Run `eos fs ls` again to ensure that all the filesystems were moved into the `de
 ┌────────────────────────┬────┬──────┬────────────────────────────────┬────────────────┬────────────────┬────────────┬──────────────┬────────────┬──────┬────────┬────────────────┐
 │host                    │port│    id│                            path│      schedgroup│          geotag│        boot│  configstatus│       drain│ usage│  active│          health│
 └────────────────────────┴────┴──────┴────────────────────────────────┴────────────────┴────────────────┴────────────┴──────────────┴────────────┴──────┴────────┴────────────────┘
- fst-1.spd.ro             1095      1                          /data01        default.0                                          off      nodrain   0.00                           
- fst-1.spd.ro             1095      2                          /data02        default.0                                          off      nodrain   0.00                           
- fst-2.spd.ro             1095      3                          /data01        default.0                                          off      nodrain   0.00                           
- fst-2.spd.ro             1095      4                          /data02        default.0                                          off      nodrain   0.00                           
- fst-3.spd.ro             1095      5                          /data01        default.0                                          off      nodrain   0.00                           
- fst-3.spd.ro             1095      6                          /data02        default.0                                          off      nodrain   0.00                           
+ fst-1.spd.ro             1095      1                          /data01        default.0                                          off      nodrain   0.00
+ fst-1.spd.ro             1095      2                          /data02        default.0                                          off      nodrain   0.00
+ fst-2.spd.ro             1095      3                          /data01        default.0                                          off      nodrain   0.00
+ fst-2.spd.ro             1095      4                          /data02        default.0                                          off      nodrain   0.00
+ fst-3.spd.ro             1095      5                          /data01        default.0                                          off      nodrain   0.00
+ fst-3.spd.ro             1095      6                          /data02        default.0                                          off      nodrain   0.00
 ```
 
 One last step, enable shared secret authentication to allow communication between the MGM and the FST nodes and grant the daemon user the necessary sudo privileges:
@@ -864,8 +864,8 @@ Check the list of FST nodes to confirm that they are online:
 ┌──────────┬────────────────────────────────┬────────────────┬──────────┬────────────┬────────────────┬─────┐
 │type      │                        hostport│          geotag│    status│   activated│  heartbeatdelta│ nofs│
 └──────────┴────────────────────────────────┴────────────────┴──────────┴────────────┴────────────────┴─────┘
- nodesview                 fst-1.spd.ro:1095       local::geo     online          ???                0     2 
- nodesview                 fst-2.spd.ro:1095       local::geo     online          ???                0     2 
+ nodesview                 fst-1.spd.ro:1095       local::geo     online          ???                0     2
+ nodesview                 fst-2.spd.ro:1095       local::geo     online          ???                0     2
  nodesview                 fst-3.spd.ro:1095       local::geo     online          ???                0     2
  ```
 
@@ -876,11 +876,11 @@ Check the list of registered filesystems to confirm that they were correctly cre
 ┌────────────────────────┬────┬──────┬────────────────────────────────┬────────────────┬────────────────┬────────────┬──────────────┬────────────┬──────┬────────┬────────────────┐
 │host                    │port│    id│                            path│      schedgroup│          geotag│        boot│  configstatus│       drain│ usage│  active│          health│
 └────────────────────────┴────┴──────┴────────────────────────────────┴────────────────┴────────────────┴────────────┴──────────────┴────────────┴──────┴────────┴────────────────┘
- fst-1.spd.ro:1095        1095      1                          /data01        default.0       local::geo         down            off      nodrain  26.20               no smartctl 
- fst-1.spd.ro:1095        1095      2                          /data02        default.0       local::geo         down            off      nodrain  26.20               no smartctl 
- fst-2.spd.ro:1095        1095      3                          /data01        default.0       local::geo         down            off      nodrain  26.16               no smartctl 
- fst-2.spd.ro:1095        1095      4                          /data02        default.0       local::geo         down            off      nodrain  26.16               no smartctl 
- fst-3.spd.ro:1095        1095      5                          /data01        default.0       local::geo         down            off      nodrain  26.16               no smartctl 
+ fst-1.spd.ro:1095        1095      1                          /data01        default.0       local::geo         down            off      nodrain  26.20               no smartctl
+ fst-1.spd.ro:1095        1095      2                          /data02        default.0       local::geo         down            off      nodrain  26.20               no smartctl
+ fst-2.spd.ro:1095        1095      3                          /data01        default.0       local::geo         down            off      nodrain  26.16               no smartctl
+ fst-2.spd.ro:1095        1095      4                          /data02        default.0       local::geo         down            off      nodrain  26.16               no smartctl
+ fst-3.spd.ro:1095        1095      5                          /data01        default.0       local::geo         down            off      nodrain  26.16               no smartctl
  fst-3.spd.ro:1095        1095      6                          /data02        default.0       local::geo         down            off      nodrain  26.16               no smartctl
 ```
 
@@ -909,11 +909,11 @@ Check the status of all filesystems again. They should now appear as booted, in 
 ┌────────────────────────┬────┬──────┬────────────────────────────────┬────────────────┬────────────────┬────────────┬──────────────┬────────────┬──────┬────────┬────────────────┐
 │host                    │port│    id│                            path│      schedgroup│          geotag│        boot│  configstatus│       drain│ usage│  active│          health│
 └────────────────────────┴────┴──────┴────────────────────────────────┴────────────────┴────────────────┴────────────┴──────────────┴────────────┴──────┴────────┴────────────────┘
- fst-1.spd.ro             1095      1                          /data01        default.0       local::geo       booted             rw      nodrain  26.56   online      no smartctl 
- fst-1.spd.ro             1095      2                          /data02        default.0       local::geo       booted             rw      nodrain  26.56   online      no smartctl 
- fst-2.spd.ro             1095      3                          /data01        default.0       local::geo       booted             rw      nodrain  26.50   online      no smartctl 
- fst-2.spd.ro             1095      4                          /data02        default.0       local::geo       booted             rw      nodrain  26.50   online      no smartctl 
- fst-3.spd.ro             1095      5                          /data01        default.0       local::geo       booted             rw      nodrain  26.79   online      no smartctl 
+ fst-1.spd.ro             1095      1                          /data01        default.0       local::geo       booted             rw      nodrain  26.56   online      no smartctl
+ fst-1.spd.ro             1095      2                          /data02        default.0       local::geo       booted             rw      nodrain  26.56   online      no smartctl
+ fst-2.spd.ro             1095      3                          /data01        default.0       local::geo       booted             rw      nodrain  26.50   online      no smartctl
+ fst-2.spd.ro             1095      4                          /data02        default.0       local::geo       booted             rw      nodrain  26.50   online      no smartctl
+ fst-3.spd.ro             1095      5                          /data01        default.0       local::geo       booted             rw      nodrain  26.79   online      no smartctl
  fst-3.spd.ro             1095      6                          /data02        default.0       local::geo       booted             rw      nodrain  26.79   online      no smartctl
 ```
 
@@ -924,9 +924,9 @@ At the same time, check that the FST nodes are activated:
 ┌──────────┬────────────────────────────────┬────────────────┬──────────┬────────────┬────────────────┬─────┐
 │type      │                        hostport│          geotag│    status│   activated│  heartbeatdelta│ nofs│
 └──────────┴────────────────────────────────┴────────────────┴──────────┴────────────┴────────────────┴─────┘
- nodesview                 fst-1.spd.ro:1095       local::geo     online           on                1     2 
- nodesview                 fst-2.spd.ro:1095       local::geo     online           on                0     2 
- nodesview                 fst-3.spd.ro:1095       local::geo     online           on                1     2 
+ nodesview                 fst-1.spd.ro:1095       local::geo     online           on                1     2
+ nodesview                 fst-2.spd.ro:1095       local::geo     online           on                0     2
+ nodesview                 fst-3.spd.ro:1095       local::geo     online           on                1     2
  ```
 
 Finally, we can check that the storage space provided by the FST nodes is available and visible to the MGM and all the six filesystems are configured as rw:
@@ -936,7 +936,7 @@ Finally, we can check that the storage space provided by the FST nodes is availa
 ┌──────────┬────────────────┬────────────┬────────────┬──────┬─────────┬───────────────┬──────────────┬─────────────┬─────────────┬──────────────┬──────┬──────┬──────────┬───────────┬───────────┬──────┬────────┬───────────┬──────┬────────┬───────────┐
 │type      │            name│   groupsize│    groupmod│ N(fs)│ N(fs-rw)│ sum(usedbytes)│ sum(capacity)│ capacity(rw)│ nom.capacity│sched.capacity│ usage│ quota│ balancing│  threshold│  converter│   ntx│  active│        wfe│   ntx│  active│ intergroup│
 └──────────┴────────────────┴────────────┴────────────┴──────┴─────────┴───────────────┴──────────────┴─────────────┴─────────────┴──────────────┴──────┴──────┴──────────┴───────────┴───────────┴──────┴────────┴───────────┴──────┴────────┴───────────┘
- spaceview           default            0           24      6         6        13.52 GB       51.13 GB      51.13 GB           0 B       37.61 GB  26.45    off        off          20         ???      0        0         off      1        0         off 
+ spaceview           default            0           24      6         6        13.52 GB       51.13 GB      51.13 GB           0 B       37.61 GB  26.45    off        off          20         ???      0        0         off      1        0         off
 ```
 
 If the number of read-write filesystems is not 6, run `eos space set default on` again and wait for the configuration to reload.

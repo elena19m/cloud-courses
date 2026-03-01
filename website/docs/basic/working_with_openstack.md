@@ -117,7 +117,7 @@ Choose `SCGC Template`, by clicking on the up arrow on the right.
 In OpenStack terminology, a `Flavor` is the predefined set of specifications that
 will describe the resources that will be allocated to the guest when creating the virtual machine.
 A flavor specifies the total disk size that can be used by the virtual machine, the number of virtual CPUs and the RAM amount that will be allocated during creation.
-For this task, choose the `m1.medium` flavor that has `1` virtual CPU, `1.5GB` of RAM and `16GB` of disk space.
+For this task, choose the `g.small` flavor that has `1` virtual CPU, `2GB` of RAM and `25GB` of disk space.
 
 ![OpenStack VM Create - Flavor](./assets/img/openstack-vm-create-flavor.png)
 

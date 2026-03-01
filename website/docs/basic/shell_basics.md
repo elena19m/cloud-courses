@@ -25,7 +25,7 @@ We recommend using the system's package managers (`apt` / `dnf`) to install pack
   * When creating a virtual machine in the Launch Instance window:
     * Select **Boot from image** in **Instance Boot Source** section
     * Select **SCGC Template** in **Image Name** section
-    * Select a flavor that is at least **m1.medium**.
+    * Select a flavor that is at least **g.medium**.
   * The username for connecting to the VM is `student`.
 
 
