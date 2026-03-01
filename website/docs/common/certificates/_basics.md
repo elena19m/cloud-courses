@@ -98,27 +98,31 @@ Find the ''issuer'' for each of the certificates and use the appropriate certifi
 
 ### Inspecting remote certificates
 
-Connect to `aero.curs.pub.ro` using a secure connection to obtain its certificate.
+Connect to `indico.upb.ro` using a secure connection to obtain its certificate.
 
 ```shell-session
-$ echo | openssl s_client -connect aero.curs.pub.ro:443
+$ echo | openssl s_client -connect indico.upb.ro:443
 CONNECTED(00000003)
-depth=2 C = US, ST = New Jersey, L = Jersey City, O = The USERTRUST Network, CN = USERTrust RSA Certification Authority
+depth=2 C = GR, O = Hellenic Academic and Research Institutions CA, CN = HARICA TLS ECC Root CA 2021
 verify return:1
-depth=1 C = NL, O = GEANT Vereniging, CN = GEANT OV RSA CA 4
+depth=1 C = GR, O = Hellenic Academic and Research Institutions CA, CN = GEANT TLS ECC 1
 verify return:1
-depth=0 C = RO, postalCode = 060042, L = Bucure\C8\99ti, street = Sectorul 6, street = "Independentei Street, No.313", O = Universitatea Politehnica din Bucure\C8\99ti, OU = NCIT Cluster, CN = *.curs.pub.ro
+depth=0 C = RO, L = Bucure\C8\99ti, O = POLITEHNICA Bucure\C8\99ti, CN = indico.upb.ro
 verify return:1
 ---
 Certificate chain
- 0 s:C = RO, postalCode = 060042, L = Bucure\C8\99ti, street = Sectorul 6, street = "Independentei Street, No.313", O = Universitatea Politehnica din Bucure\C8\99ti, OU = NCIT Cluster, CN = *.curs.pub.ro
-   i:C = NL, O = GEANT Vereniging, CN = GEANT OV RSA CA 4
- 1 s:C = GB, ST = Greater Manchester, L = Salford, O = Comodo CA Limited, CN = AAA Certificate Services
-   i:C = GB, ST = Greater Manchester, L = Salford, O = Comodo CA Limited, CN = AAA Certificate Services
- 2 s:C = US, ST = New Jersey, L = Jersey City, O = The USERTRUST Network, CN = USERTrust RSA Certification Authority
-   i:C = GB, ST = Greater Manchester, L = Salford, O = Comodo CA Limited, CN = AAA Certificate Services
- 3 s:C = NL, O = GEANT Vereniging, CN = GEANT OV RSA CA 4
-   i:C = US, ST = New Jersey, L = Jersey City, O = The USERTRUST Network, CN = USERTrust RSA Certification Authority
+ 0 s:C = RO, L = Bucure\C8\99ti, O = POLITEHNICA Bucure\C8\99ti, CN = indico.upb.ro
+   i:C = GR, O = Hellenic Academic and Research Institutions CA, CN = GEANT TLS ECC 1
+   a:PKEY: id-ecPublicKey, 384 (bit); sigalg: ecdsa-with-SHA384
+   v:NotBefore: Feb 23 14:28:41 2026 GMT; NotAfter: Feb 23 14:28:41 2027 GMT
+ 1 s:C = GR, O = Hellenic Academic and Research Institutions CA, CN = GEANT TLS ECC 1
+   i:C = GR, O = Hellenic Academic and Research Institutions CA, CN = HARICA TLS ECC Root CA 2021
+   a:PKEY: id-ecPublicKey, 384 (bit); sigalg: ecdsa-with-SHA384
+   v:NotBefore: Jan  3 11:14:21 2025 GMT; NotAfter: Dec 31 11:14:20 2039 GMT
+ 2 s:C = GR, O = Hellenic Academic and Research Institutions CA, CN = HARICA TLS ECC Root CA 2021
+   i:C = GR, O = Hellenic Academic and Research Institutions CA, CN = HARICA TLS ECC Root CA 2021
+   a:PKEY: id-ecPublicKey, 384 (bit); sigalg: ecdsa-with-SHA384
+   v:NotBefore: Feb 19 11:01:10 2021 GMT; NotAfter: Feb 13 11:01:09 2045 GMT
 ...
 ```
 
@@ -127,95 +131,49 @@ This is a wildcard certificate that is available for all subdomains of `curs.pub
 Such certificates can be used when all subdomains are secured by the same server (web server or load balancer). Let's inspect the certificate:
 
 ```shell-session
-$ echo | openssl s_client -connect aero.curs.pub.ro:443 2>/dev/null | sed -ne '/-BEGIN CERTIFICATE-/,/-END CERTIFICATE-/p' | openssl x509 -noout -text
+$ echo | openssl s_client -connect indico.upb.ro:443 2>/dev/null | sed -ne '/-BEGIN CERTIFICATE-/,/-END CERTIFICATE-/p' | openssl x509 -noout -text
 Certificate:
     Data:
         Version: 3 (0x2)
         Serial Number:
-            3c:e8:ca:7b:24:34:0e:23:33:d2:ec:4d:3e:de:d0:03
-        Signature Algorithm: sha384WithRSAEncryption
-        Issuer: C = NL, O = GEANT Vereniging, CN = GEANT OV RSA CA 4
+            55:a7:74:3f:03:61:78:a5:69:61:7b:6d:67:b0:15:ba
+        Signature Algorithm: ecdsa-with-SHA384
+        Issuer: C = GR, O = Hellenic Academic and Research Institutions CA, CN = GEANT TLS ECC 1
         Validity
-            Not Before: Feb  30 00:00:00 20XX GMT
-            Not After : Feb  30 23:59:59 20XY GMT
-        Subject: C = RO, postalCode = 060042, L = Bucure\C8\99ti, street = Sectorul 6, street = "Independentei Street, No.313", O = Universitatea Politehnica din Bucure\C8\99ti, OU = NCIT Cluster, CN = *.curs.pub.ro
+            Not Before: Feb 23 14:28:41 2026 GMT
+            Not After : Feb 23 14:28:41 2027 GMT
+        Subject: C = RO, L = Bucure\C8\99ti, O = POLITEHNICA Bucure\C8\99ti, CN = indico.upb.ro
         Subject Public Key Info:
-            Public Key Algorithm: rsaEncryption
-                RSA Public-Key: (4096 bit)
-                Modulus:
-                    00:ce:7b:17:7b:8f:c3:be:00:b5:a4:7f:28:db:53:
-                    db:a2:27:c2:62:6d:a4:75:7b:10:b7:81:3e:1d:5c:
-                    6d:48:18:77:3f:f8:d6:5e:93:e8:50:fd:16:fb:a2:
-                    79:ae:4b:12:39:22:df:28:9c:b7:82:b2:89:9c:7e:
-                    09:7a:43:b5:51:10:77:a3:c2:ec:bd:03:f6:b1:40:
-                    f2:c1:82:ca:3b:53:fa:3a:5a:61:20:25:10:03:d6:
-                    cc:eb:67:da:0a:3a:5b:f5:95:5e:15:5d:7e:b8:9d:
-                    e5:9e:d5:0e:5b:4d:77:7b:eb:4f:e7:e6:ad:d4:7c:
-                    20:dc:82:cc:d0:cf:63:5d:b3:8b:41:e4:3a:4e:70:
-                    f6:18:75:a4:90:1a:b3:18:ad:b2:51:53:92:9f:bf:
-                    ed:c1:c3:8e:ea:e0:8e:ef:68:fa:36:d2:c9:ed:8d:
-                    34:24:4b:d5:9d:18:ab:42:c3:0d:38:71:1b:ea:a9:
-                    ca:28:ff:cf:f5:9d:e1:cd:53:69:7a:c8:f2:82:af:
-                    48:72:e9:96:db:16:00:7a:c0:fc:7a:7b:01:eb:d4:
-                    66:9a:6c:4c:66:7d:de:f7:bc:9d:43:90:c0:03:4a:
-                    a6:42:98:e0:cc:44:58:85:00:6b:f2:76:cd:59:dc:
-                    df:d0:83:88:eb:28:5c:c9:3a:1b:b2:0d:61:27:1f:
-                    ed:a9:63:0e:4a:f7:3e:25:b3:ab:30:92:15:b6:b2:
-                    89:53:50:48:b2:77:39:6a:43:42:47:0d:d2:b6:c7:
-                    27:40:f9:77:1b:55:44:7e:67:81:5e:cf:7e:8e:65:
-                    1c:a4:0b:05:b6:ff:0a:91:70:79:40:f9:be:e8:17:
-                    74:81:3a:c1:f2:be:51:2e:3a:0b:d2:a9:55:1c:37:
-                    3b:2b:76:eb:2c:7b:64:fc:e7:0f:6c:c4:28:f7:7c:
-                    2c:d0:61:31:a8:f6:db:fd:89:08:c6:9d:c5:98:ec:
-                    cd:55:4b:e9:7b:3c:95:45:68:ca:fe:f0:45:75:2f:
-                    6b:65:53:c2:44:b0:44:16:af:e8:d2:5b:d5:e0:1d:
-                    57:45:6f:43:02:80:62:0d:d8:5a:75:ac:fd:ae:a0:
-                    6b:b0:52:7c:00:cf:65:57:2e:ce:0a:8d:ec:24:68:
-                    75:ce:62:92:0b:bf:b1:02:65:b9:6f:fe:a9:fa:77:
-                    24:7f:5a:2b:7d:aa:bb:42:50:8e:d4:91:f0:94:3d:
-                    3c:42:47:64:c7:92:c7:4f:ce:0b:43:01:f6:92:c2:
-                    4e:d0:2c:9b:ee:9f:b0:6b:d2:14:84:54:0c:ad:53:
-                    74:01:0e:b4:2b:63:95:cc:51:1e:44:ce:ef:9c:c0:
-                    9d:a7:98:41:1a:c4:3b:97:75:f5:eb:84:00:22:8e:
-                    b9:66:37
-                Exponent: 65537 (0x10001)
+            Public Key Algorithm: id-ecPublicKey
+                Public-Key: (384 bit)
+                pub:
+                    04:fa:4f:03:0c:06:3e:c6:f4:79:e2:c1:70:9c:ba:
+                    54:e0:05:ab:d5:d0:5f:7a:38:67:3c:c4:9f:c4:15:
+                    09:8e:38:9d:bc:e3:ca:2c:dd:f1:53:2c:b4:2f:67:
+                    7c:40:25:15:77:8c:01:9e:3b:53:cd:e1:c4:44:29:
+                    54:b1:37:8f:82:42:e1:57:ad:d7:cc:1c:84:1d:47:
+                    cf:5e:9b:71:de:a7:7f:1d:0e:dc:86:10:0b:39:4a:
+                    14:d1:06:95:8f:12:a2
+                ASN1 OID: secp384r1
+                NIST CURVE: P-384
         X509v3 extensions:
-            X509v3 Authority Key Identifier:
-                keyid:6F:1D:35:49:10:6C:32:FA:59:A0:9E:BC:8A:E8:1F:95:BE:71:7A:0C
-
-            X509v3 Subject Key Identifier:
-                F9:09:37:51:7C:1D:EC:62:7A:9E:F9:4C:23:98:9E:FB:14:3F:52:D9
-            X509v3 Key Usage: critical
-                Digital Signature, Key Encipherment
             X509v3 Basic Constraints: critical
                 CA:FALSE
-            X509v3 Extended Key Usage:
-                TLS Web Server Authentication, TLS Web Client Authentication
-            X509v3 Certificate Policies:
-                Policy: 1.3.6.1.4.1.6449.1.2.2.79
-                  CPS: https://sectigo.com/CPS
-                Policy: 2.23.140.1.2.2
-
-            X509v3 CRL Distribution Points:
-
-                Full Name:
-                  URI:http://GEANT.crl.sectigo.com/GEANTOVRSACA4.crl
-
+            X509v3 Authority Key Identifier:
+                E9:99:06:8D:17:1F:AB:FB:96:1A:5A:C8:5B:5E:5D:5E:EC:DA:9C:8F
             Authority Information Access:
-                CA Issuers - URI:http://GEANT.crt.sectigo.com/GEANTOVRSACA4.crt
-                OCSP - URI:http://GEANT.ocsp.sectigo.com
-
+                CA Issuers - URI:http://crt.harica.gr/HARICA-GEANT-TLS-E1.cer
+                OCSP - URI:http://ocsp-tls.harica.gr
             X509v3 Subject Alternative Name:
-                DNS:*.curs.pub.ro, DNS:curs.pub.ro
+                DNS:indico.upb.ro, DNS:www.indico.upb.ro
 ...
 ```
 
 As you can see, all the Subject Alternative Names (SAN) can be found under in the certificate, under `DNS` entries.
 
 :::tip
-Within a browser, inspect the certificate for `aero.curs.pub.ro` and find the field
+Within a browser, inspect the certificate for `indico.upb.ro` and find the field
 that specifies the Subject Alternative Names for the certificate.
-To avoid automatic redirecting to `curs.upb.ro`, go to `aero.curs.pub.ro/2019`.
 :::
 
 
