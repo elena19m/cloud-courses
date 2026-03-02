@@ -246,6 +246,7 @@ key "Bob <bob@stud.acs.upb.ro>" (26E89A3E08202572)
 
 Really sign? (y/N) y
 
+gpg> save
 student2@lab:~$ gpg --list-keys
 /home/student2/.gnupg/pubring.kbx
 ---------------------------------
@@ -257,7 +258,7 @@ sub   rsa4096 2026-02-24 [E]
 ```
 
 :::info
-After signing the key, its trust status is elevated to `full`.
+After signing the key and saving, its trust status is elevated to `full`.
 :::
 
 #### Encrypt a file
@@ -353,4 +354,3 @@ the Fedora versions. Go to the
 [download server](https://dl.fedoraproject.org/pub/fedora/linux/releases/),
 navigate to one of the released versions (e.g, `43/Workstation/x86_64/iso/`),
 download **only** the checksum file and verify it using the GPG keys.
-
