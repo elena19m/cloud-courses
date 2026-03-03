@@ -17,7 +17,7 @@ When choosing a container to use, we must consider the following factors:
 According to the installation instructions on the container's page, we can start the service using the following command:
 
 ```bash
-student@work:~$ docker run -d -p 25565:25565 -e EULA=true --name mc itzg/minecraft-server
+student@lab-docker:~$ docker run -d -p 25565:25565 -e EULA=true --name mc itzg/minecraft-server
     Unable to find image 'itzg/minecraft-server:latest' locally
     latest: Pulling from itzg/minecraft-server
     675920708c8b: Pull complete
@@ -45,10 +45,10 @@ student@work:~$ docker run -d -p 25565:25565 -e EULA=true --name mc itzg/minecra
     Digest: sha256:0697315bd265c751821d5796662436efd94edea8e77b42a7404dab22586af73f
     Status: Downloaded newer image for itzg/minecraft-server:latest
     53a920004fa8316ef87e4776f57f6b826825edf8237d08b9791c1936f40e50e2
-    student@uso:~/.../labs/09-task-admin/lab-container$ docker image ls
+student@lab-docker:$ docker image ls
     REPOSITORY              TAG       IMAGE ID       CREATED      SIZE
     itzg/minecraft-server   latest    616bdcb51f15   7 days ago   670MB
-    student@uso:~/.../labs/09-task-admin/lab-container$ docker ps
+student@lab-docker:$ docker ps
     CONTAINER ID   IMAGE                   COMMAND    CREATED         STATUS                            PORTS                                                      NAMES
     53a920004fa8   itzg/minecraft-server   "/start"   5 seconds ago   Up 4 seconds (health: starting)   0.0.0.0:25565->25565/tcp, :::25565->25565/tcp, 25575/tcp   mc
 ```
@@ -59,15 +59,17 @@ We notice that the container has been downloaded and started running.
 To verify that we have downloaded the container image, we run the `docker image ls` command, which lists all the containers on the system.
 We find in the list of containers the image with the name `itzg/minecraft-server`.
 
-To verify the operation of the container we will connect to the Minecraft server using the port exposed above.
+To verify the operation of the container we can check the logs of the container using the `docker logs` command as follows:
 
-```bash
-student@work:~$ curl localhost:25565
-        {"translate":"disconnect.genericReason","with":["Internal Exception: io.netty.handler.codec.DecoderException: java.lang.IndexOutOfBoundsException: Index 69 out of bounds for length 1"]}
+```shell-session
+student@lab-docker:~$ docker logs mc
+[...]
+[13:39:11] [Server thread/INFO]: Done (6.136s)! For help, type "help"
+[13:39:11] [Server thread/INFO]: Starting remote control listener
+[13:39:11] [Server thread/INFO]: Thread RCON Listener started
+[13:39:11] [Server thread/INFO]: RCON running on 0.0.0.0:25575
+[13:40:11] [Server thread/INFO]: Server empty for 60 seconds, pausing
 ```
-
-We notice that we got a Java error back, this means that the Minecraft server, which is based on the Java programming language, is reachable.
-The error occurs because we were trying to access the container using an HTTP client, instead of using Java.
 
 ### Deploy Grafana and Prometheus using Docker Compose
 
@@ -83,19 +85,19 @@ The command used to manage containers is `docker-compose`, and the container spe
 The format of the `docker-compose.yml` file is of the form:
 
 ```bash
-     services:
-            service_name:
-                image: <image_name>
-                volumes:
-                    <volume_list>
-                ports:
-                    <open_ports_list>
-                environment:
-                    <environment_variables_list>
-        volumes:
-            <volume_name>:
-        networks:
-            <network_name>:
+services:
+      service_name:
+          image: <image_name>
+          volumes:
+              <volume_list>
+          ports:
+              <open_ports_list>
+          environment:
+              <environment_variables_list>
+  volumes:
+      <volume_name>:
+  networks:
+      <network_name>:
 ```
 
 The Grafana visualization service is an industry standard for displaying graphs of various shapes and alerting based on user-specified conditions.
@@ -112,60 +114,56 @@ We will use the `node-exporter` exporter to collect information about the system
 We will write the following YAML recipe in the `docker-compose.yml` file:
 
 ```bash
-version: '2.1'
+volumes:
+    prometheus_data:
+    grafana_data:
 
-      volumes:
-          prometheus_data:
-          grafana_data:
+services:
+  prometheus:
+    image: prom/prometheus:v3
+    container_name: prometheus
+    volumes:
+      - ./prometheus:/etc/prometheus
+      - prometheus_data:/prometheus
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+      - '--storage.tsdb.path=/prometheus'
+      - '--web.console.libraries=/etc/prometheus/console_libraries'
+      - '--web.console.templates=/etc/prometheus/consoles'
+      - '--storage.tsdb.retention.time=200h'
+      - '--web.enable-lifecycle'
+    restart: unless-stopped
+    ports:
+      - 9090:9090
 
-      services:
+  nodeexporter:
+    image: prom/node-exporter:v1.10.2
+    container_name: nodeexporter
+    volumes:
+      - /proc:/host/proc:ro
+      - /sys:/host/sys:ro
+      - /:/rootfs:ro
+    command:
+      - '--path.procfs=/host/proc'
+      - '--path.rootfs=/rootfs'
+      - '--path.sysfs=/host/sys'
+      - '--collector.filesystem.ignored-mount-points=^/(sys|proc|dev|host|etc)($$|/)'
+    restart: unless-stopped
+    ports:
+      - 9100:9100
 
-        prometheus:
-          image: prom/prometheus:v2.37.9
-          container_name: prometheus
-          volumes:
-            - ./prometheus:/etc/prometheus
-            - prometheus_data:/prometheus
-          command:
-            - '--config.file=/etc/prometheus/prometheus.yml'
-            - '--storage.tsdb.path=/prometheus'
-            - '--web.console.libraries=/etc/prometheus/console_libraries'
-            - '--web.console.templates=/etc/prometheus/consoles'
-            - '--storage.tsdb.retention.time=200h'
-            - '--web.enable-lifecycle'
-          restart: unless-stopped
-          ports:
-            - 9090:9090
-
-        nodeexporter:
-          image: prom/node-exporter:v1.6.1
-          container_name: nodeexporter
-          volumes:
-            - /proc:/host/proc:ro
-            - /sys:/host/sys:ro
-            - /:/rootfs:ro
-          command:
-            - '--path.procfs=/host/proc'
-            - '--path.rootfs=/rootfs'
-            - '--path.sysfs=/host/sys'
-            - '--collector.filesystem.ignored-mount-points=^/(sys|proc|dev|host|etc)($$|/)'
-          restart: unless-stopped
-          ports:
-            - 9100:9100
-
-        grafana:
-          image: grafana/grafana:9.1.7
-          container_name: grafana
-          volumes:
-            - grafana_data:/var/lib/grafana
-            - ./grafana/provisioning:/etc/grafana/provisioning
-          environment:
-            - GF_SECURITY_ADMIN_USER=admin
-            - GF_SECURITY_ADMIN_PASSWORD=usorules
-            - GF_USERS_ALLOW_SIGN_UP=false
-          restart: unless-stopped
-          ports:
-            - 3000:3000
+  grafana:
+    image: grafana/grafana:12.3
+    container_name: grafana
+    volumes:
+      - grafana_data:/var/lib/grafana
+    environment:
+      - GF_SECURITY_ADMIN_USER=admin
+      - GF_SECURITY_ADMIN_PASSWORD=usorules
+      - GF_USERS_ALLOW_SIGN_UP=false
+    restart: unless-stopped
+    ports:
+      - 3000:3000
 ```
 
 This file was generated based on an existing [open source repository](https://github.com/Einsteinish/Docker-Compose-Prometheus-and-Grafana/), adapted for our use case.
@@ -184,10 +182,32 @@ Port exposure is done under the `ports` tag, with each port defined as `<source 
 Containerized services are configured using the `environment` tag.
 The Grafana system password was configured using the `GF_USERS_ADMIN_USER` and `GF_SECURITY_ADMIN_PASSWORD` environment variables.
 
+A `prometheus/prometheus.yml` file is needed to configure the Prometheus service to connect to the `node_exporter` exporter and download information from it.
+
+```yaml
+global:
+  scrape_interval: 15s
+
+scrape_configs:
+  - job_name: 'prometheus'
+    static_configs:
+      - targets: ['localhost:9090']
+
+  - job_name: 'node-exporter'
+    static_configs:
+      - targets: ['nodeexporter:9100']
+```
+
 ### Connect to the GUI
 
-We will authenticate to the virtual machine at the monitoring service in the browser at the
-address `localhost:3000`.
+:::info
+To access the Grafana and Prometheus services, we need to connect to the virtual machine on which the containers are running using SSH with port forwarding:
+```bash
+ssh -L 3000:10.9.X.Y:3000 -L 9090:10.9.X.Y:9090 -J fep.grid.pub.ro student@10.9.X.Y
+```
+:::
+
+In your local browser navigate at the address `localhost:3000` to access the Grafana dashboard.
 We have set the administrator user `admin` and the password `usorules`.
 We will be asked to modify this information.
 

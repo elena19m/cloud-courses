@@ -232,9 +232,7 @@ It allows an administrator to write a specification for a work environment, incl
 
 The command is called `docker-compose`, and it uses `docker-compose.yaml` files which look like this:
 
-```
-version: "3.3"
-
+```bash
 services:
   db:
     image: mysql:5.7
@@ -353,17 +351,15 @@ root@628de4f3c693:/# cat /shared-dir/test-file
 Hello
 ```
 
-In the case of containers that are run by `docker-composite`, a volume-type entry will look like this:
-```
-version: "3.3"
-
+In the case of containers that are run by `docker-compose`, a volume-type entry will look like this:
+```bash
 services:
   db:
     image: mysql:5.7
     networks:
       - wordpress-net
     volumes:
-      - mysql-vol
+      - mysql-vol:/var/lib/mysql
     environment:
       MYSQL_ROOT_PASSWORD: somewordpress
       MYSQL_DATABASE: wordpress

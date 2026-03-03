@@ -11,11 +11,10 @@ It allows an administrator to write a specification for a work environment, incl
 The command is called `docker-compose`, and it uses `docker-compose.yaml` files which look like this:
 
 ```
-version: "3.3"
-
+student@lab-docker:~$ cat docker-compose.yaml
 services:
   db:
-    image: mysql:5.7
+    image: mysql:8.0
     networks:
       - wordpress-net
     environment:
@@ -146,16 +145,14 @@ Hello
 
 In the case of containers that are run using `docker-compose`, an entry for configuring volumes will look like this:
 
-```
-version: "3.3"
-
+```bash
 services:
   db:
-    image: mysql:5.7
+    image: mysql:8.0
     networks:
       - wordpress-net
     volumes:
-      - mysql-vol
+      - mysql-vol:/var/lib/mysql
     environment:
       MYSQL_ROOT_PASSWORD: somewordpress
       MYSQL_DATABASE: wordpress
