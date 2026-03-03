@@ -146,7 +146,7 @@ In the above example we have opened port 8000 on the host machine and forwarded 
 Ports bellow 1024 require root access to be forwarded.
 :::
 
-#### Exercise: Container port forwarding
+### Exercise: Container port forwarding
 
 Create a new `webserver-8844` container based on the `python-container` image and forward port 8844 on the local machine to port 8888 on the container.
 
@@ -195,7 +195,7 @@ student@cc:~/lab-containers-part-2/python-container$ docker exec webserver-2 ip 
 
 We notice that while we were running in the 172.17.0.0/16 network before, the `webserver-2` container is in the `172.19.0.0/16` network.
 
-#### Exercise: Starting containers in networks
+### Exercise: Starting containers in networks
 
 Start a new container in the `isolated-server` network named `client` based on the `python-container:latest` image.
 Check the connection between the `client` and `webserver-2` containers using the `curl` command.
