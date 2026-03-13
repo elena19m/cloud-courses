@@ -195,7 +195,7 @@ We notice that while we were running in the 172.17.0.0/16 network before, the `w
 
 ### Exercise: Starting containers in networks
 
-Start a new container in the `isolated-server` network named `client` based on the `python-container:latest` image.
+Start a new container in the `isolated-servers` network named `client` based on the `python-container:latest` image.
 Check the connection between the `client` and `webserver-2` containers using the `curl` command.
 What port should you query on to get the web server message? Why?
 
