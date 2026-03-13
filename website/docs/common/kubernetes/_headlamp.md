@@ -26,9 +26,9 @@ Headlamp successfully installed!
 Headlamp is running on node 172.18.0.2 at port 30080.
 
 To access the dashboard, run the following command on your **local machine**:
-ssh -J fep.grid.pub.ro -L 8080:172.18.0.2:30080 student@10.9.X.Y
+ssh -J <username>@fep.grid.pub.ro -L 30080:172.18.0.2:30080 student@10.9.X.Y
 
-Open in your browser: http://localhost:8080
+Open in your browser: http://localhost:30080
 
 To login in the Headlamp dashboard, get the ID token by running:
 kubectl create token my-headlamp --namespace kube-system
@@ -37,7 +37,7 @@ kubectl create token my-headlamp --namespace kube-system
 :::note
 You are required to configure a new ssh connection that will forward the dashboard port from the cluster to your local machine:
 ```shell-session
-$ ssh -J fep.grid.pub.ro -L 8080:172.18.0.2:30080 student@10.9.X.Y
+$ ssh -J <username>@fep.grid.pub.ro -L 30080:172.18.0.2:30080 student@10.9.X.Y
 ```
 
 Afterwards, the dashboard can be accessed using your browser at `http://localhost:8080`.
