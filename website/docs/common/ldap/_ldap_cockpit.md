@@ -77,7 +77,7 @@ SOCKS v5`.
 <TabItem value="X11 Forwarding" label="X11 Forwarding">
 
 When forwarding browser windows, most of the window will be static. Because
-of this, the transfered data can be compressed to reduce network load. To
+of this, the transferred data can be compressed to reduce network load. To
 enable compression pass the `-C` argument to `ssh` for the two connections you
 create (to fep, and then to the virtual machine).
 
@@ -87,7 +87,7 @@ For example, when connecting to fep, you can use the following command:
 user@local:~$ ssh user.name@fep.grid.pub.ro -X -C -o ServerAliveInterval=100
 ```
 
-After connecting to the OpenStack virtual machine, install the latest verion
+After connecting to the OpenStack virtual machine, install the latest version
 of Firefox and start a window.
 
 ```shell-session
@@ -117,6 +117,11 @@ login screen similar to the one below.
 Authentication on the web console will require root access. Set a password for
 the root account that you will use to authenticate in cockpit. Make sure that
 you use a secure password on production systems.
+
+Newer versions of Cockpit disable root login by default. Modify
+`/etc/cockpit/disallowed-users` and remove `root` from the list of users that
+are not allowed to login to Cockpit.
+
 :::
 
 ![Cockpit login screen](./assets/cockpit-login-screen.jpg)
@@ -167,7 +172,7 @@ create the `People` organizational unit;
  4. Confirm the creation by clicking on `Create`.
 
 After creating the organizational unit, it will appear under the `Suffix Tree`
-in the new hierarchy. In order to create a new user, we will go the the
+in the new hierarchy. In order to create a new user, we will go the
 `People` organizational unit's settings and click the `New ...` button.
 
 ![389 directory server OU entry menu](./assets/cockpit-389-ds-ou-menu.jpg)
@@ -176,7 +181,7 @@ From the configuration window, select the following options:
  1. Select `Create a new custom Entry`;
  1. In the `Select ObjectClasses` section search for `person`, and select
  `inetorgperson` and `person`;
- 1. In the `Select Attributes` secion select the `cn`, `sn`, `uid` and
+ 1. In the `Select Attributes` section select the `cn`, `sn`, `uid` and
  `userPassword` attributes. The `uid` and `userPassword` attributes will be
  required later to authenticate as the user in a Linux virtual machine;
  1. Set values for the parameters. For this user we will set the following

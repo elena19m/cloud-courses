@@ -14,7 +14,7 @@ dependencies are required. You can install the packages using the
 following command on the same virtual machine as the LDAP server:
 
 ```shell-session
-[student@lab-ldap ~]$ sudo dnf install nss-pam-ldapd sssd sssd-ldap oddjob-mkhomedir
+[student@lab-ldap ~]$ sudo dnf install sssd sssd-ldap oddjob-mkhomedir
 ```
 
 We can now configure the system to use our local LDAP deployment as a trusted
@@ -66,7 +66,7 @@ configuration is properly set up, you will be able to get some user information
 on the virtual machine:
 
 :::warning
-Do not confuse the `SSSD` service with the SSH daemon (sshd).
+Do not confuse the `SSSD` service with the SSH daemon (`sshd`).
 :::
 
 ```shell-session
