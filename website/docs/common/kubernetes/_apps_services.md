@@ -25,14 +25,14 @@ spec:
     - protocol: TCP
       port: 8080
       targetPort: 8080
-      nodePort: 30080
+      nodePort: 30888
 
 student@lab-kubernetes:~$ kubectl apply -f hello-app-service.yaml
 service/hello-app created
 
 student@lab-kubernetes:~$ kubectl get services
 NAME         TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)          AGE
-hello-app    NodePort    10.96.186.102   <none>        8080:30080/TCP   7m42s
+hello-app    NodePort    10.96.186.102   <none>        8080:30888/TCP   7m42s
 kubernetes   ClusterIP   10.96.0.1       <none>        443/TCP          20h
 ```
 
@@ -55,7 +55,7 @@ student@lab-kubernetes:~$ kubectl describe nodes kind-control-plane | grep Inter
 and then connect via `curl`:
 
 ```shell-session
-student@lab-kubernetes:~$ curl http://172.18.0.2:30080
+student@lab-kubernetes:~$ curl http://172.18.0.2:30888
 Hello, world!
 Version: 1.0.0
 Hostname: hello-app-599bb4bf7f-l45k4
@@ -108,23 +108,23 @@ hello-app-599bb4bf7f   10        10        10      1m
 Connect multiple times to the service, using `curl`. You will notice that each time, a different pod responds:
 
 ```shell-session
-student@lab-kubernetes:~$ curl http://172.18.0.2:30080
+student@lab-kubernetes:~$ curl http://172.18.0.2:30888
 Hello, world!
 Version: 1.0.0
 Hostname: hello-app-599bb4bf7f-r6xqv
-student@lab-kubernetes:~$ curl http://172.18.0.2:30080
+student@lab-kubernetes:~$ curl http://172.18.0.2:30888
 Hello, world!
 Version: 1.0.0
 Hostname: hello-app-599bb4bf7f-gr9xb
-student@lab-kubernetes:~$ curl http://172.18.0.2:30080
+student@lab-kubernetes:~$ curl http://172.18.0.2:30888
 Hello, world!
 Version: 1.0.0
 Hostname: hello-app-599bb4bf7f-rrnws
-student@lab-kubernetes:~$ curl http://172.18.0.2:30080
+student@lab-kubernetes:~$ curl http://172.18.0.2:30888
 Hello, world!
 Version: 1.0.0
 Hostname: hello-app-599bb4bf7f-7xzgr
-student@lab-kubernetes:~$ curl http://172.18.0.2:30080
+student@lab-kubernetes:~$ curl http://172.18.0.2:30888
 Hello, world!
 Version: 1.0.0
 Hostname: hello-app-599bb4bf7f-ps2dj
@@ -155,7 +155,7 @@ deployment "hello-app" successfully rolled out
 Run a `curl` to confirm that the upgraded application is running:
 
 ```shell-session
-student@lab-kubernetes:~$ curl http://172.18.0.2:30080
+student@lab-kubernetes:~$ curl http://172.18.0.2:30888
 Hello, world!
 Version: 2.0.0
 Hostname: hello-app-56c5b6c78b-74x9s
@@ -182,7 +182,7 @@ deployment.apps/hello-app rolled back
 Confirm that the rollback was successful:
 
 ```shell-session
-student@lab-kubernetes:~$ curl http://172.18.0.2:30080
+student@lab-kubernetes:~$ curl http://172.18.0.2:30888
 Hello, world!
 Version: 1.0.0
 Hostname: hello-app-599bb4bf7f-fcsf2
