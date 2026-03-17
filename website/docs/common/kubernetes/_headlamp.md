@@ -8,7 +8,7 @@ While `kubectl` is the standard tool for interacting with the cluster in a cli-m
 
 ### Headlamp installation
 
-You can use the following helper script to install Headlamp on your machine:
+You can use the following helper script to install Headlamp on the lab machine:
 
 ```shell-session
 $ wget https://repository.grid.pub.ro/cs/cc/laboratoare/install-headlamp.zip
@@ -31,7 +31,7 @@ ssh -J <username>@fep.grid.pub.ro -L 30080:172.18.0.2:30080 student@10.9.X.Y
 Open in your browser: http://localhost:30080
 
 To login in the Headlamp dashboard, get the ID token by running:
-kubectl create token my-headlamp --namespace kube-system
+kubectl create token my-headlamp --namespace headlamp
 ```
 
 :::note
@@ -47,7 +47,7 @@ Afterwards, the dashboard can be accessed using your browser at `http://localhos
 
 Now that you have access to the dashboard, let's explore the cluster status and resources visually.
 
-1. Inspect namespaces
+**1. Inspect namespaces**
 
 Navigate to `Cluster / Namespaces` in the left sidebar.
 
@@ -59,13 +59,17 @@ This view lists all the namespaces currently existing in your cluster. You will 
 Click on the `default` namespace. This will show a summary of the resource quotas and active resources (like Pods, Deployments, Services) running specifically within `default` namespace. This is equivalent to running `kubectl get all -n default`.
 :::
 
-2. Inspect nodes
+**2. Inspect nodes**
 
 Navigate to `Cluster / Nodes` in the left sidebar.
 
 Since we are using `kind`, you will see a single node listed, typically named `kind-control-plane`. This node is the control plane of our cluster and also runs the workloads (Pods) that we will be creating in the labs.
 
-3. Inspect pods
+**3. Inspect pods**
+
+:::note
+Do this step **after** going through the **Pods** section of the lab.
+:::
 
 Navigate to `Workloads / Pods` in the left sidebar.
 
