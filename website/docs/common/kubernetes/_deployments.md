@@ -1,8 +1,8 @@
 ## Deployments
 
-In many usecases, we want to describe the state of an application declaratively, so managing individual pods is not very convenient. Also, if an individual pod crashes or is deleted, it will not be respawned by default.
+In many use cases, we want to describe the state of an application declaratively, so managing individual pods is not very convenient. Also, if an individual pod crashes or is deleted, it will not be respawned by default.
 
-For this, we will use a **deployment** resource, which is an abstration that encapsulates one or more pods.
+For this, we will use a **deployment** resource, which is an abstraction that encapsulates one or more pods.
 
 ### Creating a deployment
 

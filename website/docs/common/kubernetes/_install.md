@@ -6,10 +6,10 @@ However, for large systems, with a lot of nodes, it is impractical to manage con
 For this, container orchestration solutions have been developed. They manage a pool of worker nodes (basically, Linux machines with Docker installed) and containers are dynamically allocated to those nodes.
 The orchestrator also takes care of container lifecycle operations (start, stop, scale, upgrade etc.).
 
-Examples of container orchestation solutions:
-  * Apache Mesos
-  * Docker Swarm
+Examples of container orchestration solutions:
   * Kubernetes
+  * HashiCorp Nomad
+  * Docker Swarm
   * RedHat OpenShift (based on Kubernetes)
 
 For this lab, we will be focusing on [Kubernetes](https://kubernetes.io/).
@@ -20,7 +20,7 @@ In Kubernetes, the terminology for the pool of worker nodes is **Kubernetes clus
 
 There are many approaches for deploying and installing a Kubernetes cluster, ranging from single-node solutions suitable for testing and development to full-scale, production-ready clusters.
 
-For this lab, we will be using **[kind](https://kind.sigs.k8s.io/)** (acronym for Kubernetes in Docker), which deployes a lightweight, single-node cluster, inside Docker.
+For this lab, we will be using **[kind](https://kind.sigs.k8s.io/)** (acronym for Kubernetes in Docker), which deploys a lightweight, single-node cluster, inside Docker.
 
 :::note
 `kind` is already installed on the lab machine.  If you want to know how to install it on a different machine, check out the [user guide](https://kind.sigs.k8s.io/docs/user/quick-start#installation).
