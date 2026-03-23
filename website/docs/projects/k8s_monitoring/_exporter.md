@@ -4,7 +4,7 @@ The metrics exposed by nginx via the **stub_status** module are not compatible w
 
 For nginx, a popular prometheus exporter is **nginx-prometheus-exporter**: https://github.com/nginxinc/nginx-prometheus-exporter
 
-Deploy nginx-prometheus-exporter in the Kubernetes cluster, using a Kubernetes deployment. Take a look at the `docker run` command from the [`README.md`](https://github.com/nginxinc/nginx-prometheus-exporter/blob/main/README.md) file to figure out how you should configure your deployment.
+Deploy `nginx-prometheus-exporter` in the Kubernetes cluster, using a Kubernetes deployment. Take a look at the `docker run` command from the [`README.md`](https://github.com/nginxinc/nginx-prometheus-exporter/blob/main/README.md) file to figure out how you should configure your deployment.
 
 :::tip
 You should add the `-nginx.scrape-uri` command-line argument to the container.

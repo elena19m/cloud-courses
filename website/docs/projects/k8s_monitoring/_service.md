@@ -13,7 +13,7 @@ Review the steps from the Kubernetes lab on how to start an nginx service with p
 The nginx server will have to provide metrics about itself, on port **8080**, location `/metrics`. Use the `stub_status` module: http://nginx.org/en/docs/http/ngx_http_stub_status_module.html
 
 :::tip
-You will have to add an additional **server** code block in the nginx config. Review the steps for creating a custom nginx config in the Kubernetes lab [here](https://scgc.pages.upb.ro/cloud-courses/docs/management/kubernetes#communicating-between-apps).
+You will have to add an additional **server** code block in the nginx config. Review the steps for creating a custom nginx config in the Kubernetes lab [here](https://cybercloud.upb.ro/docs/security/containers#communicating-between-apps).
 :::
 
 :::danger

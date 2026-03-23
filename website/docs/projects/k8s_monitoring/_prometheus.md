@@ -5,7 +5,7 @@
 Prometheus must be deployed in a separate Kubernetes namespace, called **monitoring**. This namespace does not exist, so you must create it.
 
 :::tip
-Review the steps for creating a new namespace in the Kubernetes lab [here](https://scgc.pages.upb.ro/cloud-courses/docs/management/kubernetes#creating-a-new-namespace).
+Review the steps for creating a new namespace in the Kubernetes lab [here](https://cybercloud.upb.ro/docs/security/containers#creating-a-new-namespace).
 :::
 
 #### Deploying Prometheus
@@ -18,10 +18,10 @@ Deploy Prometheus using Helm, following the instructions from here: https://gith
 
 After the helm chart is deployed, use [`kubectl port-forward`](https://kubernetes.io/docs/tasks/access-application-cluster/port-forward-access-application-cluster/) to forward the port of the **prometheus-server** service to your VM.
 
-Connect to the Prometheus UI using a browser. 
+Connect to the Prometheus UI using a browser.
 
 :::tip
-See https://scgc.pages.upb.ro/cloud-courses/docs/basic/working_with_openstack#connecting-using-an-ssh-jump-host-proxy and use `-D 12345` instead of `-X` for starting a Socks proxy towards your VM. Then, configure a local browser to use `localhost:12345` as a Socks Proxy.
+See [`Connecting using an SSH Jump Host Proxy`](https://cybercloud.upb.ro/docs/basic/working_with_openstack/#connecting-using-an-ssh-jump-host-proxy) and use `-D 12345` instead of `-X` for starting a Socks proxy towards your VM. Then, configure a local browser to use `localhost:12345` as a Socks Proxy.
 :::
 
 ### Configuring Prometheus
