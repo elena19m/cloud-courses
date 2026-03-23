@@ -1,0 +1,43 @@
+---
+sidebar_position: 9
+---
+
+# Cloud Storage
+
+## Setup
+
+We will be using a virtual machine in the [faculty's cloud](http://cloud.grid.pub.ro/).
+
+When creating a virtual machine in the Launch Instance window:
+  * Name your VM using the following convention: `cc_lab<no>_<username>`,
+where `<no>` is the lab number and `<username>` is your institutional account.
+  * Select **Boot from image** in **Instance Boot Source** section
+  * Select **CC Template** in **Image Name** section
+  * Select the **g.medium** flavor.
+
+In the base virtual machine:
+  * Download the laboratory archive from [here](https://repository.grid.pub.ro/cs/cc/laboratoare/lab-storage.zip).
+Use: `wget https://repository.grid.pub.ro/cs/cc/laboratoare/lab-storage.zip` to download the archive.
+  * Extract the archive.
+
+```shell-session
+student@lab-storage:~$ # download the archive
+student@lab-storage:~$ wget https://repository.grid.pub.ro/cs/cc/laboratoare/lab-storage.zip
+student@lab-storage:~$ unzip lab-storage.zip
+```
+
+import Intro from '../common/cloud_storage/_intro.md'
+
+<Intro/>
+
+import PersistentVolumes from '../common/cloud_storage/_persistent_volumes.md'
+
+<PersistentVolumes/>
+
+import StorageClass from '../common/cloud_storage/_storage_class.md'
+
+<StorageClass/>
+
+import StatefulSets from '../common/cloud_storage/_stateful_sets.md'
+
+<StatefulSets/>
