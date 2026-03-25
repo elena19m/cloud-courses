@@ -39,14 +39,9 @@ The first step is to clone the newly created repository. Use `git clone` to clon
 
 The second step is to create an application, containerize it, and publish it on the [Container registry](https://gitlab.cs.pub.ro/dragos.petre/test-lab-helm/container_registry).
 The application we will create will be a Python [Flask](https://flask.palletsprojects.com/en/stable/) application serving as a web server with a simple endpoint that will print a message.
-To install Flask run:
-
-```bash
-pip install Flask
-```
 
 We will start with a very simple `Hello, World!` example.
-Create in the cloned project a new file named `app.py` (this is a default name for a Flask application to ease its running, not requiring passing additional parameters when starting.
+Create in the cloned project a new file named `app.py`. This is a default name for a Flask application to ease its running, not requiring passing additional parameters when starting.
 We aim to containerize the application so that we can deploy it inside a Kubernetes cluster.
 To do this, we will use `Docker`.
 But first, we need to create the Flask application so that it enables external access from outside the container.
@@ -359,4 +354,3 @@ We will start by doing port-forwarding between localhost and the pod/service tha
 student@lab-helm:~/cloned/repo$ kubectl port-forward svc/my-app-my-chart 8080:5000 &
 student@lab-helm:~/cloned/repo$ curl https://localhost:8080
 ```
-
