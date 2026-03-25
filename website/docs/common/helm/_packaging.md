@@ -1,4 +1,4 @@
-### Helm Chart Packaging
+## Helm Chart Packaging
 
 We are now familiar with the way charts work and how to compose and deploy them.
 We will now move towards a more practical use case of Helm Charts, and that is creating custom charts and publishing them on private or public repositories to have them accessible for application deployments:
@@ -33,7 +33,7 @@ Copy the token and save it on your computer, it will be needed later.
 
 Now that we have everything configured at this points, lets move on.
 
-#### Creating an Application
+### Creating an Application
 
 The first step is to clone the newly created repository. Use `git clone` to clone it on VM and `cd` into it.
 
@@ -160,7 +160,7 @@ Once the image has been published, we can go to the Container Registry to check 
 
 ![Container Registry](./container_registry.png)
 
-#### Chart Creation and Packaging
+### Chart Creation and Packaging
 
 Now that we have our containerized application created and published in out Container Registry, we can move on to create the Helm chart.
 We will create the chart using the `helm create` command.
@@ -239,7 +239,7 @@ spec:
               protocol: TCP
 ```
 
-To enable pulling images from our registry, we need to configure a Kubernetes secrete that enables authentication to the registry.
+To enable pulling images from our registry, we need to configure a Kubernetes secret that enables authentication to the registry.
 We will create in the `templates` folder a file named `secret.yaml`:
 
 ```yaml
@@ -320,7 +320,7 @@ Once the upload is finished, we can check the Package Registry on our Gitlab pro
 
 ![Package Registry](./package.png)
 
-#### Deploying the Chart
+### Deploying the Chart
 
 Now that we have a chart that it is published, we can try to deploy it on our machine.
 We will start by adding the Gitlab registry to the known Helm sources so that we can pull from it.

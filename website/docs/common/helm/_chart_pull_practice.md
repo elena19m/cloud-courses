@@ -12,7 +12,7 @@ To access the frontend for podinfo, connect to the OpenStack VM using `-L [local
 
 ```shell-session
 # Forward local port 1080 to the port that you forward Kubernetes service to.
-student@local-machine:~$ ssh -J fep -L 1080:localhost:8080 student@[ip_vm] 
+student@local-machine:~$ ssh -J fep -L 1080:localhost:8080 student@[ip_vm]
 ```
 
 If you have issues accessing the Podinfo frontend from Firefox, try a different browser.

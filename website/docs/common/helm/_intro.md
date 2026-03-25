@@ -1,6 +1,4 @@
-## Creating a Kubernetes cluster
-
-As in the previous laboratories, we will create a cluster on the lab machine, using the `kind create cluster` command:
+Create a local Kubernetes cluster using the `kind create cluster` command:
 
 ```shell-session
 student@lab-kubernetes:~$ kind create cluster
@@ -34,13 +32,13 @@ Kubernetes has its own package manager called Helm. Helm simplifies the deployme
 It allows users to explore and install Helm charts from various repositories, simplifying application deployment.
 Helm can connect to Artifact Hub by adding repositories listed there using `helm repo add`, making chart management more accessible.
 
-## Installing Helm
+### Installing Helm
 
 Helm is already installed on our VMs. Use `helm version` to check that the tool was successfully installed:
 
 ```shell-session
 student@lab-helm:~$ helm version
-version.BuildInfo{Version:"v3.17.1", GitCommit:"980d8ac1939e39138101364400756af2bdee1da5", GitTreeState:"clean", GoVersion:"go1.23.5"}
+version.BuildInfo{Version:"v4.1.0", GitCommit:"4553a0a96e5205595079b6757236cc6f969ed1b9", GitTreeState:"clean", GoVersion:"go1.25.6", KubeClientVersion:"v1.35"}
 ```
 
 :::note
@@ -51,32 +49,18 @@ If you want to install Helm on your computers, follow the installation link from
 Helm offers a [cheat sheet](https://helm.sh/docs/intro/cheatsheet/) with the basic commands necessary to manage an application.
 :::
 
-## Charts
+## Intro to Helm
+
+### Charts
 
 :::warning
-Throughout all the exemples and exercises, please be carefull to **follow the instructions** the charts give you at the end of their installation.
+Throughout all the examples and exercises, please be careful to **follow the instructions** the charts give you at the end of their installation.
 :::
 
 The packaging format used by Helm is called **chart**. A chart is a collection of files describing a set of Kubernetes resources.
 One chart can package a simple resource, like a pod, or complex resources, like entire applications.
 
-A chart has the follwing structure:
-
-```shell-session
-my-chart/
-  Chart.yaml          # A YAML file containing information about the chart
-  LICENSE             # OPTIONAL: A plain text file containing the license for the chart
-  README.md           # OPTIONAL: A human-readable README file
-  values.yaml         # The default configuration values for this chart
-  values.schema.json  # OPTIONAL: A JSON Schema for imposing a structure on the values.yaml file
-  charts/             # A directory containing any charts upon which this chart depends.
-  crds/               # Custom Resource Definitions
-  templates/          # A directory of templates that, when combined with values,
-                      # will generate valid Kubernetes manifest files.
-  templates/NOTES.txt # OPTIONAL: A plain text file containing short usage notes
-```
-
-#### CRDs - Custom Resource Definitions
+### CRDs - Custom Resource Definitions
 
 CRDs are extensions of the Kubernetes API that allow users to define their own resources.
 We can use CRDs to define new types of data or libraries and interact with them directly using `kubectl`.
@@ -85,9 +69,10 @@ More details about CRDs can be found [here](https://kubernetes.io/docs/concepts/
 ### Chart vs Deployment
 
 A Kubernetes **Deployment** is a resource that manages the lifecycle of a set of pods.
+
 A **chart** is a collection of files called **templates** that can include multiple Kubernetes resources (i.e. Deployments, Services, ConfigMaps etc.).
 
-In the following example we will deploy Elastic using the two methods.
+In the following example we will deploy Elastic using the two methods - using the Elastic operator and using the Elastic Helm chart.
 
 #### Elastic Kubernetes Deployment
 
@@ -127,7 +112,7 @@ Afterwards, we can monitor the operator's setup from its logs, using `logs`:
 ```shell-session
 student@lab-helm:~$ kubectl -n elastic-system logs -f statefulset.apps/elastic-operator
 ```
-We can check that the operator is ready by using `get` and checking that the oparator pod is `Running`:
+We can check that the operator is ready by using `get` and checking that the operator pod is `Running`:
 
 ```shell-session
 student@lab-helm:~$ kubectl get -n elastic-system pods
@@ -152,6 +137,10 @@ Firstly, we will add the Elastic Helm repository to the package sources, and upd
 ```shell-session
 student@lab-helm:~$ helm repo add elastic https://helm.elastic.co
 student@lab-helm:~$ helm repo update
+student@lab-helm:~$ helm repo list
+NAME    	URL
+headlamp	https://kubernetes-sigs.github.io/headlamp/
+elastic 	https://helm.elastic.co
 ```
 
 Then we will use `helm install` to install the Elastic chart:

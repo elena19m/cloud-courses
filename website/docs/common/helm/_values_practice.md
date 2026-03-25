@@ -9,6 +9,6 @@ You can check the UI message using `curl` as well: `curl localhost:8080` (after 
 :::
 
 :::important
-Once you are done, uninstall the chart to not overload the resources on your virtua machine.
+Once you are done, uninstall the chart to not overload the resources on your virtual machine.
 You can do this by using `helm list -A` to get the namespace and name of the installed chart, and `helm uninstall -n <namespace> <chart_name>` to uninstall the chart.
 :::

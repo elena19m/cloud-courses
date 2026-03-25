@@ -1,11 +1,11 @@
-### Values - Advanced
+## Values - Advanced
 
 Now that we saw how values work, it is time to dig a bit deeper into their strengths.
 Making use of values, we can impose conditions in our templates.
 Conditions can help us isolate parts of our deployements based on our requirements.
 Moreover, Helm charts give us the posibility to use loops, leading to easier templating of repetitive parts for our deployments.
 
-#### Conditions
+### Conditions
 
 Let's return to our chart from before:
 
@@ -59,7 +59,7 @@ favoriteDesert: "Apple Pie"
 If we test our chart now, we will see that nothing is changed from before:
 
 ```shell-session
-student@lab-helm:~$ helm install test ./my-chart --dry-run --debug
+student@lab-helm:~$ helm install test ./my-chart --dry-run=client --debug
 
 [...]
 
@@ -81,7 +81,7 @@ data:
 But now let's set the value of `weekend.enabled` to `true`:
 
 ```shell-session
-student@lab-helm:~$ helm install test ./my-chart --dry-run --debug --set weekend.enabled=true
+student@lab-helm:~$ helm install test ./my-chart --dry-run=client --debug --set weekend.enabled=true
 
 [...]
 
@@ -104,7 +104,7 @@ data:
 We can see that the chart has loaded the `specialMessage` now.
 
 
-#### Loops
+### Loops
 
 Loops come in handy when we want to define templates where we require lots of variables, such as environment variables.
 Using `range` we can simplify the template's design, keeping it cleaner and easier to read and write.
@@ -165,7 +165,7 @@ As the entries in each of the categories follow the same structure, we can add j
 Deploying this chart, we will see that entries were created for each pair in the `drinks` and `deserts` categories:
 
 ```shell-session
-student@lab-helm:~$ helm install test ./my-chart --dry-run --debug
+student@lab-helm:~$ helm install test ./my-chart --dry-run=client --debug
 
 [...]
 

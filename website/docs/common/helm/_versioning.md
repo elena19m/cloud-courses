@@ -1,6 +1,6 @@
-### Chart Versioning
+## Chart Versioning
 
-Helm offers us the possibility to keep track of different varsions of our charts by using versioning.
+Helm offers us the possibility to keep track of different versions of our charts by using versioning.
 The version of a chart is given by the parameter `version` found in the **Chart.yaml** file in the root of our chart.
 Making use of the version we can upgrade charts or rollback to certain versions.
 
@@ -9,7 +9,7 @@ Running `helm history [chart-deployment-name]` we will get to see the release hi
 
 ```shell-session
 student@lab-helm:~/nginx-advanced$ helm history nginx-chart
-REVISION        UPDATED                         STATUS          CHART                   APP VERSION     DESCRIPTION     
+REVISION        UPDATED                         STATUS          CHART                   APP VERSION     DESCRIPTION
 1               Thu Mar 20 20:39:39 2025        superseded      nginx-advance-0.1.0     1.16.0          Install complete
 2               Thu Mar 20 20:46:27 2025        deployed        nginx-advance-0.2.0     1.16.0          Upgrade complete
 ```
@@ -47,7 +47,7 @@ version: 0.2.0
 appVersion: "1.16.0"
 ```
 
-Once the version has been updated, let's update the `index.html` page by modifing its parameter value in `values.yaml`:
+Once the version has been updated, let's update the `index.html` page by modifying its parameter value in `values.yaml`:
 
 ```shell-session
 student@lab-helm:~/nginx-advance$ cat values.yaml
@@ -63,7 +63,7 @@ Now let's upgrade the chart using `helm upgrade`:
 ```shell-session
 student@lab-helm:~/nginx-advance$ helm upgrade nginx-chart .
 student@lab-helm:~/nginx-advance$ helm history nginx-chart
-REVISION        UPDATED                         STATUS          CHART                   APP VERSION     DESCRIPTION     
+REVISION        UPDATED                         STATUS          CHART                   APP VERSION     DESCRIPTION
 1               Thu Mar 20 20:39:39 2025        superseded      harder-chart-0.1.0      1.16.0          Install complete
 2               Thu Mar 20 20:46:27 2025        superseded      harder-chart-0.2.0      1.16.0          Upgrade complete
 3               Thu Mar 20 22:03:35 2025        deployed        harder-chart-0.2.0      1.16.0          Upgrade complete
@@ -77,8 +77,8 @@ Now let's rollback to a previous release. For this we will use `helm rollback`:
 ```shell-session
 student@lab-helm:~/nginx-advance$ helm rollback nginx-chart
 Rollback was a success! Happy Helming!
-student@cc-lab-petre-dragos:~/harder-chart$ helm history nginx-chart
-REVISION        UPDATED                         STATUS          CHART                   APP VERSION     DESCRIPTION     
+student@lab-helm:~/harder-chart$ helm history nginx-chart
+REVISION        UPDATED                         STATUS          CHART                   APP VERSION     DESCRIPTION
 1               Thu Mar 20 20:39:39 2025        superseded      harder-chart-0.1.0      1.16.0          Install complete
 2               Thu Mar 20 20:46:27 2025        superseded      harder-chart-0.2.0      1.16.0          Upgrade complete
 3               Thu Mar 20 22:03:35 2025        superseded      harder-chart-0.2.0      1.16.0          Upgrade complete
