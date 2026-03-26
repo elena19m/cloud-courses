@@ -11,7 +11,7 @@ To be able to boot a virtual machine instance, we must know the following
 parameters (objects):
   * `image`: the name or ID of the image used to boot the instance;
   * `flavor`: the name or ID of the flavor. The flavor defines the amount of
-    resoruces reserved for the virtual machine (e.g. CPU, RAM, disk space);
+    resources reserved for the virtual machine (e.g. CPU, RAM, disk space);
   * `key pair`: the public SSH key to inject into the instance during the first
     boot;
   * `network`: which virtual network(s) the virtual machine will be connected to;
