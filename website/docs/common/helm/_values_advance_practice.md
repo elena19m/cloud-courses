@@ -55,10 +55,10 @@ Run the same commands everytime you update the chart.
 
 4. Update the chart so that the content of the Nginx server html pages is parameterized (can be set using values).
 The parameter will have the following name: `pageContent.indexPage`.
-To redeploy the chart you can use `helm update`:
+To redeploy the chart you can use `helm upgrade`:
 
 ```shell-session
-student@lab-helm:~$ helm updgrade nginx-chart ./nginx-advance
+student@lab-helm:~$ helm upgrade nginx-chart ./nginx-advance
 Release "nginx-chart" has been upgraded. Happy Helming!
 NAME: nginx-chart
 LAST DEPLOYED: Thu Mar 20 20:20:32 2025
