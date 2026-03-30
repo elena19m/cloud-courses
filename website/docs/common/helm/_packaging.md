@@ -351,6 +351,6 @@ Lastly, lets try to connect to our application.
 We will start by doing port-forwarding between localhost and the pod/service that is running our application.
 
 ```shell-session
-student@lab-helm:~/cloned/repo$ kubectl port-forward svc/my-app-my-chart 8080:5000 &
+student@lab-helm:~/cloned/repo$ kubectl port-forward svc/my-app-my-app-chart 8080:5000 &
 student@lab-helm:~/cloned/repo$ curl https://localhost:8080
 ```
