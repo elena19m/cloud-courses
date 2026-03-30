@@ -72,3 +72,93 @@ Kafka **does not guarantee** that events with different keys will be sent on dif
 Kafka **guarantees** that events with the same key will also get on the same partition.
 :::
 </details>
+
+### Task 4
+
+The setup in `bad-guys/` simulates a common production setup, with an API producing events for a consumer to process. For this exercise to 
+run, the initial Docker compose must also be up.
+
+
+#### Architecture
+
+![Schema](./assets/prod_like_setup.svg#light)
+
+| Container   | Role               | Port  |
+|-------------|--------------------|-------|
+| `api`       | Flask REST API / Kafka **producer** | 5000  |
+| `processor` | Kafka **consumer** / result writer  | N/A   |
+| `kafka`     | Kafka broker (external compose)     | 9092  |
+
+Both containers share a single **SQLite** database via a named Docker volume (`db_data`), mounted at `/data/bad-guy.db`. In
+a production setup, this would be a Postgres, OpenSearch or other database accessed via the network.
+
+#### Quick Start
+
+```bash
+# From inside the bad-guy/ folder
+docker compose up --build
+```
+
+The `kafka-init` one-shot container will create the `bad-guy-requests` topic automatically.
+
+---
+
+#### API Reference
+
+##### POST `/bad-guys` – Submit a new request
+
+**Request body**
+```json
+{
+  "story": "In a galaxy far, far away…",
+  "characters": ["Darth Vader", "Luke Skywalker", "Yoda"]
+}
+```
+
+**Response `202 Accepted`**
+```json
+{
+  "request_id": "550e8400-e29b-41d4-a716-446655440000",
+  "status": "in_progress"
+}
+```
+
+---
+
+##### GET `/bad-guys?request_id=<uuid>` – Poll for results
+
+**Response `200 OK` (while processing)**
+```json
+{
+  "request_id": "550e8400-e29b-41d4-a716-446655440000",
+  "story": "In a galaxy far, far away…",
+  "characters": ["Darth Vader", "Luke Skywalker", "Yoda"],
+  "status": "in_progress",
+  "created_at": "2024-01-01 12:00:00",
+  "updated_at": "2024-01-01 12:00:00"
+}
+```
+
+**Response `200 OK` (when done)**
+```json
+{
+  "request_id": "550e8400-e29b-41d4-a716-446655440000",
+  "story": "In a galaxy far, far away…",
+  "characters": ["Darth Vader", "Luke Skywalker", "Yoda"],
+  "status": "done",
+  "created_at": "2024-01-01 12:00:00",
+  "updated_at": "2024-01-01 12:00:07",
+  "bad_guys": {
+    "Darth Vader":     "ULTIMATE_BAD_GUY",
+    "Luke Skywalker":  "NOT_BAD_GUY",
+    "Yoda":            "BAD_GUY"
+  }
+}
+```
+
+#### Subtasks
+
+1. **Observe the async flow** – Inspect the code; POST a request and immediately GET it; notice the `in_progress` status. Poll every second until it flips to `done`. Check the Compose logs to see that requests are processed sequentially and independent of the initial HTTP request.
+2. **Scale consumers** – Run multiple `processor` instances. Kafka's consumer group guarantees each message is processed once. To do this, scale up the number of replicas in the compose config of the `processor`.
+3. **Inspect Kafka** – Exec into the `kafka` container and use `kafka-console-consumer` to see raw messages on the `bad-guy-requests` topic.
+4. **Fault tolerance** – Scale the processor back to 1 container. Kill the container mid-flight. Restart it. What happens to in-flight messages?
