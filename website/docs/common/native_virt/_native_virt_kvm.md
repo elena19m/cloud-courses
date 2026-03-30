@@ -184,6 +184,22 @@ qemu-system-x86_64: warning: host doesn't support requested feature: CPUID.80000
 qemu-system-x86_64: warning: host doesn't support requested feature: CPUID.80000001H:ECX.svm [bit 2]
 ```
 
+<details>
+<summary> Troubleshooting - `client.conf` not found </summary>
+
+If you see the following error message in the output of the `kvm` command, it means that pipewire failed to find the `client.conf` configuration file:
+```shell-session
+[W][95076.224886] pw.conf      | [          conf.c: 1031 try_load_conf()] can't load config client.conf: No such file or directory
+[E][95076.224961] pw.conf      | [          conf.c: 1060 pw_conf_load_conf_for_context()] can't load config client.conf: No such file or directory
+```
+
+Install the missing PipeWire client libraries and configuration files:
+
+```shell-session
+student@lab-virt-host:~/work$ sudo apt install -y pipewire-audio-client-libraries
+```
+</details>
+
 When starting the virtual machine like this, its console is not displayed, but
 the process is still in foreground. To avoid this, we add the `--daemonize`
 parameter:
@@ -312,7 +328,7 @@ For this task we aim to create two virtual machines from the same
 disk image based on `debian-13.qcow2` for each of the virtual machines.
 
 ```shell-session
-student@lab-virt-host:~/work$ qemu-img create -f qcow2 -b debian-13.qcow2 sda-vm1.qcow2
+student@lab-virt-host:~/work$ qemu-img create -f qcow2 -b debian-13.qcow2 -F qcow2 sda-vm1.qcow2
 Formatting 'sda-vm1.qcow2', fmt=qcow2 size=8589934592 backing_file=debian-13.qcow2 cluster_size=65536 lazy_refcounts=off refcount_bits=16
 student@lab-virt-host:~/work$ du -sh sda-vm1.qcow2
 196K    sda-vm1.qcow2
