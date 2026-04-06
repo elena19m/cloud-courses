@@ -202,6 +202,19 @@ correct local IP address. After creating the interfaces, add the director's IP
 address (`192.168.100.251/24`) on the tunnel interfaces and activate them on
 both servers.
 
+The `tun0` interfaces should be configured as follows:
+
+```shell-session
+student@real-server-1:~$ ip a
+[...]
+4: tun0@NONE: <NOARP,UP,LOWER_UP> mtu 1480 qdisc noqueue state UNKNOWN group default qlen 1000
+    link/ipip 192.168.100.72 brd 0.0.0.0
+    inet 192.168.100.251/24 metric 32768 scope global tun0
+       valid_lft forever preferred_lft forever
+    inet6 fe80::5efe:c0a8:6448/64 scope link proto kernel_ll
+       valid_lft forever preferred_lft forever
+```
+
 :::warning
 When adding the IP address to the IP-IP tunnel, make sure to set a metric of
 `32768` (or larger than the `100` used for the `eth0` interface). Otherwise, the
