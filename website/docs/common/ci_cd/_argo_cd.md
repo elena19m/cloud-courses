@@ -2,10 +2,6 @@
 
 Argo CD is a declarative, GitOps-based continuous delivery tool for Kubernetes. It enables you to deploy applications by syncing the desired state defined in Git repositories with your actual cluster.
 
-:::info
-`argocd` is already installed in on your VM by the `lab_ci_cd.sh` setup script.
-:::
-
 ### Creating a Kubernetes cluster
 
 As in the previous laboratories, we will create a cluster on the lab machine, using the `kind create cluster` command:
@@ -31,13 +27,14 @@ Thanks for using kind! 😊
 It is recommended that you use port-forwarding instead of X11 forwarding to interact with the UI.
 :::
 
-### Creating resources for Argo CD in k8s
+### Install ArgoCD using helm
 
 To enable and create the resources required by Argo CD in your Kubernetes cluster, run the following commands:
 
 ```shell-session
-student@cc-lab:~$ kubectl create namespace argocd
-student@cc-lab:~$ kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
+student@cc-lab:~$ helm repo add argo https://argoproj.github.io/argo-helm
+student@cc-lab:~$ helm repo update
+student@cc-lab:~$ helm install argocd argo/argo-cd --namespace argocd --create-namespace
 student@cc-lab:~$ kubectl get all -n argocd
 NAME                                                   READY   STATUS    RESTARTS   AGE
 pod/argocd-application-controller-0                    1/1     Running   0          25h
@@ -123,8 +120,6 @@ kubectl get secret argocd-initial-admin-secret -n argocd   -o jsonpath="{.data.p
 ```
 :::
 
-
-
 ### Login to Argo CD
 
 To interact using the `argocd` CLI or to login to the Argo dashboard, you need to get the initial password for the `admin` user:
@@ -188,6 +183,11 @@ student@cc-lab:~$ kubectl get all -n default
 Sync the Argo project to create the deployment:
 ```shell-session
 student@cc-lab:~$ argocd app sync go-simple-webserver
+```
+
+To troubleshoot the Argo CD application, check the Argo CD dashboard or run the following command to get more details:
+```shell-session
+student@cc-lab:~$ argocd app list
 ```
 
 Check the new resources created in the `default` namespace:

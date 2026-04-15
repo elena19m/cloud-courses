@@ -39,10 +39,12 @@ student@cc-lab:~$ cd ci_cd_lab/
 ```
 :::
 
-Inspect the `.github/workflows/deploy.yaml`:
+A workflow is defined in the `.github/workflows` directory of your repository. In this lab, you will be working with the `deploy.yaml` workflow file.
 
-```yaml
-# .github/workflows/deploy.yaml
+Create a file named `.github/workflows/deploy.yaml` with the content below:
+
+```shell-session
+student@cc-lab:~/ci_cd_lab$ cat .github/workflows/deploy.yaml
 name: Build CI/CD
 
 # Trigger the workflow on a commit push to the `main` branch
@@ -77,6 +79,19 @@ jobs:
       - name: Compile binary
         run: go build -o myapp
 ```
+
+To take effect, commit the changes and push them to your forked repository:
+
+```shell-session
+student@cc-lab:~/ci_cd_lab$ git status
+student@cc-lab:~/ci_cd_lab$ git add .github/workflows/deploy.yaml
+student@cc-lab:~/ci_cd_lab$ git commit -m "Add test step to workflow"
+student@cc-lab:~/ci_cd_lab$ git push
+```
+
+Check the `Actions` tab from your GitHub repository page to monitor the workflow's output. It should look similar to this:
+
+![gh_actions_page](./gh_actions_page.png)
 
 ### Exercise - Create a new job to enable automated tests
 
@@ -119,20 +134,6 @@ jobs:
     [...]
     # TODO 02 - Make sure that the `test` job is run before `compile`
 ```
-
-To take effect, commit the changes from the `deploy.yaml` file and push them to your forked repository:
-
-```shell-session
-student@cc-lab:~$ git status
-student@cc-lab:~$ git add .github/workflows/deploy.yaml
-student@cc-lab:~$ git commit -m "Add test step to workflow"
-student@cc-lab:~$ git push
-```
-
-Check the `Actions` tab from your GitHub repository page to monitor the workflow's output. It should look similar to this:
-
-![gh_actions_page](./gh_actions_page.png)
-
 
 ### Exercise - Create a new job to build a docker image
 
@@ -188,13 +189,13 @@ For example, if your name is `JohnDoe`, you can use `ghcr.io/johndoe/ci_cd_lab:l
 
 Refer to the [documentation here](https://docs.github.com/en/packages/working-with-a-github-packages-registry/working-with-the-container-registry) to better understand how to interact with GHCR.
 
-To take effect, commit the changes from the `deploy.yaml` file and push them to your forked repository:
+To take effect, commit the changes and push them to your forked repository:
 
 ```shell-session
-student@cc-lab:~$ git status
-student@cc-lab:~$ git add .github/workflows/deploy.yaml
-student@cc-lab:~$ git commit -m "Add build step to workflow"
-student@cc-lab:~$ git push
+student@cc-lab:~/ci_cd_lab$ git status
+student@cc-lab:~/ci_cd_lab$ git add .github/workflows/deploy.yaml
+student@cc-lab:~/ci_cd_lab$ git commit -m "Add build step to workflow"
+student@cc-lab:~/ci_cd_lab$ git push
 ```
 
 Check the `Actions` tab from your GitHub repository page to monitor the workflow's output.

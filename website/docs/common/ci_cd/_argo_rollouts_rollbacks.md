@@ -1,4 +1,4 @@
-## Argo CD - Rollbacks
+## Argo Rollouts - Rollbacks
 
 During a rollout, you can revert to a previous version using the `argo-rollouts` CLI. To undo the latest rollout and revert to the previous stable version, run:
 

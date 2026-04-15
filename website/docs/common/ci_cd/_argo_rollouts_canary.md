@@ -2,29 +2,22 @@
 
 Argo Rollouts is a Kubernetes controller and set of CRDs (Custom Resource Definitions) that provide advanced deployment capabilities for Kubernetes applications. It allows you to perform canary deployments, blue/green deployments, and more.
 
-:::info
-`argo-rollouts` is already installed in on your VM by the `lab_ci_cd.sh` setup script.
-:::
-
-### Creating resources for Argo Rollouts in K8s
+### Install Argo Rollouts using Helm
 
 To enable and create the resources required by Argo Rollouts in your Kubernetes cluster, run the following commands:
 
 ```shell-session
-student@cc-lab:~$ kubectl create namespace argo-rollouts
-student@cc-lab:~$ kubectl apply -n argo-rollouts -f https://github.com/argoproj/argo-rollouts/releases/latest/download/install.yaml
+student@cc-lab:~$ helm repo add argo https://argoproj.github.io/argo-helm
+student@cc-lab:~$ helm repo update
+student@cc-lab:~$ helm install argo-rollouts argo/argo-rollouts --namespace argo-rollouts --create-namespace
 student@cc-lab:~$ kubectl get all -n argo-rollouts
-NAME                                READY   STATUS    RESTARTS   AGE
-pod/argo-rollouts-974ccd9c9-zckrj   1/1     Running   0          25h
+NAME                               READY   STATUS    RESTARTS   AGE
+pod/argo-rollouts-ffb479f4-lzd2v   0/1     Running   0          10s
 
-NAME                            TYPE        CLUSTER-IP     EXTERNAL-IP   PORT(S)    AGE
-service/argo-rollouts-metrics   ClusterIP   10.96.123.75   <none>        8090/TCP   25h
+[...]
 
-NAME                            READY   UP-TO-DATE   AVAILABLE   AGE
-deployment.apps/argo-rollouts   1/1     1            1           25h
-
-NAME                                      DESIRED   CURRENT   READY   AGE
-replicaset.apps/argo-rollouts-974ccd9c9   1         1         1       25h
+NAME                                     DESIRED   CURRENT   READY   AGE
+replicaset.apps/argo-rollouts-ffb479f4   2         2         0       10s
 ```
 
 ### Creating a canary rollout
