@@ -10,10 +10,15 @@ const config = {
   url: process.env.URL,
   baseUrl: process.env.BASE_URL,
   onBrokenLinks: 'throw',
-  onBrokenMarkdownLinks: 'warn',
   favicon: '/img/cybercloud_favicon.png',
   organizationName: 'CyberCloud', // Usually your GitHub org/user name.
   projectName: 'cloud-courses', // Usually your repo name.
+
+  markdown: {
+    hooks: {
+      onBrokenMarkdownLinks: 'warn',
+    },
+  },
 
   presets: [
     [
