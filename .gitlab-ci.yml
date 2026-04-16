@@ -21,7 +21,7 @@ test:
       - website/node_modules/
   script:
   - cd website
-  - yarn install
+  - yarn install --frozen-lockfile
   - yarn build
   rules:
     - if: $CI_COMMIT_REF_NAME != $CI_DEFAULT_BRANCH
@@ -34,7 +34,7 @@ pages:
       - website/node_modules/
   script:
   - cd website
-  - yarn install
+  - yarn install --frozen-lockfile
   - yarn build
   - mv ./build ../public
   artifacts:
