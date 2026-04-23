@@ -11,6 +11,25 @@ As presented in the scheme above, our architecture is the following:
   * three virtual machines that are connected to the `virbr-labs` bridge
   interface: VM1 is a Debian webserver, VM2 and VM3 are Alma Linux systems;
 
+To better understand the topology, you can inspect the network interfaces of the base virtual machine:
+```shell-session
+student@base-lab-ids:~$ ip a s
+2: eth0: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1450 qdisc fq_codel state UP group default qlen 1000
+    link/ether fa:16:3e:e0:b7:50 brd ff:ff:ff:ff:ff:ff
+    altname enp0s3
+    altname ens3
+    inet 10.9.1.32/16 metric 100 brd 10.9.255.255 scope global dynamic eth0
+       valid_lft 80984sec preferred_lft 80984sec
+    inet6 fe80::f816:3eff:fee0:b750/64 scope link
+       valid_lft forever preferred_lft forever
+[...]
+4: virbr-labs: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1450 qdisc noqueue state UP group default qlen 1000
+    link/ether 52:54:00:6c:23:91 brd ff:ff:ff:ff:ff:ff
+    inet 192.168.100.254/24 brd 192.168.100.255 scope global virbr-labs
+       valid_lft forever preferred_lft forever
+[...]
+```
+
 Using virtual machines, the topology presented above simulates a small network.
 The traffic we want to monitor is the one that flows through the `virbr-labs`
 network adapter. Thus, we will install Zeek in the base virtual machine
@@ -21,17 +40,20 @@ We will consider our internal network `192.168.100.0/24`.
 
 Install Zeek on the virtual machine:
 
-```console
+```shell-session
 student@base-lab-ids:~$ echo 'deb http://download.opensuse.org/repositories/security:/zeek/Debian_12/ /' | sudo tee /etc/apt/sources.list.d/security:zeek.list
 student@base-lab-ids:~$ curl -fsSL https://download.opensuse.org/repositories/security:zeek/Debian_12/Release.key | gpg --dearmor | sudo tee /etc/apt/trusted.gpg.d/security_zeek.gpg > /dev/null
 student@base-lab-ids:~$ sudo apt update
 student@base-lab-ids:~$ sudo apt install zeek-7.0
 ```
 
-(If prompted about mail setting, you can just go with the defaults)
+:::info
+If prompted about mail setting, you can just go with the defaults.
+:::
 
 By default, all zeek-related files will be located under `/opt/zeek/`.
 We will refer to `/opt/zeek/` as the `$PREFIX` directory from now on.
+For convenience, export the variable by running `export PREFIX=/opt/zeek`.
 
 We must have a monitoring interface attached to our virtual machine, where we
 will receive all the traffic to be analyzed.
@@ -49,7 +71,7 @@ save the address ranges considered local networks.  We will leave it empty for n
 
 Zeek uses a control shell for easy use.  We can start it with:
 
-```console
+```shell-session
 root@base-lab-ids:~# /opt/zeek/bin/zeekctl
 Hint: Run the zeekctl "deploy" command to get started.
 
@@ -63,12 +85,8 @@ Type "help" for help.
 Since it's the first time Zeek runs on our system, we must run the `install`
 command first, then `start`:
 
-```console
+```shell-session
 [ZeekControl] > install
-removing old policies in /opt/zeek/spool/installed-scripts-do-not-touch/site
-...
-removing old policies in /opt/zeek/spool/installed-scripts-do-not-touch/auto
-...
 creating policy directories ...
 installing site policies ...
 generating standalone-layout.zeek ...
@@ -85,21 +103,21 @@ Zeek will run in the background and save different logs under `$PREFIX/logs/curr
 There are several log files, all described [here](https://docs.zeek.org/en/master/logs/index.html).
 Some of the most relevant are:
 
-* conn.log: will log all connections. There will be an entry for every TCP
+* `conn.log`: will log all connections. There will be an entry for every TCP
 connection and for every UDP packet. It will retain all possible information,
 such as source/destination IP/port, packet size, etc. It can be used by
 OpenSearch to visualize all the connections.
-* dns|http|ftp|smtp|ssh.log: will log information on packets using different
+* `dns|http|ftp|smtp|ssh.log`: will log information on packets using different
 protocols. Since we are working on encrypted traffic, a lot of these will not
 be helpful for us. Most packets will not even be identified (and logged) to the
 specific protocol.
-* file.log: will log file transfers. Zeek can be configured to save the files
+* `file.log`: will log file transfers. Zeek can be configured to save the files
 on disk. Again, this is not useful for us, since the traffic is encrypted.
-* ssl.log: will record information about the TLS traffic. TLS version, cipher,
+* `ssl.log`: will record information about the TLS traffic. TLS version, cipher,
 certificate chains, etc.
-* weird.log: will record unexpected events at the protocol level. For example,
+* `weird.log`: will record unexpected events at the protocol level. For example,
 unknown protocols, SYN after close, etc.
-* notice.log: will log all the alerts that we choose. Some alerts are enabled
+* `notice.log`: will log all the alerts that we choose. Some alerts are enabled
 by default, like self-signed certificates, high traffic loss, etc. Most of the
 alerts will be triggered by scripts. Specific logs saved in the notice.log can
 be sent via email, by setting the notice type to `ACTION_EMAIL` or
@@ -131,8 +149,10 @@ F       0       C       0       0    00       -
 We can see some relevant information here, like the source/destination address
 and port, protocol, etc.
 
+:::tip
 If you do not see any traffic, you can connect to one of the VMs using SSH and ping
 another one.
+:::
 
 ### Zeeks Scripting Framework
 
@@ -193,7 +213,7 @@ The notice will require at least the `note` and `msg` parameters.
 The final file will look like this:
 
 ```shell-session
-root@base-lab-ids:/opt/zeek/share/zeek/site# cat alert-all.zeek 
+root@base-lab-ids:~# cat $PREFIX/share/zeek/site/alert-all.zeek
 @load base/frameworks/notice
 
 export {
@@ -212,9 +232,11 @@ event new_connection(c: connection)
 ```
 
 We need to load the script in the Zeek start configuration.
-For that, just add this like in `$PREFIX/share/zeek/site/local.zeek`:
+For that, just add the line below in `$PREFIX/share/zeek/site/local.zeek`:
 
-```
+```shell-session
+root@base-lab-ids:# cat $PREFIX/share/zeek/site/local.zeek
+[...]
 @load site/alert-all.zeek
 ```
 
@@ -223,9 +245,9 @@ In order to test our script, let's ping the virtual machine from another
 system.  After that, we should see new entries in `$PREFIX/logs/current/notice.log`
 
 ```shell-session
-student@lab-scgc$ ping <IP of VM>
+student@base-lab-ids$ ping 192.168.100.81
 
-root@base-lab-ids:/# cat /opt/zeek/logs/current/notice.log
+root@base-lab-ids:# less /opt/zeek/logs/current/notice.log
 #fields ts      uid     id.orig_h       id.orig_p       id.resp_h
 id.resp_p       fuid    file_mime_type  file_desc       proto   note    msg
 sub     src     dst     p       n    peer_descr       actions email_dest
@@ -260,14 +282,15 @@ We can see our `icmp` connection, along with other tcp/udp connections.
 The last script does not help us very much, since the alerts will quickly turn
 into spam.  Let's create a new script that will alert us if an address initiates
 more than 10 connections. Something like this can be used to detect port scans.
-Likely the threshold will different in a real network, but we will use 10 for
+Likely the threshold will be different in a real network, but we will use 10 for
 ease of testing.
 
 For this, we will create a hashmap-like structure, where `map[IP address] = number of connections started by IP`.
 We will use the Zeek [`table` type](https://docs.zeek.org/en/master/script-reference/types.html#type-table),
-which functions exactly like a hashmap.  We create a new script, `port-scan.zeek`:
+which functions exactly like a hashmap.  We create a new script, `$port-scan.zeek`:
 
-```
+```shell-session
+root@base-lab-ids:~# cat $PREFIX/share/zeek/site/port-scan.zeek
 @load base/frameworks/notice
 
 export {
@@ -277,7 +300,7 @@ export {
 }
 ```
 
-Just like before, we must define a new `Notice::Type`.  We also define the
+Just like before, we must define a new `Notice::Type`. We also define the
 connection limit. The `&redef` attribute will let us redefine the connection
 threshold in the `local.zeek` file if wanted. We also create the hashmap with
 keys of `addr` type and values of `count` type (`unsigned int`).
@@ -317,16 +340,27 @@ event new_connection(c: connection)
 
 We load it in the `local.zeek` main script, like we did before (we can remove the
 old alert-all script from there, so we get rid of the spam notices).
+
+```shell-session
+root@base-lab-ids:# cat $PREFIX/share/zeek/site/local.zeek
+[...]
+@load site/port-scan.zeek
+```
+
+:::info
+To load new scripts, we must restart Zeek using `/opt/zeek/bin/zeekctl deploy` for the changes to take effect.
+:::
+
 In order to test it, we can do a port sweep from the host VM to the monitoring VM:
 
 ```shell-session
-student@lab-ids-1:~$ nc -z <IP of VM2> 1-20
+student@lab-ids-1:~$ nc -z 192.168.100.82 1-20
 ```
 
 Now, we should see some alerts:
 
 ```shell-session
-root@base-lab-ids:/opt/zeek# cat logs/current/notice.log
+root@base-lab-ids:# less /opt/zeek/logs/current/notice.log
 1753179245.707612       C99E6v2wxjgzxe3Wp4      192.168.56.1    45630   192.168.56.104  8       -       -       -       tcp     PortScan        Port Scan Detected, from 192.168.56.1 to 192.1
 68.56.104       -       192.168.56.1    192.168.56.104  8       -       -       Notice::ACTION_LOG      (empty) 3600.000000     -       -       -       -       -
 1753179245.707698       CgZhtw2PkCeVFaxof2      192.168.56.1    54594   192.168.56.104  9       -       -       -       tcp     PortScan        Port Scan Detected, from 192.168.56.1 to 192.1
@@ -338,11 +372,11 @@ root@base-lab-ids:/opt/zeek# cat logs/current/notice.log
 ```
 
 As you can see, the alerts are still noisy. We receive alerts for every 10
-connections, and the conunter increases even if the connections are done to the
+connections, and the counter increases even if the connections are done to the
 same port. You can test that by running from a VM:
 
 ```shell
-$ for i in $(seq 1 30); do nc -z 192.168.100.82 1; done
+student@base-lab-ids:~$ for i in $(seq 1 30); do nc -z 192.168.100.82 1; done
 ```
 
 You will still see alerts, even if you just connected to one port.
@@ -353,21 +387,28 @@ table that already exists, or you can use other [data types](https://docs.zeek.o
 Try do redefine the connection threshold in the `local.zeek` file, without changing
 the initial `port-scan.zeek` file. You can see how to use `redef` in the [`docs`](https://docs.zeek.org/en/master/script-reference/statements.html#keyword-const).
 
-### Intel Framework
+### Intelligence Framework
 
 Zeek can also work as a rule-based IDS, meaning that you can provide a list of known
 malicious signatures (like IP address, domain, file hash, etc.) and it will send
 alerts if any of them are seen in traffic. Signatures are stored in files, with
 a specific format. You can find a list of files already formatted [here](https://github.com/CriticalPathSecurity/Zeek-Intelligence-Feeds).
-Let's use a list of IP addresses. Download [this file](https://github.com/CriticalPathSecurity/Zeek-Intelligence-Feeds/blob/master/abuse-ch-threatfox-ip.intel)
-and place it somewhere on the ids VM. We will create a new script (`intel.zeek`) where
-we will load the file locations and start the intel framework.
+Let's use a list of known malicious IP addresses. Download [this intelligence file](https://github.com/CriticalPathSecurity/Zeek-Intelligence-Feeds/blob/master/abuse-ch-threatfox-ip.intel):
 
+```shell-session
+student@base-lab-ids:~$ wget https://raw.githubusercontent.com/CriticalPathSecurity/Zeek-Intelligence-Feeds/master/abuse-ch-threatfox-ip.intel
+student@base-lab-ids:~$ head abuse-ch-threatfox-ip.intel
 ```
+
+We will create a new script (`intel.zeek`) where we will
+load the file locations and start the intel framework.
+
+```shell-session
+root@base-lab-ids:~# cat $PREFIX/share/zeek/site/intel.zeek
 @load frameworks/intel/seen
 @load base/utils/site
 
-redef Intel::read_files += { "PATH_TO_DOWNLOADED_FILE" };
+redef Intel::read_files += { "TODO_PATH_TO_DOWNLOADED_FILE" };
 
 event new_connection(c: connection)
 {
@@ -382,19 +423,24 @@ addresses in the known signatures. Load the new `intel.zeek` script into `local.
 and then try to ping one of the addresses in the list. A new log file should appear,
 named `intel.log`:
 
+:::tip
+Zeek is monitoring the network traffic on 192.168.100.0/24, so you can only trigger alerts
+from that subnet. Ping external IP addresses from one of the VM1, VM2, or VM3 to trigger the alerts.
+:::
+
 ```shell-session
-root@base-lab-ids:~# cat /opt/zeek/logs/intel.log
+root@base-lab-ids:~# less /opt/zeek/logs/current/intel.log
 #fields ts      uid     id.orig_h       id.orig_p       id.resp_h       id.resp_p       seen.indicator  seen.indicator_type     seen.where      seen.node       matched sources fuid    file_mime_type        file_desc
 #types  time    string  addr    port    addr    port    string  enum    enum    string  set[enum]       set[string]     string  string  string
 1753186849.671304       Cjt2Bb4if9usJtEkMa      192.168.56.1    55008   192.168.56.104  22      192.168.56.1    Intel::ADDR     Conn::IN_ORIG   zeek    Intel::ADDR     ABUSE-CH        -    --
 1753186853.787336       CGWZHb2oMz8gCylTll      192.168.56.104  8       192.168.56.1    0       192.168.56.1    Intel::ADDR     Conn::IN_RESP   zeek    Intel::ADDR     ABUSE-CH        -    --
 ```
 
-Try to do the same with another file from the [list](https://github.com/CriticalPathSecurity/Zeek-Intelligence-Feeds).
+Select and use another intelligence file from the [Zeek Intelligence repository](https://github.com/CriticalPathSecurity/Zeek-Intelligence-Feeds) to trigger alerts on other indicators.
 
 ### Porting Already Existing Scripts
 
-Try to port some of the already publicly available scripts to Zeek.
+Port some of the already publicly available scripts to Zeek:
 
 * https://github.com/jonschipp/bro-scripts
 * https://github.com/zeek/bro-scripts
