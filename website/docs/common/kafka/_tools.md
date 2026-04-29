@@ -34,12 +34,15 @@ If you want to use this method, follow the steps from [here](https://cloud-cours
 
 ## Set the connection
 
-Go to `localhost:8080` and configure as follows:
+In your local browser, navigate to `localhost:8080` and configure a new cluster as follows:
 * **Cluster name**: CC_lab
 * **Host**: kafka
 * **Post**: 9092
 
-At the bottom of the page click **Validate**. If everything goes well, we will see a toastr, `Configuration is valid`. We can click on **Submit**. After a couple of seconds, we will be able to see more options on the left panel:
+![Kafka UI configuration](assets/kafka_ui_create_cluster_dark.png#dark)
+![Kafka UI configuration](assets/kafka_ui_create_cluster_light.png#light)
+
+At the bottom of the page click **Validate**. If everything goes well, we will see a toast - `Configuration is valid`. We can click on **Submit**. After a couple of seconds, we will be able to see more options on the left panel:
 * The **Brokers** page shows the list of kafka nodes available in the cluster.
 * The **Topics** page presents all the topics.
 * The **Consumers** page lists the consumer groups, with all the consumers in each group.

@@ -11,13 +11,13 @@ We will explain each keyword in the following chapters.
 
 ## Why do we need Kafka?
 
-**Kafka** is used entensively across industries and domains that require real-time data streaming, reliable data pipelines and scalable system architectures.
+**Kafka** is used extensively across industries and domains that require real-time data streaming, reliable data pipelines and scalable system architectures.
 
 Here is a list of companies that use Kafka in their tech stack:
 1. Netflix
     * monitors streaming quality and buffer times
     * delivers recommendations based on recent watch history
-    * trigger adaptive bitrate switching based on network conditions 
+    * trigger adaptive bitrate switching based on network conditions
 2. Riot Games (League of Legends)
     * track millions of in-game events per second
     * analyze performance, gameplay balance and user engagement
@@ -42,7 +42,7 @@ A synchronous solution using HTTP calls has fundamental scalability constraints.
 - **Event loss**: If the backend cannot process events quickly enough, incoming events may be dropped or timeout
 - **Tight coupling**: Monitored endpoints depend directly on backend availability and response time
 
-![Schema](./assets/sync_request_processing.svg#light)
+![Schema](./assets/sync_request_processing.svg)
 
 
 #### How Kafka Addresses These Issues
@@ -56,7 +56,7 @@ Kafka provides a message queue that enables asynchronous event processing:
 
 This architecture separates event production from consumption, allowing each component to scale independently and ensuring reliable event processing even under high load.
 
-![Schema](./assets/kafka_async_request_processing.svg#light)
+![Schema](./assets/kafka_async_request_processing.svg)
 
 #### Asynchronous Requests: Trade-offs and Considerations
 

@@ -1,14 +1,14 @@
 ## Exercises
 
-From this point, we will use the python script provided in the ZIP archive.
+From this point, we will use the python script provided in the lab archive.
 
-:::note
-To continue the lab, we need to create a virtual environment and install the `confluent-kafka` package. Run the following commands (directly on the VM, **not** in the kafka container):
+:::info
+To continue the lab, we need to create a virtual environment (`venv`) and install the `confluent-kafka` package. Run the following commands directly on the VM, **not** in the kafka container:
 
 ```shell-session
-$ python3.10 -m venv venv
-$ source venv/bin/activate
-$ pip3 install confluent-kafka
+student@lab-kafka:~$ python3.10 -m venv venv
+student@lab-kafka:~$ source venv/bin/activate
+(venv) student@lab-kafka:~$ pip3 install confluent-kafka
 ```
 :::
 
@@ -36,6 +36,7 @@ Follow `TODO1` comments and let some events to be produced. What is the result i
 
 <details>
 <summary><b>Read me after</b></summary>
+
 Each consumer will get all the events. Sometimes this is what we want, but sometimes this behaviour can lead to duplicating the actions.
 An example is the online shop that send events each time an user purchases something. One email service would want to subscribe to these events to send details to customers. Another service, that generates invoices for businesses, would also be a consumer. Both require the same events, not just a subset of them.
 
@@ -48,9 +49,10 @@ Follow `TODO2` comments and let some events to be produced. What is the result i
 
 <details>
 <summary><b>Read me after</b></summary>
+
 As we can see, grouping multiple consumers under the same ID means that we will not consume the same event twice.
 
-**Kafka** has an internal routing system based on partitions and the number of consumers in a consumer group. In this case, we can have maximum 5 active consumers because we have 5 partitions. The rest of the consumers will be on hold and will run only if active consumers stop for any reason. 
+**Kafka** has an internal routing system based on partitions and the number of consumers in a consumer group. In this case, we can have maximum 5 active consumers because we have 5 partitions. The rest of the consumers will be on hold and will run only if active consumers stop for any reason.
 </details>
 
 ### Task 3
@@ -59,6 +61,7 @@ Follow `TODO3` comments and let some events to be produced. What is the result i
 
 <details>
 <summary><b>Read me after</b></summary>
+
 Up until this moment, we sent events that had a value, but without a key.
 When we send an event with a key, **Kafka** makes a hash of the key and assigns it to a partition. From that moment, all the events containing that key hash will be routed to the same partition.
 
@@ -75,13 +78,12 @@ Kafka **guarantees** that events with the same key will also get on the same par
 
 ### Task 4
 
-The setup in `bad-guys/` simulates a common production setup, with an API producing events for a consumer to process. For this exercise to 
+The setup in `bad-guys/` simulates a common production setup, with an API producing events for a consumer to process. For this exercise to
 run, the initial Docker compose must also be up.
-
 
 #### Architecture
 
-![Schema](./assets/prod_like_setup.svg#light)
+![Schema](./assets/prod_like_setup.svg)
 
 | Container   | Role               | Port  |
 |-------------|--------------------|-------|
@@ -94,9 +96,10 @@ a production setup, this would be a Postgres, OpenSearch or other database acces
 
 #### Quick Start
 
-```bash
-# From inside the bad-guy/ folder
-docker compose up --build
+To start the API and processor, build and start the `bad-guys` containers:
+
+```shell-session
+student@lab-kafka:~/bad-guys$ docker compose up --build
 ```
 
 The `kafka-init` one-shot container will create the `bad-guy-requests` topic automatically.
@@ -155,6 +158,25 @@ The `kafka-init` one-shot container will create the `bad-guy-requests` topic aut
   }
 }
 ```
+
+:::tip
+ Interact with the API using `curl [...] | jq` to pretty-print the JSON responses.
+
+For example, to submit a new request:
+
+```shell-session
+curl -X POST http://localhost:5000/bad-guys \
+  -H "Content-Type: application/json" \
+  -d '{"story": "In a galaxy far, far away…", "characters": ["Darth Vader", "Luke Skywalker", "Yoda"]}' | jq
+```
+
+or to poll for results:
+
+```shell-session
+curl "http://localhost:5000/bad-guys?request_id=550e8400-e29b-41d4-a716-446655440000" | jq
+```
+
+:::
 
 #### Subtasks
 
