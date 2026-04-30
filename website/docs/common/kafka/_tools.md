@@ -34,7 +34,7 @@ If you want to use this method, follow the steps from [here](https://cloud-cours
 
 ## Set the connection
 
-In your local browser, navigate to `localhost:8080` and configure a new cluster as follows:
+In your local browser, navigate to http://localhost:8080 and configure a new cluster as follows:
 * **Cluster name**: CC_lab
 * **Host**: kafka
 * **Post**: 9092

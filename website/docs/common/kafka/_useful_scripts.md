@@ -36,7 +36,7 @@ This script will connect to our Kafka node on port **19092** (used for external 
 We can delete topics using the same script.
 
 :::warning
-If you run the below script, you will have to recreate the **post.office**.
+If you run the below script, you will have to recreate the **post.office** topic.
 :::
 
 ```shell-session

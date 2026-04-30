@@ -102,7 +102,7 @@ To start the API and processor, build and start the `bad-guys` containers:
 student@lab-kafka:~/bad-guys$ docker compose up --build
 ```
 
-The `kafka-init` one-shot container will create the `bad-guy-requests` topic automatically.
+The `kafka-init` one-shot container will create the `bad-guys-requests` topic automatically.
 
 ---
 
@@ -182,5 +182,5 @@ curl "http://localhost:5000/bad-guys?request_id=550e8400-e29b-41d4-a716-44665544
 
 1. **Observe the async flow** – Inspect the code; POST a request and immediately GET it; notice the `in_progress` status. Poll every second until it flips to `done`. Check the Compose logs to see that requests are processed sequentially and independent of the initial HTTP request.
 2. **Scale consumers** – Run multiple `processor` instances. Kafka's consumer group guarantees each message is processed once. To do this, scale up the number of replicas in the compose config of the `processor`.
-3. **Inspect Kafka** – Exec into the `kafka` container and use `kafka-console-consumer` to see raw messages on the `bad-guy-requests` topic.
+3. **Inspect Kafka** – Exec into the `kafka` container and use `kafka-console-consumer` to see raw messages on the `bad-guys-requests` topic.
 4. **Fault tolerance** – Scale the processor back to 1 container. Kill the container mid-flight. Restart it. What happens to in-flight messages?
