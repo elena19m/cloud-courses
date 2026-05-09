@@ -9,14 +9,24 @@ Key features of Dissect:
 * Parse log files, config files or command history files
 * Export findings to structured data - JSON, CSV or streams to Splunk or Elastic
 
-### Install dissect
+### Install Dissect
 
-Dissect can be installed using `pip3` in a virtual environment:
+Dissect can be installed using `pipx` in a virtual environment:
 
 ```shell-session
-student@lab-forensics:~$ python3 -m venv .venv
-student@lab-forensics:~$ source .venv/bin/activate
-(venv) student@lab-forensics:~$ pip3 install dissect
+student@lab-forensics:~$ pipx install dissect --include-deps
+⚠️  Note: pygmentize was already on your PATH at /usr/bin/pygmentize
+  installed package dissect 3.22, installed using Python 3.12.3
+  These apps are now globally available
+  [...]
+    - target-fs
+    - target-info
+  [...]
+done! ✨ 🌟 ✨
+student@lab-forensics:~$ pipx ensurepath
+Added /home/ubuntu/.local/bin to the PATH environment variable in /home/ubuntu/.bashrc
+
+Open a new terminal to use pipx ✨ 🌟 ✨
 ```
 
 :::tip

@@ -1,17 +1,13 @@
 ## Memory forensics with Volatility3
 
 The [Volatility3](https://github.com/volatilityfoundation/volatility3) framework is a modular and extensible tool for memory forensics.
-Using a translation layer based on debugging symbols from the operating system, it can reconstruct the state of a system at the moment a memory capture has been taken. This type of analysis is critical as attackers eveolve to use more sophisticated threats which leave no trace on the disk.
+Using a translation layer based on debugging symbols from the operating system, it can reconstruct the state of a system at the moment a memory capture has been taken. This type of analysis is critical as attackers evolve to use more sophisticated threats which leave no trace on the disk.
 
 ### Installing Volatility 3
 
 Since it is written in Python, volatility is [published on PyPi](https://pypi.org/project/volatility3/). The official installation instructions on Github use the `pip` package manager, but we recommend following Python best practices and installing it in a virtual environment, either manually managed through `venv` or with `pipx`/`uv`. We will be using `pipx`, which can be installed using your system's package manager:
 
-```shell-session
-student@lab-forensics:~$ sudo apt update && sudo apt install -y pipx python3-venv
-```
-
-Then, we can install volatility using: 
+Then, we can install volatility using:
 
 ```shell-session
 student@lab-forensics:~$ pipx install volatility3
@@ -20,15 +16,8 @@ Installing to existing directory '/home/student/.local/pipx/venvs/volatility3'
   These binaries are now globally available
     - vol
     - volshell
-⚠️  Note: '/home/ubuntu/.local/bin' is not on your PATH environment variable. These binaries will not be globally accessible until your PATH is updated. Run `pipx ensurepath` to automatically add it, or manually modify your PATH in your shell's config file (i.e. ~/.bashrc).
 done! ✨ 🌟 ✨
-
-student@lab-forensics:~$ pipx ensurepath
-Added /home/ubuntu/.local/bin to the PATH environment variable in /home/ubuntu/.bashrc
-
-Open a new terminal to use pipx ✨ 🌟 ✨
 ```
-
 
 ### Memory Acquisition
 
@@ -42,7 +31,7 @@ For VMWare, the file has the `.vmem` extension and can be found in the same dire
 
 This, while creating a cleaner RAM snapshot, will also fully disrupt the system by pausing it and making it unavailable. This is not always desirable. In an active investigation you might not want to have the attackers know you are on their tail.
 
-For QEMU virtual machines managed through `virt-manager` there is the option of using the `virsh dump` command as seen below. 
+For QEMU virtual machines managed through `virt-manager` there is the option of using the `virsh dump` command as seen below.
 
 ```shell-session
 ubuntu@host:~$ virsh list
@@ -50,7 +39,7 @@ ubuntu@host:~$ virsh list
 ---------------------------
  9    guest1      running
  12   guest2      running
- 
+
 ubuntu@host:~$ virsh dump --help
   NAME
     dump - dump the core of a domain to a file for analysis
@@ -276,9 +265,9 @@ Plugins:
                         Scans all virtual memory areas for tasks using RegEx.
     linux.vmcoreinfo.VMCoreInfo
                         Enumerate VMCoreInfo tables
-                        
+
  [...]
- 
+
 The following plugins could not be loaded (use -vv to see why): volatility3.plugins.linux.vmayarascan, volatility3.plugins.windows.cachedump, volatility3.plugins.windows.direct_system_calls,
 volatility3.plugins.windows.hashdump, volatility3.plugins.windows.indirect_system_calls, volatility3.plugins.windows.lsadump, volatility3.plugins.windows.malware.direct_system_calls,
 volatility3.plugins.windows.malware.indirect_system_calls, volatility3.plugins.windows.mftscan, volatility3.plugins.windows.registry.cachedump, volatility3.plugins.windows.registry.hashdump,
@@ -290,7 +279,7 @@ In order to specify the location where volatility will look for profiles, you ca
 
 ### Exercise 01 - Overcoming the limitations of disk forensics
 
-A good starting point if the attacker did not try to erase his tracks by [disabling the bash history](https://unix.stackexchange.com/questions/10922/temporarily-suspend-bash-history-on-a-given-shell) is to look at the bash history, checking for what commands were executed. Unfortunately, in the disk forensics part, we could see that the attacker deleted the bash history file (`.bash_history`). 
+A good starting point if the attacker did not try to erase his tracks by [disabling the bash history](https://unix.stackexchange.com/questions/10922/temporarily-suspend-bash-history-on-a-given-shell) is to look at the bash history, checking for what commands were executed. Unfortunately, in the disk forensics part, we could see that the attacker deleted the bash history file (`.bash_history`).
 
 Volatility has a plugin that can extract the bash history from memory:
 
@@ -327,7 +316,7 @@ The original report you received mentioned that files uploaded by the users were
 
 Depending on how the files were encrypted and when they were last accessed, the originals might still be in memory, [in the page cache](https://www.cs.princeton.edu/courses/archive/fall19/cos316/lectures/11-page-cache.pdf).
 
-Try and use the `linux.pagecache.Files` and `linux.pagecache.InodePages` plugins to extract some of the encrypted files. The first plugin will list the files (or parts of files) in the page cache, while the second can be used to dump (recover) the files. 
+Try and use the `linux.pagecache.Files` and `linux.pagecache.InodePages` plugins to extract some of the encrypted files. The first plugin will list the files (or parts of files) in the page cache, while the second can be used to dump (recover) the files.
 
 :::warning
 **Don't worry if this fails, this is not a sure way to recover files, but it is worth trying.**
@@ -361,7 +350,7 @@ While disk forensics give us an idea of what happened in the past, memory forens
 
 #### Try and answer the following questions
 
-* Does the attacker have an active connection to the compromised machine? 
+* Does the attacker have an active connection to the compromised machine?
     <details>
     <summary>Hint 1</summary>
 
@@ -379,7 +368,7 @@ While disk forensics give us an idea of what happened in the past, memory forens
 
         While both the PID of the process is in the output of the `linux.sockstat` plugin, try and see what the plugins that deal with processes have to report. Give `linux.psaux`, `linux.psscan`, `linux.pslist` and `linux.pstree` a try. They can report different information and inconsistencies might help you spot suspicious processes.
     </details>
-* Cross check with the bash history. Can you figure out what tool the attacker is using for the remote connection? 
+* Cross check with the bash history. Can you figure out what tool the attacker is using for the remote connection?
 * Can you find another suspicious process? Don't worry if you can't, we will take a look at it in the next section.
 
 
@@ -387,7 +376,7 @@ While disk forensics give us an idea of what happened in the past, memory forens
 
 Fileless malware is a type of malware that leaves no traces on the filesystem. A common technique on Windows, called process hollowing, can be used to hide malicious code in the memory of another process. On Linux, a mechanism called [memory mapped file descriptors](https://circuitlabs.net/advanced-file-i-o-memory-mapped-files-mmap-munmap/) can be used to write the content of an executable directly into the memory and execute it from that same memory region, as if it were a file on disk. While this does not leave any trace on the disk, it leaves traces that can help you identify such processes.
 
-The first is a broken link in the `/proc` filesystem where a link to the location on disk of the binary should be (`/proc/<pid>/exe`). 
+The first is a broken link in the `/proc` filesystem where a link to the location on disk of the binary should be (`/proc/<pid>/exe`).
 
 ```shell-session
 student@lab-forensics:~/work$ ls -la /proc/349926/exe
@@ -431,7 +420,7 @@ Using volatility, we can check for this using the `linux.elfs` plugin, which gi
 
 #### \[EXTRA\] Extracting a binary from a memory dump
 
-Use the `linux.elfs` plugin to find the malware and extract the binary using the `linux.proc.Maps` plugin. 
+Use the `linux.elfs` plugin to find the malware and extract the binary using the `linux.proc.Maps` plugin.
 
 Give [this StackOverflow question](https://stackoverflow.com/questions/1401359/understanding-linux-proc-pid-maps-or-proc-self-maps) a read to better understand the `/proc/<pid>/maps` structure and where the actual binary is located.
 
@@ -446,5 +435,5 @@ The resulting binary will not be runnable, but it is good enough to do some stat
         Once you figured it out try and use Ghidra with some extensions (Google it) to analyze the binary.
     </details>
 * What library was used for the encryption?
-* What type of encryption was used? 
+* What type of encryption was used?
 * Can you find the encryption key? Is it useful / can you decrypt the data? Why (not)?

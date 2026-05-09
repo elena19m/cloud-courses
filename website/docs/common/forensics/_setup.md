@@ -20,3 +20,10 @@ $ # download the archive
 $ wget https://repository.grid.pub.ro/cs/scgc/laboratoare/lab-forensics.zip
 $ unzip lab-forensics.zip
 ```
+
+We will be using several Python-based forensic tools throughout the lab - Dissect and Volatility 3.
+To install them we recommend following Python best practices and use a virtual environment, either manually managed through `venv` or with `pipx`/`uv`. We will be using `pipx`, which can be installed using your system's package manager:
+
+```shell-session
+student@lab-forensics:~$ sudo apt update && sudo apt install -y pipx python3-venv
+```
