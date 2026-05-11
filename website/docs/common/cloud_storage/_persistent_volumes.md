@@ -131,7 +131,13 @@ An app was deployed but its pod is stuck in `Pending`. Figure out what is missin
 1. Create the missing resource so the pod reaches `Running`.
 
    :::tip
-   When creating the **Persistent Volume** you have to setup its storage backend. For this exercise you can use `.spec.hostPath: /tmp/manual-pv-data` field, which will link the PV to a directory on the node.
+   When creating the **Persistent Volume** you have to setup its storage backend. For this exercise you can use:
+    ```
+    spec:
+      hostPath: 
+        path: /tmp/manual-pv-data
+    ```    
+   which will link the PV to a directory on the node.
 
    This is **not** recommended for production use, but it is useful for learning purposes.
    :::
