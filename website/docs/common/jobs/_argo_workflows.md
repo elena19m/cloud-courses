@@ -174,6 +174,7 @@ metadata:
   generateName: hello-world-
 spec:
   entrypoint: hello
+  serviceAccountName: argo-admin
   templates:
   - name: hello
     container:
@@ -235,6 +236,7 @@ metadata:
   generateName: sequential-
 spec:
   entrypoint: main
+  serviceAccountName: argo-admin
   templates:
   - name: main
     steps:
@@ -319,6 +321,7 @@ metadata:
   generateName: parallel-
 spec:
   entrypoint: main
+  serviceAccountName: argo-admin
   templates:
   - name: main
     steps:
@@ -428,6 +431,7 @@ metadata:
   generateName: artifact-passing-
 spec:
   entrypoint: main
+  serviceAccountName: argo-admin
   templates:
   - name: main
     steps:

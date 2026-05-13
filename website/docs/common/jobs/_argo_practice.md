@@ -27,6 +27,7 @@ metadata:
   generateName: image-processing-
 spec:
   entrypoint: image-pipeline
+  serviceAccountName: argo-admin
   templates:
   - name: image-pipeline
     steps:
