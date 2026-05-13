@@ -48,7 +48,7 @@ Create the Argo namespace and install the server components:
 $ kubectl create namespace argo
 namespace/argo created
 
-$ kubectl apply -n argo -f https://github.com/argoproj/argo-workflows/releases/download/v3.7.14/install.yaml
+$ kubectl apply --server-side -n argo -f "https://github.com/argoproj/argo-workflows/releases/download/v3.7.14/quick-start-minimal.yaml"
 customresourcedefinition.apiextensions.k8s.io/clusterworkflowtemplates.argoproj.io created
 customresourcedefinition.apiextensions.k8s.io/cronworkflows.argoproj.io created
 customresourcedefinition.apiextensions.k8s.io/workfloweventbindings.argoproj.io created
