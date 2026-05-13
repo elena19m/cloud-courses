@@ -132,6 +132,10 @@ $ kubectl -n argo create clusterrolebinding argo-admin \
 $ kubectl -n argo create token argo-admin
 ```
 
+:::warning
+Add the prefix `Bearer <token>` to the token when pasting it in the login screen.
+:::
+
 The Argo UI is extremely useful for:
 - Visualizing workflow DAGs
 - Monitoring workflow execution in real-time
