@@ -38,7 +38,7 @@ The `schedule` value is specified using the following convention from the cron m
 ```
 
 This means that the above job will run on the 8th day of the month at 2:00 AM.
-If we want to specify a job which would run for every minute we could to the following chane:
+If we want to specify a job which would run for every minute we could to the following change:
 ```
 -  schedule: "0 2 8 * *"
 +  schedule: "*/1 * * * *"
@@ -46,7 +46,9 @@ If we want to specify a job which would run for every minute we could to the fol
 
 The `*/x` means the job will run every `x` minutes.
 
+:::tip
 For an easy way to define the cron schedule, you can use https://crontab.guru/.
+:::
 
 ### Case study: Database backup
 
@@ -106,17 +108,17 @@ spec:
     app: postgres
 ```
 
-The pgsql.yaml file deploys a database server.
-For this database server we need to create backups which will be storen in another volume which will them be deployed off-site.
+The `pgsql.yaml` file deploys a database server.
+For this database server we need to create backups which will be store in another volume which will them be deployed off-site.
 
 In order to prepare the setup we first need to create the database that we will be creating.
 Run the following command to setup the database deployment and service in the lab directory:
 
 ```
-oc apply -f pgsql.yaml
+kubectl apply -f pgsql.yaml
 ```
 
-We will start from the followin already created CronJob:
+We will start from the following already created CronJob:
 ```
 apiVersion: batch/v1
 kind: CronJob
@@ -190,7 +192,7 @@ The above CronJob creates a backup of the database using `pg_dump` and puts it i
 Apply them so we can see the backup in action.
 
 ```
-sergiu@epsilon:~/ocp/upgrade$ oc get cronjobs
+student@lab-jobs:~/ocp/upgrade$ kubectl get cronjobs
 NAME              SCHEDULE      SUSPEND   ACTIVE   LAST SCHEDULE   AGE
 postgres-backup   */1 * * * *   False     0        35s             39m
 ```

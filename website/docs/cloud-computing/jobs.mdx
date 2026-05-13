@@ -1,0 +1,57 @@
+---
+sidebar_position: 10
+---
+
+# Running jobs on Kubernetes
+
+## Setup
+
+We will be using a virtual machine in the [faculty's cloud](http://cloud.grid.pub.ro/).
+
+When creating a virtual machine in the Launch Instance window:
+  * Name your VM using the following convention: `cc_lab<no>_<username>`,
+where `<no>` is the lab number and `<username>` is your institutional account.
+  * Select **Boot from image** in **Instance Boot Source** section
+  * Select **CC Template** in **Image Name** section
+  * Select the **g.large** flavor.
+
+### Creating a Kubernetes cluster
+
+As in the previous laboratories, we will create a cluster on the lab machine, using the `kind create cluster` command:
+
+```shell-session
+student@lab-kubernetes:~$ kind create cluster
+Creating cluster "kind" ...
+ ✓ Ensuring node image (kindest/node:v1.23.4) 🖼
+ ✓ Preparing nodes 📦
+ ✓ Writing configuration 📜
+ ✓ Starting control-plane 🕹️
+ ✓ Installing CNI 🔌
+ ✓ Installing StorageClass 💾
+Set kubectl context to "kind-kind"
+You can now use your cluster with:
+
+kubectl cluster-info --context kind-kind
+
+Thanks for using kind! 😊
+```
+
+:::note
+It is recommended that you use port-forwarding instead of X11 forwarding to interact with the UI.
+:::
+
+import Jobs from '../common/jobs/_jobs.md'
+
+<Jobs/>
+
+import CronJobs from '../common/jobs/_cronjobs.md'
+
+<CronJobs/>
+
+import ArgoWorkflows from '../common/jobs/_argo_workflows.md'
+
+<ArgoWorkflows/>
+
+import ArgoPractice from '../common/jobs/_argo_practice.md'
+
+<ArgoPractice/>
